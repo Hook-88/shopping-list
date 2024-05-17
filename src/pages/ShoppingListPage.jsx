@@ -1,36 +1,25 @@
-import { FaPlus, FaCheck } from "react-icons/fa6"
+import { FaPlus, FaCheck, FaAngleRight } from "react-icons/fa6"
+import { Link } from "react-router-dom"
 import getFirstCharCapped from "../utility/getFirstCharCapped"
 import { useEffect, useRef, useState } from "react"
 import Header from "../components/Header"
 import List from "../components/List/Index"
 import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
-import Form from "../components/Form"
-import InputText from "../components/InputText"
 import AddItemInput from "../components/AddItemInput"
 import { nanoid } from "nanoid"
-import { IoClose, IoCloseOutline } from "react-icons/io5"
-import DialogCard from "../components/DialogCard";
+import DialogCard from "../components/DialogCard"
+import MainContent from "../components/MainContent"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
     const [addItemOn, setAddItemOn] = useState(false)
     const dialogRef = useRef()
+    const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
 
     function toggleAddItemOn() {
         setAddItemOn(prevAddItemOn => !prevAddItemOn)
     }
-
-    const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
-
-    useEffect(() => {
-        const unsub = onSnapshot(docRef, snapshot => {
-            // sync up with local state
-            setShoppingList(snapshot.data().items)
-        })
-
-        return unsub
-    }, [])
 
     async function toggleCheckedInFireStore(itemId) {
         const docSnap = await getDoc(docRef)
@@ -97,6 +86,15 @@ export default function ShoppingListPage() {
     function closeConfirm() {
         dialogRef.current.close()
     }
+
+    useEffect(() => {
+        const unsub = onSnapshot(docRef, snapshot => {
+            // sync up with local state
+            setShoppingList(snapshot.data().items)
+        })
+
+        return unsub
+    }, [])
     
     return (
         <>
@@ -109,38 +107,36 @@ export default function ShoppingListPage() {
                     { addItemOn ? <FaCheck /> : <FaPlus />}
                 </button>
             </Header>
-
             {
                 shoppingList ?
-                <main className="px-4 grid gap-4 mt-12">
-                        <List>
-                            {
-                                shoppingList.map((item, index, arr) => {
-                                    let liClassName = "flex items-center justify-between pr-4 cursor-pointer"
+                <MainContent>
+                    <List>
+                        {
+                            shoppingList.map((item, index, arr) => {
+                                let liClassName = "flex items-center justify-between pr-4 cursor-pointer"
 
-                                    if (index !== (arr.length - 1)) {
-                                        liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
-                                    }
+                                if (index !== (arr.length - 1)) {
+                                    liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
+                                }
 
-                                    if (item.checked) {
-                                        liClassName += " text-white/30 line-through"
-                                    }
+                                if (item.checked) {
+                                    liClassName += " text-white/30 line-through"
+                                }
 
-                                    
-                                    return (
-                                        <List.Item 
-                                            key={item.id}
-                                            className={liClassName}
-                                            onClick={() => toggleCheckedInFireStore(item.id)}
-                                        >
-                                            {getFirstCharCapped(item.name)}
-                                            {item.checked && <FaCheck className=""/>}
-                                        </List.Item>
-                                    )
-                                })
-                            }
-                        </List> 
-                    
+                                
+                                return (
+                                    <List.Item 
+                                        key={item.id}
+                                        className={liClassName}
+                                        onClick={() => toggleCheckedInFireStore(item.id)}
+                                    >
+                                        {getFirstCharCapped(item.name)}
+                                        {item.checked && <FaCheck className=""/>}
+                                    </List.Item>
+                                )
+                            })
+                        }
+                    </List> 
 
                     {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
 
@@ -174,8 +170,15 @@ export default function ShoppingListPage() {
                             </button>
                         </>
                     }
+                    <Link
+                        className="py-2 rounded-lg bg-white/10 px-4 flex items-center justify-between"
+                        to="recipes"
+                    >
+                        Recipes
+                        <FaAngleRight />
+                    </Link>
 
-                </main> : "Loading..."
+                </MainContent> : "Loading..."
             }
             <dialog
                 ref={dialogRef}
