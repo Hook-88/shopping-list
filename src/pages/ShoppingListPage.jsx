@@ -1,7 +1,8 @@
 import { FaPlus, FaCheck } from "react-icons/fa6"
+import { CgClose } from "react-icons/cg";
 
 import SHOPPINGLISTDATA from "../data"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Header from "../components/Header"
 import List from "../components/List/Index"
 import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
@@ -10,10 +11,12 @@ import Form from "../components/Form"
 import InputText from "../components/InputText"
 import AddItemInput from "../components/AddItemInput"
 import { nanoid } from "nanoid"
+import { IoClose, IoCloseOutline } from "react-icons/io5"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
     const [addItemOn, setAddItemOn] = useState(false)
+    const dialogRef = useRef()
 
     function toggleAddItemOn() {
         setAddItemOn(prevAddItemOn => !prevAddItemOn)
@@ -62,6 +65,10 @@ export default function ShoppingListPage() {
             items: arrayUnion(newItemObj)
         })
 
+    }
+
+    function openConfirm() {
+        dialogRef.current.showModal()
     }
     
     return (
@@ -113,12 +120,32 @@ export default function ShoppingListPage() {
                     <button
                         className="bg-white/10 py-2 rounded-lg text-red-700 disabled:text-red-700/40"
                         disabled={ shoppingList.every(item => item.checked === false) }
+                        onClick={openConfirm}
                     >
                         Delete Checked Items
                     </button>
 
                 </main> : "Loading..."
             }
+            <dialog
+                ref={dialogRef}
+                className="bg-[#171717]"
+            >
+                <div className="fixed inset-0 grid place-content-center backdrop-blur-md bg-white/20">
+                    <div className="w-full max-w-lg bg-[#171717] text-white grid rounded-lg">
+                    <h2 className="py-2 px-4 shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]">
+                        Delete checked Items?
+                    </h2>
+                    <button className="flex justify-center items-center py-2 mx-2 shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px] gap-2">
+                        Yes <FaCheck className="text-green-700"/>
+                    </button>
+
+                    <button className="flex justify-center items-center py-2 gap-2">
+                        No <CgClose className="text-red-700 text-lg"/>
+                    </button>
+                    </div>
+                </div>
+            </dialog>
         </>
     )
 }
