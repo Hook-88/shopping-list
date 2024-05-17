@@ -1,4 +1,4 @@
-const shoppingListData = [
+const SHOPPINGLISTDATA = [
     {
         name: "beer",
         id: "jajasdb38bcesc",
@@ -16,4 +16,4 @@ const shoppingListData = [
     },
 ]
 
-export default shoppingListData
+export default SHOPPINGLISTDATA
