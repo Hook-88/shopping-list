@@ -13,6 +13,12 @@ import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
+    const [addItemOn, setAddItemOn] = useState(false)
+
+    function toggleAddItemOn() {
+        setAddItemOn(prevAddItemOn => !prevAddItemOn)
+    }
+
     const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
 
     useEffect(() => {
@@ -56,15 +62,17 @@ export default function ShoppingListPage() {
             items: arrayUnion(newItemObj)
         })
 
-        
     }
     
     return (
         <>
             <Header className="px-4">
                 <h1 className="col-span-8 col-start-3">SHOPPING LIST</h1>
-                <button className="flex items-center justify-end pr-4 col-span-2">
-                    <FaPlus />
+                <button 
+                    className="flex items-center justify-end pr-4 col-span-2"
+                    onClick={toggleAddItemOn}
+                >
+                    { addItemOn ? <FaCheck /> : <FaPlus />}
                 </button>
             </Header>
 
@@ -100,9 +108,8 @@ export default function ShoppingListPage() {
                     </List> : "Loading..."
                 }
 
-                {/* TODO make FORM and INPUT components */}
+                {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
 
-                <AddItemInput onSubmit={addItemToShoppingList}/>
             </main>
         </>
     )
