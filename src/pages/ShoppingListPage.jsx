@@ -1,7 +1,5 @@
 import { FaPlus, FaCheck } from "react-icons/fa6"
-import { CgClose } from "react-icons/cg";
-
-import SHOPPINGLISTDATA from "../data"
+import getFirstCharCapped from "../utility/getFirstCharCapped"
 import { useEffect, useRef, useState } from "react"
 import Header from "../components/Header"
 import List from "../components/List/Index"
@@ -12,6 +10,7 @@ import InputText from "../components/InputText"
 import AddItemInput from "../components/AddItemInput"
 import { nanoid } from "nanoid"
 import { IoClose, IoCloseOutline } from "react-icons/io5"
+import DialogCard from "../components/DialogCard";
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
@@ -54,6 +53,21 @@ export default function ShoppingListPage() {
 
     }
 
+    async function checkAllItemsInFireStore(checkValue) {
+        const docSnap = await getDoc(docRef)
+        const newArray = docSnap.data().items.map(item => {
+            
+            return {
+                ...item,
+                checked: checkValue
+            }
+        })
+        
+        await updateDoc(docRef, {
+            items: newArray         
+        })
+    }
+
     async function addItemToShoppingList(value) {
         const newItemObj = {
             name: value.toLowerCase(),
@@ -67,8 +81,21 @@ export default function ShoppingListPage() {
 
     }
 
+    async function deleteSelectionFromShoppingList() {
+        const newShoppingList = shoppingList.filter(item => item.checked === false)
+
+        await updateDoc(docRef, {
+            items: newShoppingList
+        })
+        
+    }
+
     function openConfirm() {
         dialogRef.current.showModal()
+    }
+
+    function closeConfirm() {
+        dialogRef.current.close()
     }
     
     return (
@@ -106,7 +133,7 @@ export default function ShoppingListPage() {
                                             className={liClassName}
                                             onClick={() => toggleCheckedInFireStore(item.id)}
                                         >
-                                            {item.name}
+                                            {getFirstCharCapped(item.name)}
                                             {item.checked && <FaCheck className=""/>}
                                         </List.Item>
                                     )
@@ -116,6 +143,24 @@ export default function ShoppingListPage() {
                     
 
                     {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
+
+                    <button
+                        className="bg-white/10 py-2 px-4 rounded-lg text-left flex items-center justify-between disabled:text-red-700/40"
+                        // disabled={ shoppingList.every(item => item.checked === false) }
+                        onClick={() => checkAllItemsInFireStore(!shoppingList.every(item => item.checked === true))}
+                    >
+                        {
+                            shoppingList.every(item => item.checked === true) ?
+                                <>
+                                    Uncheck all
+                                </> : 
+                                <>
+                                    Check All
+                                    <FaCheck />
+                                </>
+                        }
+                        
+                    </button>
 
                     <button
                         className="bg-white/10 py-2 rounded-lg text-red-700 disabled:text-red-700/40"
@@ -129,22 +174,13 @@ export default function ShoppingListPage() {
             }
             <dialog
                 ref={dialogRef}
-                className="bg-[#171717]"
+                onClick={closeConfirm}
             >
-                <div className="fixed inset-0 grid place-content-center backdrop-blur-md bg-white/20">
-                    <div className="w-full max-w-lg bg-[#171717] text-white grid rounded-lg">
-                    <h2 className="py-2 px-4 shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]">
-                        Delete checked Items?
-                    </h2>
-                    <button className="flex justify-center items-center py-2 mx-2 shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px] gap-2">
-                        Yes <FaCheck className="text-green-700"/>
-                    </button>
-
-                    <button className="flex justify-center items-center py-2 gap-2">
-                        No <CgClose className="text-red-700 text-lg"/>
-                    </button>
-                    </div>
-                </div>
+                <DialogCard 
+                    question="Delete checked items?"
+                    confirmAction={deleteSelectionFromShoppingList}
+                    closeConfirm={closeConfirm}
+                />
             </dialog>
         </>
     )

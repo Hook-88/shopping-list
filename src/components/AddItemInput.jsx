@@ -22,6 +22,7 @@ export default function AddItemInput({onSubmit}) {
                 placeholder="Item"
                 onChange={handleFormChange}
                 value={formData}
+                autoFocus
             />
         </Form>
     )
