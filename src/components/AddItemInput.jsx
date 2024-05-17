@@ -2,7 +2,7 @@ import { useState } from "react"
 import Form from "./Form"
 import InputText from "./InputText"
 
-export default function AddItemInput({onSubmit}) {
+export default function AddItemInput({onSubmit, placeholder}) {
     const [formData, setFormData] = useState("")
 
     function handleFormChange(event) {
@@ -19,7 +19,7 @@ export default function AddItemInput({onSubmit}) {
     return (
         <Form className="grid" onSubmit={handleSubmit}>
             <InputText 
-                placeholder="Item"
+                placeholder={placeholder}
                 onChange={handleFormChange}
                 value={formData}
                 autoFocus

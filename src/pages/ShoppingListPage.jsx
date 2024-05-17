@@ -11,16 +11,13 @@ import { nanoid } from "nanoid"
 import DialogCard from "../components/DialogCard"
 import MainContent from "../components/MainContent"
 import PageLink from "../components/PageLink"
+import useStateAndToggle from "../hooks/useStateAndToggle"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
-    const [addItemOn, setAddItemOn] = useState(false)
+    const [addItemOn, setAddItemOn, toggleAddItemOn] = useStateAndToggle(false)
     const dialogRef = useRef()
     const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
-
-    function toggleAddItemOn() {
-        setAddItemOn(prevAddItemOn => !prevAddItemOn)
-    }
 
     async function toggleCheckedInFireStore(itemId) {
         const docSnap = await getDoc(docRef)
@@ -111,35 +108,38 @@ export default function ShoppingListPage() {
             {
                 shoppingList ?
                 <MainContent>
-                    <List>
-                        {
-                            shoppingList.map((item, index, arr) => {
-                                let liClassName = "flex items-center justify-between pr-4 cursor-pointer"
+                    {
+                        shoppingList.length > 0 &&
+                        <List>
+                            {
+                                shoppingList.map((item, index, arr) => {
+                                    let liClassName = "flex items-center justify-between pr-4 cursor-pointer"
 
-                                if (index !== (arr.length - 1)) {
-                                    liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
-                                }
+                                    if (index !== (arr.length - 1)) {
+                                        liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
+                                    }
 
-                                if (item.checked) {
-                                    liClassName += " text-white/30 line-through"
-                                }
+                                    if (item.checked) {
+                                        liClassName += " text-white/30 line-through"
+                                    }
 
-                                
-                                return (
-                                    <List.Item 
-                                        key={item.id}
-                                        className={liClassName}
-                                        onClick={() => toggleCheckedInFireStore(item.id)}
-                                    >
-                                        {getFirstCharCapped(item.name)}
-                                        {item.checked && <FaCheck className=""/>}
-                                    </List.Item>
-                                )
-                            })
-                        }
-                    </List> 
+                                    
+                                    return (
+                                        <List.Item 
+                                            key={item.id}
+                                            className={liClassName}
+                                            onClick={() => toggleCheckedInFireStore(item.id)}
+                                        >
+                                            {getFirstCharCapped(item.name)}
+                                            {item.checked && <FaCheck className=""/>}
+                                        </List.Item>
+                                    )
+                                })
+                            }
+                        </List> 
+                    }
 
-                    {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
+                    {addItemOn && <AddItemInput onSubmit={addItemToShoppingList} placeholder="item"/>}
 
                     {
                         shoppingList.length > 0 &&
@@ -161,17 +161,20 @@ export default function ShoppingListPage() {
                                 }
                                 
                             </button>
+                        </>
+                    }
+                    <PageLink to="recipes">Recipes</PageLink>
 
+                    {
+                        shoppingList.length > 0 &&
                             <button
                                 className="bg-white/10 py-2 rounded-lg text-red-700 disabled:text-red-700/40"
                                 disabled={ shoppingList.every(item => item.checked === false) }
                                 onClick={openConfirm}
-                                >
+                            >
                                 Delete Checked Items
                             </button>
-                        </>
                     }
-                    <PageLink to="recipes">Recipes</PageLink>
 
                 </MainContent> : "Loading..."
             }
