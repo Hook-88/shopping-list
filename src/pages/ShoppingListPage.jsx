@@ -112,7 +112,7 @@ export default function ShoppingListPage() {
 
             {
                 shoppingList ?
-                <main className="px-4 grid gap-4">
+                <main className="px-4 grid gap-4 mt-12">
                         <List>
                             {
                                 shoppingList.map((item, index, arr) => {
