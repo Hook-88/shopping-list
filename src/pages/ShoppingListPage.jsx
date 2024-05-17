@@ -4,8 +4,12 @@ import SHOPPINGLISTDATA from "../data"
 import { useEffect, useState } from "react"
 import Header from "../components/Header"
 import List from "../components/List/Index"
-import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
+import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
+import Form from "../components/Form"
+import InputText from "../components/InputText"
+import AddItemInput from "../components/AddItemInput"
+import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
@@ -39,6 +43,20 @@ export default function ShoppingListPage() {
             items: newArray         
         })
 
+    }
+
+    async function addItemToShoppingList(value) {
+        const newItemObj = {
+            name: value.toLowerCase(),
+            checked: false,
+            id: nanoid()
+        }
+
+        await updateDoc(docRef, {
+            items: arrayUnion(newItemObj)
+        })
+
+        
     }
     
     return (
@@ -81,14 +99,10 @@ export default function ShoppingListPage() {
                         }
                     </List> : "Loading..."
                 }
-                //TODO make form and input components
-                <form onSubmit={e => e.preventDefault()} className="grid">
-                    <input 
-                        type="text" 
-                        placeholder="Item"
-                        className="py-2 rounded-lg bg-white/10 text-center font-bold" 
-                    />
-                </form>
+
+                {/* TODO make FORM and INPUT components */}
+
+                <AddItemInput onSubmit={addItemToShoppingList}/>
             </main>
         </>
     )
