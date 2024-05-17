@@ -76,41 +76,49 @@ export default function ShoppingListPage() {
                 </button>
             </Header>
 
-            <main className="px-4 grid gap-4">
-                {
-                    shoppingList ?
-                    <List>
-                        {
-                            shoppingList.map((item, index, arr) => {
-                                let liClassName = "flex items-center justify-between pr-4 cursor-pointer"
+            {
+                shoppingList ?
+                <main className="px-4 grid gap-4">
+                        <List>
+                            {
+                                shoppingList.map((item, index, arr) => {
+                                    let liClassName = "flex items-center justify-between pr-4 cursor-pointer"
 
-                                if (index !== (arr.length - 1)) {
-                                    liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
-                                }
+                                    if (index !== (arr.length - 1)) {
+                                        liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
+                                    }
 
-                                if (item.checked) {
-                                    liClassName += " text-white/30 line-through"
-                                }
+                                    if (item.checked) {
+                                        liClassName += " text-white/30 line-through"
+                                    }
 
-                                
-                                return (
-                                    <List.Item 
-                                        key={item.id}
-                                        className={liClassName}
-                                        onClick={() => toggleCheckedInFireStore(item.id)}
-                                    >
-                                        {item.name}
-                                        {item.checked && <FaCheck className=""/>}
-                                    </List.Item>
-                                )
-                            })
-                        }
-                    </List> : "Loading..."
-                }
+                                    
+                                    return (
+                                        <List.Item 
+                                            key={item.id}
+                                            className={liClassName}
+                                            onClick={() => toggleCheckedInFireStore(item.id)}
+                                        >
+                                            {item.name}
+                                            {item.checked && <FaCheck className=""/>}
+                                        </List.Item>
+                                    )
+                                })
+                            }
+                        </List> 
+                    
 
-                {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
+                    {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
 
-            </main>
+                    <button
+                        className="bg-white/10 py-2 rounded-lg text-red-700 disabled:text-red-700/40"
+                        disabled={ shoppingList.every(item => item.checked === false) }
+                    >
+                        Delete Checked Items
+                    </button>
+
+                </main> : "Loading..."
+            }
         </>
     )
 }
