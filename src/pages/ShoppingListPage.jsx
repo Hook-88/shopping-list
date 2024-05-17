@@ -175,7 +175,6 @@ export default function ShoppingListPage() {
             <dialog
                 ref={dialogRef}
                 onClick={closeConfirm}
-                onOpenAutoFocus={(e) => e.preventDefault()}
             >
                 <DialogCard 
                     question="Delete checked items?"
