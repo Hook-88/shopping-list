@@ -144,31 +144,36 @@ export default function ShoppingListPage() {
 
                     {addItemOn && <AddItemInput onSubmit={addItemToShoppingList}/>}
 
-                    <button
-                        className="bg-white/10 py-2 px-4 rounded-lg text-left flex items-center justify-between disabled:text-red-700/40"
-                        // disabled={ shoppingList.every(item => item.checked === false) }
-                        onClick={() => checkAllItemsInFireStore(!shoppingList.every(item => item.checked === true))}
-                    >
-                        {
-                            shoppingList.every(item => item.checked === true) ?
-                                <>
-                                    Uncheck all
-                                </> : 
-                                <>
-                                    Check All
-                                    <FaCheck />
-                                </>
-                        }
-                        
-                    </button>
+                    {
+                        shoppingList.length > 0 &&
+                        <>
+                            <button
+                                className="bg-white/10 py-2 px-4 rounded-lg text-left flex items-center justify-between disabled:text-red-700/40"
+                                // disabled={ shoppingList.every(item => item.checked === false) }
+                                onClick={() => checkAllItemsInFireStore(!shoppingList.every(item => item.checked === true))}
+                                >
+                                {
+                                    shoppingList.every(item => item.checked === true) ?
+                                    <>
+                                            Uncheck all
+                                        </> : 
+                                        <>
+                                            Check All
+                                            <FaCheck />
+                                        </>
+                                }
+                                
+                            </button>
 
-                    <button
-                        className="bg-white/10 py-2 rounded-lg text-red-700 disabled:text-red-700/40"
-                        disabled={ shoppingList.every(item => item.checked === false) }
-                        onClick={openConfirm}
-                    >
-                        Delete Checked Items
-                    </button>
+                            <button
+                                className="bg-white/10 py-2 rounded-lg text-red-700 disabled:text-red-700/40"
+                                disabled={ shoppingList.every(item => item.checked === false) }
+                                onClick={openConfirm}
+                                >
+                                Delete Checked Items
+                            </button>
+                        </>
+                    }
 
                 </main> : "Loading..."
             }
