@@ -45,7 +45,7 @@ export default function RecipesPage() {
             <Header className="px-4">
                 <h1 className="col-span-8 col-start-3">RECIPES</h1>
                 <button 
-                    className="flex items-center justify-end pr-4 col-span-2"
+                    className="flex items-center justify-end pr-3 col-span-2"
                     onClick={toggleAddRecipeOn}
                 >
                     { addRecipeOn ? <FaCheck /> : <FaPlus />}
@@ -68,6 +68,7 @@ export default function RecipesPage() {
                                     <Link
                                         to={recipe.id}
                                         key={recipe.id}
+                                        state={recipe}
                                     >
                                         <List.Item className={css}>
                                             {getFirstCharCapped(recipe.name)}
