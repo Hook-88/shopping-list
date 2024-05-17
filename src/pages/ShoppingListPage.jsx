@@ -10,6 +10,7 @@ import AddItemInput from "../components/AddItemInput"
 import { nanoid } from "nanoid"
 import DialogCard from "../components/DialogCard"
 import MainContent from "../components/MainContent"
+import PageLink from "../components/PageLink"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(null)
@@ -170,13 +171,7 @@ export default function ShoppingListPage() {
                             </button>
                         </>
                     }
-                    <Link
-                        className="py-2 rounded-lg bg-white/10 px-4 flex items-center justify-between"
-                        to="recipes"
-                    >
-                        Recipes
-                        <FaAngleRight />
-                    </Link>
+                    <PageLink to="recipes">Recipes</PageLink>
 
                 </MainContent> : "Loading..."
             }
