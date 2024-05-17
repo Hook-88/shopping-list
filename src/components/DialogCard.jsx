@@ -10,9 +10,9 @@ export default function DialogCard({question, closeConfirm, confirmAction}) {
                 {question}
             </h2>
             <button 
-                className="flex justify-center items-center py-2 mx-2 shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px] gap-2"
+            className="flex justify-center items-center py-2 mx-2 shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px] gap-2 outline-none"
                 onClick={confirmAction}
-                onOpenAutoFocus={(e) => e.preventDefault()}
+                
             >
                 Yes <FaCheck className="text-green-700"/>
             </button>
