@@ -1,42 +1,49 @@
-import { FaPlus } from "react-icons/fa6"
+import { FaPlus, FaCheck } from "react-icons/fa6"
 
 import SHOPPINGLISTDATA from "../data"
 import { useState } from "react"
+import Header from "../components/Header"
+import List from "../components/List/Index"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useState(SHOPPINGLISTDATA)
     
     return (
         <>
-            <header className="text-center py-2 text-lg font-bold grid grid-cols-12">
+            <Header className="px-4">
                 <h1 className="col-span-8 col-start-3">SHOPPING LIST</h1>
-                <button className="flex items-center justify-center col-span-2">
+                <button className="flex items-center justify-end pr-4 col-span-2">
                     <FaPlus />
                 </button>
-            </header>
+            </Header>
 
-            <main className="grid grid-cols-12 px-4">
-                <ul className="bg-white/10 rounded-lg col-span-12 pl-4">
+            <main className="px-4">
+                <List>
                     {
                         shoppingList.map((item, index, arr) => {
-                            let liClassName = "py-2"
+                            let liClassName = "flex items-center justify-between pr-4"
 
                             if (index !== (arr.length - 1)) {
                                 liClassName += " shadow-[rgba(100,100,100,0.3)_0px_1px_0px_0px]"
                             }
 
+                            if (item.checked) {
+                                liClassName += " text-white/30 line-through"
+                            }
+
                             
                             return (
-                                <li 
+                                <List.Item 
                                     key={item.id}
                                     className={liClassName}
                                 >
                                     {item.name}
-                                </li>
+                                    {item.checked && <FaCheck className=""/>}
+                                </List.Item>
                             )
                         })
                     }
-                </ul>
+                </List>
             </main>
         </>
     )
