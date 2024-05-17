@@ -50,7 +50,7 @@ export default function ShoppingListPage() {
                 </button>
             </Header>
 
-            <main className="px-4">
+            <main className="px-4 grid gap-4">
                 {
                     shoppingList ?
                     <List>
@@ -81,6 +81,14 @@ export default function ShoppingListPage() {
                         }
                     </List> : "Loading..."
                 }
+                <form onSubmit={e => e.preventDefault()} className="grid">
+                    <input 
+                        type="text" 
+                        name="" 
+                        placeholder="Item"
+                        className="py-2 rounded-lg bg-white/10 text-center font-bold" 
+                    />
+                </form>
             </main>
         </>
     )
