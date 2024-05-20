@@ -1,7 +1,7 @@
 import { FaEdit } from "react-icons/fa"
 import Header from "../components/Header"
 import MainContent from "../components/MainContent"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import List from "../components/List/Index"
 import { useEffect, useRef, useState } from "react"
 import getFirstCharCapped from "../utility/getFirstCharCapped"
@@ -107,12 +107,14 @@ export default function RecipePage() {
         <>
             <Header className="px-4">
                 <h1 className="col-span-8 col-start-3">{recipe.name.toUpperCase()}</h1>
-                <button 
+                <Link 
                     className="flex items-center justify-end pr-3 col-span-2"
+                    to="edit"
+                    state={recipe}
                     // onClick={toggleAddRecipeOn}
                 >
                     <FaEdit />
-                </button>
+                </Link>
             </Header>
 
             <MainContent>
