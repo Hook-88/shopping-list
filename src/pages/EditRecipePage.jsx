@@ -31,6 +31,7 @@ export default function EditRecipePage() {
                     <h2 className="ml-4 mb-1 text-gray-400 font-thin text-sm">NAME RECIPE</h2>
                     <PageLink
                         to="name"
+                        state={state.name}
                     >
                         {getFirstCharCapped(state.name)}
                     </PageLink>
