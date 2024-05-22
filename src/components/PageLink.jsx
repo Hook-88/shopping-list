@@ -4,7 +4,7 @@ import { FaAngleRight } from "react-icons/fa6"
 
 export default function PageLink({children, className, ...rest}) {
     const PageLinkCSS = twMerge(
-        "flex items-center justify-between py-2 px-4 bg-white/15 rounded-lg",
+        "flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg",
         className
     )
     
