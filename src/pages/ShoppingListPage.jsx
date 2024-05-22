@@ -32,6 +32,10 @@ export default function ShoppingListPage() {
     function deleteCheckedItems() {
         setShoppingList(prevShoppinglist => prevShoppinglist.filter(item => item.checked === false) )
     }
+
+    function checkAll(checkValue) {
+        setShoppingList(prevShoppinglist => prevShoppinglist.map(item => ({...item, checked: checkValue})))
+    }
     
     return (
         <>
@@ -93,6 +97,20 @@ export default function ShoppingListPage() {
                         />
                     </Form>
                 }
+
+                <button
+                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
+                    onClick={() => checkAll(!shoppingList.every(item => item.checked === true))}
+                >
+                    {
+                        !shoppingList.every(item => item.checked === true) ? 
+                            <>
+                                Check all
+                                <FaCheck />
+                            </> : "Uncheck all"
+                    }
+                    
+                </button>
 
                 <PageLink to="recipes">Recipes</PageLink>
 
