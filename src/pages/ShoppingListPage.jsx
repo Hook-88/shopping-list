@@ -128,9 +128,6 @@ export default function ShoppingListPage() {
                     closeDialog={closeDialog}
                 />
             </dialog>
-
-            {/* Todo cup code in components */}
-
         </>
     )
 }
