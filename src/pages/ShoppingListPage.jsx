@@ -4,13 +4,18 @@ import PageMain from "../components/PageMain"
 import PageLink from "../components/PageLink"
 import PageTitle from "../components/PageTitle"
 import Form from "../components/Form"
+import TextInput from "../components/TextInput"
+import List from "../components/List"
+import ListItem from "../components/ListItem"
 import { useRef, useState } from "react"
 import { ITEMS } from "../data"
 import { IoClose } from "react-icons/io5"
+import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
     const [onAddItem, setOnAddItem] = useState(false)
     const [shoppingList, setShoppingList] = useState(ITEMS)
+    const [formData, setFormData] = useState("")
     const dialogRef = useRef()
 
     function toggleOnAddItem() {
@@ -36,6 +41,28 @@ export default function ShoppingListPage() {
     function checkAll(checkValue) {
         setShoppingList(prevShoppinglist => prevShoppinglist.map(item => ({...item, checked: checkValue})))
     }
+
+    function addItem(value) {
+        const itemObj = {
+            name: value.toLowerCase(),
+            checked: false,
+            id: nanoid()
+        }
+
+        setShoppingList(prevShoppinglist => [...prevShoppinglist, itemObj])
+
+    }
+
+    function handleFormChange(event) {
+        setFormData(event.target.value)
+        
+    }
+
+    function handleSubmit() {
+        addItem(formData)
+        setFormData("")
+
+    }
     
     return (
         <>
@@ -54,12 +81,10 @@ export default function ShoppingListPage() {
             <PageMain>
                 {
                     shoppingList.length > 0 &&
-                    <ul
-                        className="bg-white/10 rounded-lg pl-4"
-                    >
+                    <List>
                         {
                             shoppingList.map((item, index, arr) => {
-                                let liCSS = "py-2 pr-4 flex items-center justify-between cursor-pointer"
+                                let liCSS;
 
                                 if ( index !== (arr.length - 1) ) {
                                     liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
@@ -70,29 +95,30 @@ export default function ShoppingListPage() {
                                 }
 
                                 return (
-                                    <li
+                                    <ListItem
                                         key={item.id}
                                         className={liCSS}
                                         onClick={() => toggleChecked(item.id)}
                                     >
                                         {item.name}
                                         {item.checked && <FaCheck />}
-                                    </li>
+                                    </ListItem>
                                 )
                             })
                         }
-                    </ul>
+                    </List>
                 }
 
                 {   
                     onAddItem &&
                     <Form
                         className="grid"
+                        onSubmit={handleSubmit}
                     >
-                        <input 
-                            type="text" 
+                        <TextInput 
                             placeholder="Item"
-                            className="py-2 px-4 bg-white/10 rounded-lg text-center"
+                            value={formData}
+                            onChange={handleFormChange}
                             autoFocus 
                         />
                     </Form>
@@ -103,13 +129,12 @@ export default function ShoppingListPage() {
                     onClick={() => checkAll(!shoppingList.every(item => item.checked === true))}
                 >
                     {
-                        !shoppingList.every(item => item.checked === true) ? 
+                        shoppingList && !shoppingList.every(item => item.checked === true) ? 
                             <>
                                 Check all
                                 <FaCheck />
                             </> : "Uncheck all"
                     }
-                    
                 </button>
 
                 <PageLink to="recipes">Recipes</PageLink>
@@ -154,6 +179,8 @@ export default function ShoppingListPage() {
                     </div>
                 </div>
             </dialog>
+
+            {/* Todo cup code in components */}
 
         </>
     )
