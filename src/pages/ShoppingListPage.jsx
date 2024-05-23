@@ -89,8 +89,9 @@ export default function ShoppingListPage() {
                 <PageLink to="recipes">Recipes</PageLink>
 
                 <PageButton
-                    className="justify-center text-red-700"
+                    className="justify-center text-red-700 disabled:text-red-700/50"
                     onClick={openDialog}
+                    disabled={shoppingList.every(item => item.checked === false)}
                 >
                     Delete checked items
                 </PageButton>
