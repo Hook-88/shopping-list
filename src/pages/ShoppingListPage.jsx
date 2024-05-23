@@ -3,19 +3,17 @@ import PageHeader from "../components/PageHeader"
 import PageMain from "../components/PageMain"
 import PageLink from "../components/PageLink"
 import PageTitle from "../components/PageTitle"
-import Form from "../components/Form"
-import TextInput from "../components/TextInput"
-import List from "../components/List"
-import ListItem from "../components/ListItem"
+import PageButton from "../components/PageButton"
+import DialogContent from "../components/DialogContent"
+import ShoppingListPageItemsList from "./ShoppingListPageItemsList"
+import AddItemForm from "../components/AddItemForm"
 import { useRef, useState } from "react"
 import { ITEMS } from "../data"
-import { IoClose } from "react-icons/io5"
 import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
     const [onAddItem, setOnAddItem] = useState(false)
     const [shoppingList, setShoppingList] = useState(ITEMS)
-    const [formData, setFormData] = useState("")
     const dialogRef = useRef()
 
     function toggleOnAddItem() {
@@ -52,17 +50,6 @@ export default function ShoppingListPage() {
         setShoppingList(prevShoppinglist => [...prevShoppinglist, itemObj])
 
     }
-
-    function handleFormChange(event) {
-        setFormData(event.target.value)
-        
-    }
-
-    function handleSubmit() {
-        addItem(formData)
-        setFormData("")
-
-    }
     
     return (
         <>
@@ -81,53 +68,15 @@ export default function ShoppingListPage() {
             <PageMain>
                 {
                     shoppingList.length > 0 &&
-                    <List>
-                        {
-                            shoppingList.map((item, index, arr) => {
-                                let liCSS;
-
-                                if ( index !== (arr.length - 1) ) {
-                                    liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
-                                }
-
-                                if (item.checked) {
-                                    liCSS += " text-white/40 line-through"
-                                }
-
-                                return (
-                                    <ListItem
-                                        key={item.id}
-                                        className={liCSS}
-                                        onClick={() => toggleChecked(item.id)}
-                                    >
-                                        {item.name}
-                                        {item.checked && <FaCheck />}
-                                    </ListItem>
-                                )
-                            })
-                        }
-                    </List>
+                    <ShoppingListPageItemsList 
+                        toggleChecked={toggleChecked}
+                        shoppingList={shoppingList}
+                    />
                 }
 
-                {   
-                    onAddItem &&
-                    <Form
-                        className="grid"
-                        onSubmit={handleSubmit}
-                    >
-                        <TextInput 
-                            placeholder="Item"
-                            value={formData}
-                            onChange={handleFormChange}
-                            autoFocus 
-                        />
-                    </Form>
-                }
+                { onAddItem && <AddItemForm onSubmit={addItem}/>  }
 
-                <button
-                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
-                    onClick={() => checkAll(!shoppingList.every(item => item.checked === true))}
-                >
+                <PageButton onClick={() => checkAll(!shoppingList.every(item => item.checked === true))}>
                     {
                         shoppingList && !shoppingList.every(item => item.checked === true) ? 
                             <>
@@ -135,16 +84,16 @@ export default function ShoppingListPage() {
                                 <FaCheck />
                             </> : "Uncheck all"
                     }
-                </button>
+                </PageButton>
 
                 <PageLink to="recipes">Recipes</PageLink>
 
-                <button
-                    className="flex items-center justify-center py-2 px-4 bg-white/10 rounded-lg text-red-700"
+                <PageButton
+                    className="justify-center text-red-700"
                     onClick={openDialog}
                 >
                     Delete checked items
-                </button>
+                </PageButton>
 
             </PageMain>
 
@@ -153,31 +102,11 @@ export default function ShoppingListPage() {
                 className="bg-blue-700"
                 onClick={closeDialog}
             >
-                <div
-                    className="fixed inset-0 grid place-content-center backdrop-blur-sm bg-white/30"
-                >
-                    <div
-                        className="bg-[#1a1a1a] text-white grid rounded-lg"
-                    >
-                        <p className="py-2 px-4 shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]">
-                            Greetings, one and all!
-                        </p>
-                        <button 
-                            className="py-2 shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px] flex items-center justify-center gap-1"
-                            onClick={deleteCheckedItems}
-                        >
-                            Yes
-                            <FaCheck className="text-green-600"/>
-                        </button>
-                        <button 
-                            className="py-2 flex items-center justify-center gap-1"
-                            onClick={closeDialog}
-                        >
-                            No
-                            <IoClose className="text-xl text-red-700"/>
-                        </button>
-                    </div>
-                </div>
+                <DialogContent 
+                    confrimQuestion="Are you sure want to delete the checked items?"
+                    onConfirm={deleteCheckedItems}
+                    closeDialog={closeDialog}
+                />
             </dialog>
 
             {/* Todo cup code in components */}
