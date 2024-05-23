@@ -7,13 +7,14 @@ import PageButton from "../components/PageButton"
 import DialogContent from "../components/DialogContent"
 import ShoppingListPageItemsList from "./ShoppingListPageItemsList"
 import AddItemForm from "../components/AddItemForm"
-import { useRef, useState } from "react"
-import { ITEMS } from "../data"
+import { useEffect, useRef, useState } from "react"
 import { nanoid } from "nanoid"
+import { doc, onSnapshot, updateDoc } from "firebase/firestore"
+import { db } from "../firebase/firebase"
 
 export default function ShoppingListPage() {
     const [onAddItem, setOnAddItem] = useState(false)
-    const [shoppingList, setShoppingList] = useState(ITEMS)
+    const [shoppingList, setShoppingList] = useState([])
     const dialogRef = useRef()
 
     function toggleOnAddItem() {
@@ -21,7 +22,13 @@ export default function ShoppingListPage() {
     }
 
     function toggleChecked(itemId) {
-        setShoppingList(prevShoppinglist => prevShoppinglist.map(item => item.id === itemId ? {...item, checked: !item.checked} : item))
+        const newArray = shoppingList.map(item => item.id === itemId ? {...item, checked: !item.checked} : item)
+        updateShoppingListInFirestore(newArray)
+    }
+
+    async function updateShoppingListInFirestore(newArray) {
+        const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
+        await updateDoc(docRef, {items: newArray})
     }
 
     function openDialog() {
@@ -33,11 +40,13 @@ export default function ShoppingListPage() {
     }
 
     function deleteCheckedItems() {
-        setShoppingList(prevShoppinglist => prevShoppinglist.filter(item => item.checked === false) )
+        const newArray = shoppingList.filter(item => item.checked === false)
+        updateShoppingListInFirestore(newArray)
     }
 
     function checkAll(checkValue) {
-        setShoppingList(prevShoppinglist => prevShoppinglist.map(item => ({...item, checked: checkValue})))
+        const newArray = shoppingList.map(item => ({...item, checked: checkValue}))
+        updateShoppingListInFirestore(newArray)
     }
 
     function addItem(value) {
@@ -46,10 +55,20 @@ export default function ShoppingListPage() {
             checked: false,
             id: nanoid()
         }
+        const newArray = [...shoppingList, itemObj]
 
-        setShoppingList(prevShoppinglist => [...prevShoppinglist, itemObj])
-
+        updateShoppingListInFirestore(newArray)
     }
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, "shoppingList", "wA03LYangQz8a20aIKFV"), snapshot => {
+            //sync with local state
+            setShoppingList(snapshot.data().items)
+
+        })
+
+        return unsub
+    }, [])
     
     return (
         <>
