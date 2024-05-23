@@ -41,11 +41,13 @@ export default function ShoppingListPage() {
 
     function deleteCheckedItems() {
         const newArray = shoppingList.filter(item => item.checked === false)
+
         updateShoppingListInFirestore(newArray)
     }
 
     function checkAll(checkValue) {
         const newArray = shoppingList.map(item => ({...item, checked: checkValue}))
+        
         updateShoppingListInFirestore(newArray)
     }
 
@@ -64,7 +66,6 @@ export default function ShoppingListPage() {
         const unsub = onSnapshot(doc(db, "shoppingList", "wA03LYangQz8a20aIKFV"), snapshot => {
             //sync with local state
             setShoppingList(snapshot.data().items)
-
         })
 
         return unsub
