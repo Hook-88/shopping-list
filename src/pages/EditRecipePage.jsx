@@ -44,7 +44,10 @@ export default function EditRecipePage() {
         Object.keys(recipe).length > 0 ?
         <>
             <PageHeader>
-                <PageTitle>EDIT RECIPE</PageTitle>
+                <GoBackLink to="./..">
+                    {getFirstCharUpperCase(recipe.name)}
+                </GoBackLink>
+                <PageTitle>EDIT {recipe.name.toUpperCase()}</PageTitle>
 
                 <button
                     className="flex items-center justify-end pr-4"
@@ -100,7 +103,7 @@ export default function EditRecipePage() {
                     Delete Recipe
                 </PageButton>
 
-                <GoBackLink to="./..">Go back</GoBackLink>
+                
 
             </PageMain>
 

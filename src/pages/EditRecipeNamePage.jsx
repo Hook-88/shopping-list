@@ -19,7 +19,15 @@ export default function EditRecipeNamePage() {
     return (
         <>
             <PageHeader>
-                <PageTitle>EDIT {recipe.name.toUpperCase()}</PageTitle>
+                <GoBackLink 
+                    to="./.."
+                    className="col-span-2"
+                >
+                    Edit {getFirstCharUpperCase(recipe.name)}
+                </GoBackLink>
+                <PageTitle className="col-span-2 col-start-3">
+                    EDIT {recipe.name.toUpperCase()}
+                </PageTitle>
             </PageHeader>
 
             <PageMain>
@@ -27,8 +35,6 @@ export default function EditRecipeNamePage() {
                     initialValue={getFirstCharUpperCase(recipe.name)}
                     onSubmit={setRecipeName}
                 />
-
-                <GoBackLink to="./..">Go back</GoBackLink>
 
             </PageMain>
         </>
