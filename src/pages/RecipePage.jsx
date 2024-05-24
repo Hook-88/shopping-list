@@ -91,66 +91,74 @@ export default function RecipePage() {
                 </Link>
             </PageHeader>
 
-            <PageMain>
-                <List>
-                    {
-                        recipeLocal.ingredients.map((ingredient, index, arr) => {
-                            let liCSS;
+            <PageMain className="">
+                <div className="grid">
+                    <small className="ml-4 text-white/50">INGREDIENTS</small>
+                    <List className="mb-4">
+                        {
+                            recipeLocal.ingredients.map((ingredient, index, arr) => {
+                                let liCSS;
 
-                            if( index !== (arr.length - 1) ) {
-                                liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
-                            }
+                                if( index !== (arr.length - 1) ) {
+                                    liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
+                                }
 
-                            if (ingredient.selected) {
-                                liCSS += " font-bold"
-                            }
+                                if (ingredient.selected) {
+                                    liCSS += " font-bold"
+                                }
 
-                            return (
-                                <ListItem 
-                                    key={ingredient.id} 
-                                    className={liCSS}
-                                    onClick={() => toggleSelect(ingredient.id)}
-                                >
-                                    {getFirstCharUpperCase(ingredient.name)}
-                                    {
-                                        ingredient.selected === true ? <FaCircleCheck className="text-blue-500"/> : <FaRegCircle className="text-blue-500"/>
-                                    }
-                                </ListItem>
-                            )
-                        })
-                    }
-                </List>
-                <PageButton
-                    className={!recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ? "font-bold" : ""}
-                    onClick={() => selectAll(!recipeLocal.ingredients.every(ingredient => ingredient.selected === true))}
-                >
-                    {
-                        !recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ?
-                        <>
-                            Select all
-                            <FaCircleCheck className="text-blue-500"/>
-                        </> : 
-                        <>
-                            Deselect all
-                            <FaRegCircle className="text-blue-500"/>
-                        </>
-                    }
-                </PageButton>
+                                return (
+                                    <ListItem 
+                                        key={ingredient.id} 
+                                        className={liCSS}
+                                        onClick={() => toggleSelect(ingredient.id)}
+                                    >
+                                        {getFirstCharUpperCase(ingredient.name)}
+                                        {
+                                            ingredient.selected === true ? <FaCircleCheck className="text-blue-500"/> : <FaRegCircle className="text-blue-500"/>
+                                        }
+                                    </ListItem>
+                                )
+                            })
+                        }
+                    </List>
+                    
+                    <PageButton
+                        className={!recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ? "font-bold" : ""}
+                        onClick={() => selectAll(!recipeLocal.ingredients.every(ingredient => ingredient.selected === true))}
+                    >
+                        {
+                            !recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ?
+                            <>
+                                Select all
+                                <FaCircleCheck className="text-blue-500"/>
+                            </> : 
+                            <>
+                                Deselect all
+                                <FaRegCircle className="text-blue-500"/>
+                            </>
+                        }
+                    </PageButton>
 
-                <PageButton 
-                    onClick={openDialog}
-                    className="disabled:text-white/30"
-                    disabled={recipeLocal.ingredients.every(ingredients => ingredients.selected === false)}
-                >
-                    Add selection to shopping list
-                    <FaCartPlus />
-                </PageButton>
+                    <PageButton 
+                        onClick={openDialog}
+                        className="disabled:text-white/30 mt-4"
+                        disabled={recipeLocal.ingredients.every(ingredients => ingredients.selected === false)}
+                    >
+                        Add selection to shopping list
+                        <FaCartPlus />
+                    </PageButton>
+                </div>
 
-                <PageLink
-                    to="/"
-                >
-                    Shopping List
-                </PageLink>
+                <div>
+                <small className="ml-4 text-white/50">NAVIGATION</small>
+                    <PageLink
+                        to="/"
+                    >
+                        Shopping List
+                    </PageLink>
+                </div>
+                
 
             </PageMain>
 
