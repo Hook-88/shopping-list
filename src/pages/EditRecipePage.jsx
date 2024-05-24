@@ -29,6 +29,8 @@ export default function EditRecipePage() {
 
         return unsub
     }, [])
+
+    // TODO add logic to add ingredients to shoppinglist
     
     return (
         Object.keys(recipe).length > 0 ?
