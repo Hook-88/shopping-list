@@ -3,7 +3,7 @@ import PageHeader from "../components/PageHeader"
 import PageLink from "../components/PageLink"
 import PageMain from "../components/PageMain"
 import PageTitle from "../components/PageTitle"
-import { FaAngleRight, FaCheck, FaPlus } from "react-icons/fa6"
+import { FaAngleRight, FaCheck, FaPlus, FaAngleLeft } from "react-icons/fa6"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
 import { useContext, useRef, useState } from "react"
 import List from "../components/List"
@@ -93,11 +93,19 @@ export default function EditRecipePage() {
                 </div>
 
                 <PageButton
-                    className="justify-center text-red-700"
+                    className="justify-center text-red-700 mb-4"
                     onClick={openDialog}
                 >
                     Delete Recipe
                 </PageButton>
+
+                <Link
+                    to="./.."
+                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
+                >
+                    <FaAngleLeft />
+                    Go back
+                </Link>
 
             </PageMain>
 

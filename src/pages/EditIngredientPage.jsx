@@ -1,6 +1,6 @@
 import PageHeader from "../components/PageHeader"
 import PageTitle from "../components/PageTitle"
-import { useLocation, useParams, useNavigate } from "react-router-dom"
+import { useLocation, useParams, useNavigate, Link } from "react-router-dom"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
 import PageMain from "../components/PageMain"
 import ChangeItemForm from "../components/changeItemForm"
@@ -12,7 +12,7 @@ import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import PageButton from "../components/PageButton"
 import { FaSave } from "react-icons/fa"
-import { FaCheck } from "react-icons/fa6"
+import { FaCheck, FaAngleLeft } from "react-icons/fa6"
 import DialogContent from "../components/DialogContent"
 
 export default function EditIngredientPage() {
@@ -110,6 +110,14 @@ export default function EditIngredientPage() {
                 >
                     Delete ingredient
                 </PageButton>
+
+                <Link
+                    to="./../.."
+                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
+                >
+                    <FaAngleLeft />
+                    Go back
+                </Link>
 
             </PageMain>
 

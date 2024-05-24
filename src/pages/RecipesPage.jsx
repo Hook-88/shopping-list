@@ -8,8 +8,9 @@ import List from "../components/List"
 import ListItem from "../components/ListItem"
 import { Link } from "react-router-dom"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
-import { FaAngleRight, FaPlus, FaCheck } from "react-icons/fa6"
+import { FaAngleRight, FaPlus, FaCheck, FaAngleLeft } from "react-icons/fa6"
 import AddItemForm from "../components/AddItemForm"
+import PageLink from "../components/PageLink"
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([])
@@ -42,6 +43,13 @@ export default function RecipesPage() {
     return (
         <>
             <PageHeader>
+                {/* <Link
+                    className="flex items-center text-sm text-blue-500"
+                    to="./.."
+                >
+                    <FaAngleLeft />
+                    S.L.
+                </Link> */}
                 <PageTitle>RECIPES</PageTitle>
                 <button
                     className="flex items-center justify-end pr-4"
@@ -78,6 +86,14 @@ export default function RecipesPage() {
                 </List>
 
                 { onAddItem && <AddItemForm onSubmit={AddRecipe}/>  }
+                
+                <Link
+                    to="./.."
+                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
+                >
+                    <FaAngleLeft />
+                    Go back
+                </Link>
 
             </PageMain>
         </>

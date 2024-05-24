@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import { FaEdit } from "react-icons/fa"
-import { FaRegCircle, FaCircleCheck, FaCartPlus } from "react-icons/fa6"
+import { FaRegCircle, FaCircleCheck, FaCartPlus, FaAngleLeft } from "react-icons/fa6"
 import PageMain from "../components/PageMain"
 import List from "../components/List"
 import ListItem from "../components/ListItem"
@@ -147,6 +147,14 @@ export default function RecipePage() {
                 >
                     Shopping List
                 </PageLink>
+
+                <Link
+                    to="./.."
+                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
+                >
+                    <FaAngleLeft />
+                    Go back
+                </Link>
             </PageMain>
 
             <dialog 
