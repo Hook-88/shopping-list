@@ -96,25 +96,36 @@ export default function ShoppingListPage() {
 
                 { onAddItem && <AddItemForm onSubmit={addItem}/>  }
 
-                <PageButton onClick={() => checkAll(!shoppingList.every(item => item.checked === true))}>
-                    {
-                        shoppingList && !shoppingList.every(item => item.checked === true) ? 
-                            <>
-                                Check all
-                                <FaCheck />
-                            </> : "Uncheck all"
-                    }
-                </PageButton>
+                {
+                    shoppingList.length > 1 && !onAddItem &&
+                        <PageButton onClick={() => checkAll(!shoppingList.every(item => item.checked === true))}>
+                            {
+                                shoppingList && !shoppingList.every(item => item.checked === true) ? 
+                                    <>
+                                        Check all
+                                        <FaCheck />
+                                    </> : "Uncheck all"
+                            }
+                        </PageButton>
+                }
+
+                
 
                 <PageLink to="recipes">Recipes</PageLink>
 
-                <PageButton
-                    className="justify-center text-red-700 disabled:text-red-700/50"
-                    onClick={openDialog}
-                    disabled={shoppingList.every(item => item.checked === false)}
-                >
-                    Delete checked items
-                </PageButton>
+                {
+                    shoppingList.length > 0 && !onAddItem &&
+                    <PageButton
+                        className="justify-center text-red-700 disabled:text-red-700/50"
+                        onClick={openDialog}
+                        disabled={shoppingList.every(item => item.checked === false)}
+                    >
+                        Delete checked items
+                    </PageButton>
+
+                }
+
+                
 
             </PageMain>
 
