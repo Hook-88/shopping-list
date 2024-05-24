@@ -19,7 +19,6 @@ export default function RecipeLayout() {
         const newIngredientsArray = [...recipe.ingredients, ingredientObj]
 
         await updateDoc(docRef, {ingredients: newIngredientsArray})
-        
     }
 
     useEffect(() => {
