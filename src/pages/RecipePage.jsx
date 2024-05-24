@@ -29,7 +29,7 @@ export default function RecipePage() {
     function openDialog() {
         dialogRef.current.showModal()
     }
-
+    // map to obj with selected prop
     useEffect(() => {
         if (recipe && recipe.ingredients) {
             const recipeObj = {

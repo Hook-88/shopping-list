@@ -1,19 +1,16 @@
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import PageHeader from "../components/PageHeader"
 import PageLink from "../components/PageLink"
 import PageMain from "../components/PageMain"
 import PageTitle from "../components/PageTitle"
 import { FaAngleRight, FaCheck, FaPlus } from "react-icons/fa6"
-import { db } from "../firebase/firebase"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
-import { useState, useEffect, useContext } from "react"
-import { onSnapshot, doc } from "firebase/firestore"
+import { useContext } from "react"
 import List from "../components/List"
 import ListItem from "../components/ListItem"
 import { RecipeContext } from "../layout/RecipeLayout"
 
 export default function EditRecipePage() {
-    const {id} = useParams()
     const { recipe } = useContext(RecipeContext)
 
     // TODO add logic to add ingredients to shoppinglist
