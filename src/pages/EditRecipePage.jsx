@@ -19,10 +19,6 @@ export default function EditRecipePage() {
     function toggleOnAddItem() {
         setOnAddItem(prevOnAddItem => !prevOnAddItem)
     }
-
-
-
-    // TODO add logic to add ingredients to shoppinglist
     
     return (
         Object.keys(recipe).length > 0 ?
@@ -59,6 +55,7 @@ export default function EditRecipePage() {
                                     <Link
                                         to={`ingredients/${ingredient.id}`}
                                         key={ingredient.id}
+                                        state={{ingredient}}
                                     >
                                         <ListItem
                                             className={liCSS}

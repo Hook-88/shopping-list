@@ -25,12 +25,22 @@ export default function RecipeLayout() {
         await updateDoc(docRef, {name: value.trim().toLowerCase()})
     }
 
+    async function setIngredientName(ingredientId, value) {
+        // const newIngredientsArray = recipe.ingredients.map(ingredient => ingredient.id === ingredientId ? ({...ingredient, name: value}) : ingredient)
+        const newIngredientsArray = getMutatedIngredientsArray(ingredientId, "ingredients", value.toLowerCase())
+        console.log(newIngredientsArray)
+        await updateDoc(docRef, {ingredients: newIngredientsArray})
+    }
+
+    function getMutatedIngredientsArray(ingredientId, ingredientProp, propValue) {
+        return recipe.ingredients.map(ingredient => ingredient.id === ingredientId ? ({...ingredient, [ingredientProp]: propValue}) : ingredient)
+    }
+
     useEffect(() => {
         const unsub = onSnapshot(docRef, snapshot => {
             //sync up with local state
             const recipeObj = {
                 ...snapshot.data(),
-                // ingredients: snapshot.data().ingredients.map(ingredient => ({...ingredient, selected: false})),
                 id: snapshot.id
             }
 
@@ -41,7 +51,7 @@ export default function RecipeLayout() {
     }, [])
 
     return (
-        <RecipeContext.Provider value={{recipe, addIngredient, setRecipeName}}>
+        <RecipeContext.Provider value={{recipe, addIngredient, setRecipeName, setIngredientName}}>
             <Outlet />
         </RecipeContext.Provider>
     )
