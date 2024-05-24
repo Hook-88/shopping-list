@@ -4,6 +4,7 @@ import RecipesPage from "./pages/RecipesPage"
 import RecipeLayout from "./layout/RecipeLayout"
 import RecipePage from "./pages/RecipePage"
 import EditRecipePage from "./pages/EditRecipePage"
+import EditRecipeNamePage from "./pages/EditRecipeNamePage"
 
 export default function App() {
     
@@ -15,6 +16,7 @@ export default function App() {
                 <Route path="/recipes/:id" element={<RecipeLayout />}>
                     <Route index element={<RecipePage />}/>
                     <Route path="edit" element={<EditRecipePage />}/>
+                    <Route path="edit/name" element={<EditRecipeNamePage />}/>
                 </Route>
             </Routes>
         </BrowserRouter>

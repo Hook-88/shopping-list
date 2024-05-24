@@ -21,6 +21,10 @@ export default function RecipeLayout() {
         await updateDoc(docRef, {ingredients: newIngredientsArray})
     }
 
+    async function setRecipeName(value) {
+        await updateDoc(docRef, {name: value.trim().toLowerCase()})
+    }
+
     useEffect(() => {
         const unsub = onSnapshot(docRef, snapshot => {
             //sync up with local state
@@ -37,7 +41,7 @@ export default function RecipeLayout() {
     }, [])
 
     return (
-        <RecipeContext.Provider value={{recipe, addIngredient}}>
+        <RecipeContext.Provider value={{recipe, addIngredient, setRecipeName}}>
             <Outlet />
         </RecipeContext.Provider>
     )
