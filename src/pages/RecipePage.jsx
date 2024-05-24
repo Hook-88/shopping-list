@@ -15,6 +15,7 @@ import PageLink from "../components/PageLink"
 import DialogContent from "../components/DialogContent"
 import { RecipeContext } from "../layout/RecipeLayout"
 import getMergedArraysByProperty from "../utility/getMergedArraysByProperty"
+import GoBackLink from "../components/GoBackLink"
 
 export default function RecipePage() {
     const { recipe } = useContext(RecipeContext)
@@ -80,6 +81,7 @@ export default function RecipePage() {
         recipeLocal?.name ?
         <>
             <PageHeader>
+                <GoBackLink to="./..">Recipes</GoBackLink>
                 <PageTitle>{recipeLocal.name.toUpperCase()}</PageTitle>
                 <Link
                     className="flex items-center justify-end pr-4"
@@ -137,8 +139,10 @@ export default function RecipePage() {
 
                 <PageButton 
                     onClick={openDialog}
+                    className="disabled:text-white/30"
+                    disabled={recipeLocal.ingredients.every(ingredients => ingredients.selected === false)}
                 >
-                    Add to shopping list
+                    Add selection to shopping list
                     <FaCartPlus />
                 </PageButton>
 
@@ -148,13 +152,6 @@ export default function RecipePage() {
                     Shopping List
                 </PageLink>
 
-                <Link
-                    to="./.."
-                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
-                >
-                    <FaAngleLeft />
-                    Go back
-                </Link>
             </PageMain>
 
             <dialog 

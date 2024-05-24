@@ -11,6 +11,7 @@ import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
 import { FaAngleRight, FaPlus, FaCheck, FaAngleLeft } from "react-icons/fa6"
 import AddItemForm from "../components/AddItemForm"
 import PageLink from "../components/PageLink"
+import GoBackLink from "../components/GoBackLink"
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([])
@@ -43,16 +44,19 @@ export default function RecipesPage() {
     return (
         <>
             <PageHeader>
-                {/* <Link
-                    className="flex items-center text-sm text-blue-500"
+                <GoBackLink
+                    className="col-span-2"
                     to="./.."
                 >
-                    <FaAngleLeft />
-                    S.L.
-                </Link> */}
-                <PageTitle>RECIPES</PageTitle>
+                    Shopping list
+                </GoBackLink>
+                <PageTitle
+                    className="col-span-2 col-start-3"
+                >
+                    RECIPES
+                </PageTitle>
                 <button
-                    className="flex items-center justify-end pr-4"
+                    className="flex items-center justify-end pr-4 col-start-6"
                     onClick={toggleOnAddItem}
                 >
                     { onAddItem ? <FaCheck /> : <FaPlus /> }
@@ -86,14 +90,6 @@ export default function RecipesPage() {
                 </List>
 
                 { onAddItem && <AddItemForm onSubmit={AddRecipe}/>  }
-                
-                <Link
-                    to="./.."
-                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
-                >
-                    <FaAngleLeft />
-                    Go back
-                </Link>
 
             </PageMain>
         </>

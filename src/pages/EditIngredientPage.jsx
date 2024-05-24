@@ -14,6 +14,7 @@ import PageButton from "../components/PageButton"
 import { FaSave } from "react-icons/fa"
 import { FaCheck, FaAngleLeft } from "react-icons/fa6"
 import DialogContent from "../components/DialogContent"
+import GoBackLink from "../components/GoBackLink"
 
 export default function EditIngredientPage() {
     const { recipe } = useContext(RecipeContext)
@@ -111,13 +112,7 @@ export default function EditIngredientPage() {
                     Delete ingredient
                 </PageButton>
 
-                <Link
-                    to="./../.."
-                    className="flex items-center justify-between py-2 px-4 bg-white/10 rounded-lg"
-                >
-                    <FaAngleLeft />
-                    Go back
-                </Link>
+                <GoBackLink to="./../..">Go back</GoBackLink>
 
             </PageMain>
 
