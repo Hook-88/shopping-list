@@ -5,13 +5,22 @@ import PageMain from "../components/PageMain"
 import PageTitle from "../components/PageTitle"
 import { FaAngleRight, FaCheck, FaPlus } from "react-icons/fa6"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
-import { useContext } from "react"
+import { useContext, useRef, useState } from "react"
 import List from "../components/List"
 import ListItem from "../components/ListItem"
 import { RecipeContext } from "../layout/RecipeLayout"
+import DialogContent from "../components/DialogContent"
+import AddItemForm from "../components/AddItemForm"
 
 export default function EditRecipePage() {
-    const { recipe } = useContext(RecipeContext)
+    const { recipe, addIngredient } = useContext(RecipeContext)
+    const [onAddItem, setOnAddItem] = useState(false)
+
+    function toggleOnAddItem() {
+        setOnAddItem(prevOnAddItem => !prevOnAddItem)
+    }
+
+
 
     // TODO add logic to add ingredients to shoppinglist
     
@@ -23,10 +32,9 @@ export default function EditRecipePage() {
 
                 <button
                     className="flex items-center justify-end pr-4"
-                    // onClick={toggleOnAddItem}
+                    onClick={toggleOnAddItem}
                 >
-                    {/* { onAddItem ? <FaCheck /> : <FaPlus /> } */}
-                    <FaPlus />
+                    { onAddItem ? <FaCheck /> : <FaPlus /> }
                 </button>
             </PageHeader>
 
@@ -38,7 +46,7 @@ export default function EditRecipePage() {
 
                 <div>
                     <small className="ml-4 text-white/50">INGREDIENTS</small>
-                    <List>
+                    <List className="mb-4">
                         {
                             recipe.ingredients.map((ingredient, index, arr) => {
                                 let liCSS;
@@ -63,9 +71,13 @@ export default function EditRecipePage() {
                             })
                         }
                     </List>
+                    
+                    { onAddItem && <AddItemForm onSubmit={addIngredient} /> }
+
                 </div>
 
             </PageMain>
+
         </> : null
     )
 }

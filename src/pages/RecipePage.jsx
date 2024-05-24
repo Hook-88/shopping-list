@@ -14,13 +14,12 @@ import PageButton from "../components/PageButton"
 import PageLink from "../components/PageLink"
 import DialogContent from "../components/DialogContent"
 import { RecipeContext } from "../layout/RecipeLayout"
+import getMergedArraysByProperty from "../utility/getMergedArraysByProperty"
 
 export default function RecipePage() {
-    const { id } = useParams()
     const { recipe } = useContext(RecipeContext)
     const [recipeLocal, setRecipeLocal] = useState(null)
     const dialogRef = useRef()
-
 
     function closeDialog() {
         dialogRef.current.close()
@@ -66,24 +65,10 @@ export default function RecipePage() {
         const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
         const currentShoppingList = await getDoc(docRef)
         const selection = recipeLocal.ingredients.filter(ingredient => ingredient.selected === true)
-        const newShoppingList = mergeArraysByProperty(currentShoppingList.data().items, selection, "id")
+        const newShoppingList = getMergedArraysByProperty(currentShoppingList.data().items, selection, "id")
         
         await updateDoc(docRef, {items: newShoppingList})
         
-    }
-
-    function mergeArraysByProperty(array1, array2, property) {
-        // Concatenate arrays
-        const combinedArray = array1.concat(array2)
-        
-        // Filter unique objects based on the property
-        const mergedArray = combinedArray.filter((obj, index, self) =>
-            index === self.findIndex((t) => (
-                t[property] === obj[property]
-            ))
-        )
-        
-        return mergedArray
     }
 
     function handleAddIngredientsToShoppingList() {
