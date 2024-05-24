@@ -16,7 +16,7 @@ import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 
 export default function EditRecipePage() {
-    const { recipe, addIngredient } = useContext(RecipeContext)
+    const { recipe, addIngredient, deleteRecipe } = useContext(RecipeContext)
     const [onAddItem, setOnAddItem] = useState(false)
     const dialogRef = useRef()
     const navigate = useNavigate()
@@ -33,9 +33,8 @@ export default function EditRecipePage() {
         dialogRef.current.close()
     }
 
-    function deleteRecipe() {
-        const docRef = doc(db, "recipes", recipe.id)
-        deleteDoc(docRef)
+    function handleDelete() {
+        deleteRecipe()
         navigate("./../..")
 
     }
@@ -108,7 +107,7 @@ export default function EditRecipePage() {
             >
                 <DialogContent 
                     confrimQuestion="Are you sure you want to delete the Recipe?"
-                    onConfirm={deleteRecipe}
+                    onConfirm={handleDelete}
                 />
             </dialog>
 

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react"
 import { Outlet, useParams } from "react-router-dom"
-import { onSnapshot, doc, updateDoc, } from "firebase/firestore"
+import { onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import { nanoid } from "nanoid"
 
@@ -36,6 +36,10 @@ export default function RecipeLayout() {
         return recipe.ingredients.map(ingredient => ingredient.id === ingredientId ? ({...ingredient, [ingredientProp]: propValue}) : ingredient)
     }
 
+    async function deleteRecipe() {
+        await deleteDoc(docRef)
+    }
+
     useEffect(() => {
         const unsub = onSnapshot(docRef, snapshot => {
             //sync up with local state
@@ -51,7 +55,7 @@ export default function RecipeLayout() {
     }, [])
 
     return (
-        <RecipeContext.Provider value={{recipe, addIngredient, setRecipeName, setIngredientName}}>
+        <RecipeContext.Provider value={{recipe, deleteRecipe, addIngredient, setRecipeName, setIngredientName}}>
             <Outlet />
         </RecipeContext.Provider>
     )
