@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom"
 import PageHeader from "../components/PageHeader"
 import PageTitle from "../components/PageTitle"
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import { FaEdit } from "react-icons/fa"
@@ -13,11 +13,14 @@ import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
 import PageButton from "../components/PageButton"
 import PageLink from "../components/PageLink"
 import DialogContent from "../components/DialogContent"
+import { RecipeContext } from "../layout/RecipeLayout"
 
 export default function RecipePage() {
     const { id } = useParams()
-    const [recipe, setRecipe] = useState({})
+    const { recipe } = useContext(RecipeContext)
+    const [recipeLocal, setRecipeLocal] = useState(null)
     const dialogRef = useRef()
+
 
     function closeDialog() {
         dialogRef.current.close()
@@ -27,8 +30,20 @@ export default function RecipePage() {
         dialogRef.current.showModal()
     }
 
+    useEffect(() => {
+        if (recipe && recipe.ingredients) {
+            const recipeObj = {
+                ...recipe,
+                ingredients: recipe.ingredients.map(ingredient => ({...ingredient, selected: false}))
+            }
+            
+            setRecipeLocal(recipeObj)
+        }
+
+    }, [recipe])
+
     function toggleSelect(ingredientId) {
-        setRecipe(prevRecipe => {
+        setRecipeLocal(prevRecipe => {
             
             return {
                 ...prevRecipe,
@@ -38,7 +53,7 @@ export default function RecipePage() {
     }
 
     function selectAll(selectValue) {
-        setRecipe(prevRecipe => {
+        setRecipeLocal(prevRecipe => {
 
             return {
                 ...prevRecipe, 
@@ -50,10 +65,9 @@ export default function RecipePage() {
     async function addSelectionToShoppingListDoc() {
         const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
         const currentShoppingList = await getDoc(docRef)
-        const selection = recipe.ingredients.filter(ingredient => ingredient.selected === true)
+        const selection = recipeLocal.ingredients.filter(ingredient => ingredient.selected === true)
         const newShoppingList = mergeArraysByProperty(currentShoppingList.data().items, selection, "id")
         
-        // await updateDoc(docRef, {items: [...currentShoppingList.data().items, ...selection]})
         await updateDoc(docRef, {items: newShoppingList})
         
     }
@@ -76,27 +90,12 @@ export default function RecipePage() {
         addSelectionToShoppingListDoc()
         selectAll(false)
     }
-
-    useEffect(() => {
-        const unsub = onSnapshot(doc(db, "recipes", id), snapshot => {
-            //sync up with local state
-            const recipeObj = {
-                ...snapshot.data(),
-                ingredients: snapshot.data().ingredients.map(ingredient => ({...ingredient, selected: false})),
-                id: snapshot.id
-            }
-
-            setRecipe(recipeObj)
-        })
-
-        return unsub
-    }, [])
     
     return (
-        Object.keys(recipe).length > 0 ?
+        recipeLocal?.name ?
         <>
             <PageHeader>
-                <PageTitle>{recipe.name.toUpperCase()}</PageTitle>
+                <PageTitle>{recipeLocal.name.toUpperCase()}</PageTitle>
                 <Link
                     className="flex items-center justify-end pr-4"
                     to="edit"
@@ -108,7 +107,7 @@ export default function RecipePage() {
             <PageMain>
                 <List>
                     {
-                        recipe.ingredients.map((ingredient, index, arr) => {
+                        recipeLocal.ingredients.map((ingredient, index, arr) => {
                             let liCSS;
 
                             if( index !== (arr.length - 1) ) {
@@ -135,11 +134,11 @@ export default function RecipePage() {
                     }
                 </List>
                 <PageButton
-                    className={!recipe.ingredients.every(ingredient => ingredient.selected === true) ? "font-bold" : ""}
-                    onClick={() => selectAll(!recipe.ingredients.every(ingredient => ingredient.selected === true))}
+                    className={!recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ? "font-bold" : ""}
+                    onClick={() => selectAll(!recipeLocal.ingredients.every(ingredient => ingredient.selected === true))}
                 >
                     {
-                        !recipe.ingredients.every(ingredient => ingredient.selected === true) ?
+                        !recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ?
                         <>
                             Select all
                             <FaCircleCheck className="text-blue-500"/>
@@ -151,7 +150,9 @@ export default function RecipePage() {
                     }
                 </PageButton>
 
-                <PageButton onClick={openDialog}>
+                <PageButton 
+                    onClick={openDialog}
+                >
                     Add to shopping list
                     <FaCartPlus />
                 </PageButton>
