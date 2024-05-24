@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import PageHeader from "../components/PageHeader"
 import PageLink from "../components/PageLink"
 import PageMain from "../components/PageMain"
@@ -11,13 +11,33 @@ import ListItem from "../components/ListItem"
 import { RecipeContext } from "../layout/RecipeLayout"
 import DialogContent from "../components/DialogContent"
 import AddItemForm from "../components/AddItemForm"
+import PageButton from "../components/PageButton"
+import { deleteDoc, doc } from "firebase/firestore"
+import { db } from "../firebase/firebase"
 
 export default function EditRecipePage() {
     const { recipe, addIngredient } = useContext(RecipeContext)
     const [onAddItem, setOnAddItem] = useState(false)
+    const dialogRef = useRef()
+    const navigate = useNavigate()
 
     function toggleOnAddItem() {
         setOnAddItem(prevOnAddItem => !prevOnAddItem)
+    }
+
+    function openDialog() {
+        dialogRef.current.showModal()
+    }
+
+    function closeDialog() {
+        dialogRef.current.close()
+    }
+
+    function deleteRecipe() {
+        const docRef = doc(db, "recipes", recipe.id)
+        deleteDoc(docRef)
+        navigate("./../..")
+
     }
     
     return (
@@ -73,7 +93,24 @@ export default function EditRecipePage() {
 
                 </div>
 
+                <PageButton
+                    className="justify-center text-red-700"
+                    onClick={openDialog}
+                >
+                    Delete Recipe
+                </PageButton>
+
             </PageMain>
+
+            <dialog
+                ref={dialogRef}
+                onClick={closeDialog}
+            >
+                <DialogContent 
+                    confrimQuestion="Are you sure you want to delete the Recipe?"
+                    onConfirm={deleteRecipe}
+                />
+            </dialog>
 
         </> : null
     )
