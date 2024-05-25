@@ -13,7 +13,6 @@ import DialogContent from "../components/DialogContent"
 import AddItemForm from "../components/AddItemForm"
 import PageButton from "../components/PageButton"
 import GoBackLink from "../components/GoBackLink"
-import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 
 export default function EditRecipePage() {
