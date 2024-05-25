@@ -5,7 +5,7 @@ import PageMain from "../components/PageMain"
 import PageTitle from "../components/PageTitle"
 import { FaAngleRight, FaCheck, FaPlus, FaAngleLeft } from "react-icons/fa6"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
-import { useContext, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import List from "../components/List"
 import ListItem from "../components/ListItem"
 import { RecipeContext } from "../layout/RecipeLayout"
@@ -37,8 +37,14 @@ export default function EditRecipePage() {
     function handleDelete() {
         deleteRecipe()
         navigate("./../..")
-
     }
+
+    useEffect(() => {
+        if (recipe.ingredients && recipe.ingredients.length === 0) {
+            setOnAddItem(true)
+        }
+
+    }, [recipe])
     
     return (
         Object.keys(recipe).length > 0 ?
@@ -100,7 +106,7 @@ export default function EditRecipePage() {
                 </div>
 
                 <PageButton
-                    className="justify-center text-red-700"
+                    className="justify-center text-red-700 mt-4"
                     onClick={openDialog}
                 >
                     Delete Recipe
@@ -123,3 +129,5 @@ export default function EditRecipePage() {
         </> : null
     )
 }
+
+// TODO Add component voor optional ingredients

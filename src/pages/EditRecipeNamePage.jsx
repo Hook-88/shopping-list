@@ -14,7 +14,7 @@ import { FaAngleLeft } from "react-icons/fa6"
 import GoBackLink from "../components/GoBackLink"
 
 export default function EditRecipeNamePage() {
-    const { setRecipeName, recipe } = useContext(RecipeContext)
+    const { setRecipeName, setRecipeIcon, recipe } = useContext(RecipeContext)
     
     return (
         <>

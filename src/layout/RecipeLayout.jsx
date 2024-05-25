@@ -14,7 +14,8 @@ export default function RecipeLayout() {
     async function addIngredient(value) {
         const ingredientObj = {
             id: nanoid(),
-            name: value.trim().toLowerCase()
+            name: value.trim().toLowerCase(),
+            optional: false
         }
         const newIngredientsArray = [...recipe.ingredients, ingredientObj]
 
@@ -23,6 +24,10 @@ export default function RecipeLayout() {
 
     async function setRecipeName(value) {
         await updateDoc(docRef, {name: value.trim().toLowerCase()})
+    }
+
+    async function setRecipeIcon(value) {
+        await updateDoc(docRef, {icon: value[0]})
     }
 
     async function setIngredientName(ingredientId, value) {
@@ -55,7 +60,7 @@ export default function RecipeLayout() {
     }, [])
 
     return (
-        <RecipeContext.Provider value={{recipe, deleteRecipe, addIngredient, setRecipeName, setIngredientName}}>
+        <RecipeContext.Provider value={{recipe, deleteRecipe, addIngredient, setRecipeName, setIngredientName, setRecipeIcon}}>
             <Outlet />
         </RecipeContext.Provider>
     )

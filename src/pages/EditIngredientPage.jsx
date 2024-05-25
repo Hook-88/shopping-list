@@ -12,7 +12,8 @@ import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import PageButton from "../components/PageButton"
 import { FaSave } from "react-icons/fa"
-import { FaCheck, FaAngleLeft } from "react-icons/fa6"
+import { FaCheck, FaAngleLeft, FaToggleOff, FaToggleOn } from "react-icons/fa6"
+import { IoToggle } from "react-icons/io5";
 import DialogContent from "../components/DialogContent"
 import GoBackLink from "../components/GoBackLink"
 
@@ -63,6 +64,14 @@ export default function EditIngredientPage() {
         navigate("./../..")
     }
 
+    async function toggleOptional(id) {
+        const docRef = doc(db, "recipes", recipe.id)
+
+        const newIngredientsArray = recipe.ingredients.map(ingredient => ingredient.id === id ? ({...ingredient, optional: !ingredient.optional}): ingredient)
+
+        await updateDoc(docRef, {ingredients: newIngredientsArray})
+    }
+
     useEffect(() => {
         if (recipe.ingredients) {
             setLocalIngredient(recipe.ingredients.filter(ingredient => ingredient.id === ingredientId)[0])
@@ -111,6 +120,19 @@ export default function EditIngredientPage() {
                         </PageButton> */}
                     </Form>
                 </div>
+
+                <PageButton
+                    onClick={() => toggleOptional(localIngredient.id)}
+                >
+                    Optional Ingredient
+                    {
+                        localIngredient?.optional ? 
+                        <span className="rotate-180">
+                            <FaToggleOff className="text-2xl text-blue-500"/>
+                        </span> :
+                        <FaToggleOff className="text-2xl text-white/20"/>
+                    }
+                </PageButton>
 
                 <PageButton
                     className="justify-center text-red-700 mt-4"

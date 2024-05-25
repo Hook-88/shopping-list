@@ -70,19 +70,21 @@ export default function RecipesPage() {
                         recipes
                             .sort((a, b) => a.name.localeCompare(b.name))
                             .map((recipe, index, arr) => {
-                                let liCSS;
+                                let liCSS = "flex-grow"
 
                                 if( index !== (arr.length - 1) ) {
-                                    liCSS = " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
+                                    liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
                                 }
 
                                 return (
                                     <Link
                                         key={recipe.id}
                                         to={recipe.id}
+                                        className="flex items-center gap-4"
                                     >
+                                    <span className="text-xl">🍽️</span>
                                         <ListItem className={liCSS}>
-                                            {getFirstCharUpperCase(recipe.name)}
+                                                {getFirstCharUpperCase(recipe.name)}
                                             <FaAngleRight />
                                         </ListItem>
                                     </Link>
