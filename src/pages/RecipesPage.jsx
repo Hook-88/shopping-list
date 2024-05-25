@@ -6,7 +6,7 @@ import { addDoc, collection, onSnapshot } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import List from "../components/List"
 import ListItem from "../components/ListItem"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
 import { FaAngleRight, FaPlus, FaCheck, FaAngleLeft } from "react-icons/fa6"
 import AddItemForm from "../components/AddItemForm"
@@ -16,6 +16,7 @@ import GoBackLink from "../components/GoBackLink"
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([])
     const [onAddItem, setOnAddItem] = useState(false)
+    const navigate = useNavigate()
 
     function toggleOnAddItem() {
         setOnAddItem(prevOnAddItem => !prevOnAddItem)
@@ -37,7 +38,8 @@ export default function RecipesPage() {
             name: recipeName.toLowerCase(),
             ingredients: []
         }
-        await addDoc(collection(db, "recipes"), recipeObj)
+        const docref = await addDoc(collection(db, "recipes"), recipeObj)
+        navigate(`${docref.id}/edit`)
 
     }
     

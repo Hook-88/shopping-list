@@ -80,39 +80,44 @@ export default function EditIngredientPage() {
     return (
         <>
             <PageHeader>
+                <GoBackLink to="./../.."
+                >
+                    Back
+                </GoBackLink>
                 <PageTitle>
-                    EDIT INGREDIENT NAME
+                    EDIT INGREDIENT
                 </PageTitle>
             </PageHeader>
 
             <PageMain>
-                <Form
-                    className="grid gap-4"
-                    onSubmit={handleSubmit}
-                >
-                    <TextInput 
-                        placeholder="ingredient"
-                        value={formData.length > 0 ? getFirstCharUpperCase(formData) : formData}
-                        onChange={handleFormChange}
-                        required
-                    />
-
-                    {/* <PageButton
-                        className="justify-center gap-2"
+                <div>
+                    <small className="ml-4 text-white/50">RECIPE NAME</small>
+                    <Form
+                        className="grid gap-4"
+                        onSubmit={handleSubmit}
                     >
-                        Save
-                        <FaCheck className="text-green-700"/>
-                    </PageButton> */}
-                </Form>
+                        <TextInput 
+                            placeholder="ingredient"
+                            value={formData.length > 0 ? getFirstCharUpperCase(formData) : formData}
+                            onChange={handleFormChange}
+                            required
+                        />
+
+                        {/* <PageButton
+                            className="justify-center gap-2"
+                        >
+                            Save
+                            <FaCheck className="text-green-700"/>
+                        </PageButton> */}
+                    </Form>
+                </div>
 
                 <PageButton
-                    className="justify-center text-red-700"
+                    className="justify-center text-red-700 mt-4"
                     onClick={openDialog}
                 >
                     Delete ingredient
                 </PageButton>
-
-                <GoBackLink to="./../..">Go back</GoBackLink>
 
             </PageMain>
 

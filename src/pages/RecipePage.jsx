@@ -92,7 +92,7 @@ export default function RecipePage() {
             </PageHeader>
 
             <PageMain className="">
-                <div className="grid">
+                <div>
                     <small className="ml-4 text-white/50">INGREDIENTS</small>
                     <List className="mb-4">
                         {
@@ -124,7 +124,7 @@ export default function RecipePage() {
                     </List>
                     
                     <PageButton
-                        className={!recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ? "font-bold" : ""}
+                        className={!recipeLocal.ingredients.every(ingredient => ingredient.selected === true) ? "w-full font-bold" : "w-full"}
                         onClick={() => selectAll(!recipeLocal.ingredients.every(ingredient => ingredient.selected === true))}
                     >
                         {
@@ -142,7 +142,7 @@ export default function RecipePage() {
 
                     <PageButton 
                         onClick={openDialog}
-                        className="disabled:text-white/30 mt-4"
+                        className="disabled:text-white/30 mt-4 w-full"
                         disabled={recipeLocal.ingredients.every(ingredients => ingredients.selected === false)}
                     >
                         Add selection to shopping list

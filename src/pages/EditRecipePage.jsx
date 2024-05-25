@@ -47,7 +47,7 @@ export default function EditRecipePage() {
                 <GoBackLink to="./..">
                     {getFirstCharUpperCase(recipe.name)}
                 </GoBackLink>
-                <PageTitle>EDIT {recipe.name.toUpperCase()}</PageTitle>
+                <PageTitle>EDIT RECIPE</PageTitle>
 
                 <button
                     className="flex items-center justify-end pr-4"
@@ -65,32 +65,35 @@ export default function EditRecipePage() {
 
                 <div>
                     <small className="ml-4 text-white/50">INGREDIENTS</small>
-                    <List className="mb-4">
-                        {
-                            recipe.ingredients.map((ingredient, index, arr) => {
-                                let liCSS;
+                    {
+                        recipe.ingredients.length > 0 &&
+                        <List className="mb-4">
+                            {
+                                recipe.ingredients.map((ingredient, index, arr) => {
+                                    let liCSS;
 
-                                if ( index !== (arr.length - 1) ) {
-                                    liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
-                                }
+                                    if ( index !== (arr.length - 1) ) {
+                                        liCSS += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
+                                    }
 
-                                return (
-                                    <Link
-                                        to={`ingredients/${ingredient.id}`}
-                                        key={ingredient.id}
-                                        state={{ingredient}}
-                                    >
-                                        <ListItem
-                                            className={liCSS}
+                                    return (
+                                        <Link
+                                            to={`ingredients/${ingredient.id}`}
+                                            key={ingredient.id}
+                                            state={{ingredient}}
                                         >
-                                            {getFirstCharUpperCase(ingredient.name)}
-                                            <FaAngleRight />
-                                        </ListItem>
-                                    </Link>
-                                )
-                            })
-                        }
-                    </List>
+                                            <ListItem
+                                                className={liCSS}
+                                            >
+                                                {getFirstCharUpperCase(ingredient.name)}
+                                                <FaAngleRight />
+                                            </ListItem>
+                                        </Link>
+                                    )
+                                })
+                            }
+                        </List>
+                    }
                     
                     { onAddItem && <AddItemForm onSubmit={addIngredient} /> }
 

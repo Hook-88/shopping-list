@@ -23,7 +23,7 @@ export default function EditRecipeNamePage() {
                     to="./.."
                     className="col-span-2"
                 >
-                    Edit {getFirstCharUpperCase(recipe.name)}
+                    Back
                 </GoBackLink>
                 <PageTitle className="col-span-2 col-start-3">
                     EDIT {recipe.name.toUpperCase()}
@@ -31,10 +31,13 @@ export default function EditRecipeNamePage() {
             </PageHeader>
 
             <PageMain>
+                <div>
+                <small className="ml-4 text-white/50">RECIPE NAME</small>
                 <ChangeItemForm 
                     initialValue={getFirstCharUpperCase(recipe.name)}
                     onSubmit={setRecipeName}
                 />
+                </div>
 
             </PageMain>
         </>
