@@ -40,7 +40,9 @@ export default function ShoppingListPage() {
     }
 
     function deleteCheckedItems() {
+        // console.log(shoppingList)
         const newArray = shoppingList.filter(item => item.checked === false)
+        // console.log(newArray)
 
         updateShoppingListInFirestore(newArray)
     }

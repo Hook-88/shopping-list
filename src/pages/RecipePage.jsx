@@ -66,7 +66,19 @@ export default function RecipePage() {
         const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
         const currentShoppingList = await getDoc(docRef)
         const selection = recipeLocal.ingredients.filter(ingredient => ingredient.selected === true)
-        const newShoppingList = getMergedArraysByProperty(currentShoppingList.data().items, selection, "id")
+        const newShoppingList = 
+            getMergedArraysByProperty(currentShoppingList.data().items, selection, "id")
+            .map(ingredient => {
+                const newObj = {
+                    ...ingredient,
+                    checked: false
+                }
+
+                delete newObj.selected
+
+                return newObj
+            })
+
         
         await updateDoc(docRef, {items: newShoppingList})
         
