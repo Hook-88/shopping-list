@@ -2,8 +2,13 @@ import List from "../components/List"
 import ListItem from "../components/ListItem"
 import { FaCheck } from "react-icons/fa6"
 import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
+import LongPressButton from "../components/LongPressButton"
 
 export default function ShoppingListPageItemsList({shoppingList, toggleChecked}) {
+
+    function handleLongPress() {
+        console.log("long press")
+    }
     
     return (
         <List>
@@ -20,14 +25,28 @@ export default function ShoppingListPageItemsList({shoppingList, toggleChecked})
                     }
 
                     return (
-                        <ListItem
-                            key={item.id}
-                            className={liCSS}
-                            onClick={() => toggleChecked(item.id)}
-                        >
-                            {getFirstCharUpperCase(item.name)}
-                            {item.checked && <FaCheck />}
-                        </ListItem>
+                        // <LongPressButton
+                        //     key={item.id}
+                        //     onLongPress={handleLongPress}
+                        //     onClick={() => toggleChecked(item.id)}
+                        // >
+                        //     <ListItem
+                                
+                        //         className={liCSS}
+                                
+                        //     >
+                        //         {getFirstCharUpperCase(item.name)}
+                        //         {item.checked && <FaCheck />}
+                        //     </ListItem>
+                        // </LongPressButton>
+                            <ListItem
+                                key={item.id}          
+                                className={liCSS}
+                                onClick={() => toggleChecked(item.id)}
+                            >
+                                {getFirstCharUpperCase(item.name)}
+                                {item.checked && <FaCheck />}
+                            </ListItem>
                     )
                 })
             }
