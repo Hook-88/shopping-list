@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import Header from "../components/Header"
 import Main from "../components/Main"
 import LinkButton from "../components/LinkButton"
+import Form from "../components/Form"
+import InputTekst from "../components/InputText"
 
 import { useUIStore } from "../store/store"
 
@@ -26,16 +28,15 @@ export default function ShoppingListPage() {
             <Main>
                 {
                     showAddItem &&
-                    <form className="col-span-12 grid">
-                        <input 
-                            type="text" 
+                    <Form>
+                        <InputTekst 
                             placeholder="Item"
-                            className="py-2 text-center bg-white/15 rounded"
                         />
-                    </form>
+                    </Form>
                 }
 
                 <LinkButton to="recipes">Recipes</LinkButton>
+                
             </Main>
         </>
     )
