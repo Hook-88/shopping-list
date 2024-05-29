@@ -6,8 +6,8 @@ import LinkButton from "../components/LinkButton"
 import Form from "../components/Form"
 import InputTekst from "../components/InputText"
 import { ITEMS } from "../data"
-
 import { useUIStore } from "../store/store"
+import List from "../components/List/index"
 
 export default function ShoppingListPage() {
     const showAddItem = useUIStore(state => state.onAddItem)
@@ -27,10 +27,10 @@ export default function ShoppingListPage() {
             </Header>
 
             <Main>
-                <ul className="bg-white/15 col-span-12 rounded">
+                <List>
                     {
                         ITEMS.map((item, index, arr) => {
-                            let liClassName = "py-2 px-4 flex items-center justify-between cursor-pointer"
+                            let liClassName;
 
                             if ( index !== (arr.length -1) ) {
                                 liClassName += " shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]"
@@ -41,20 +41,17 @@ export default function ShoppingListPage() {
                             }
 
                             return (
-                                <li
+                                <List.Item
                                     key={item.id}
                                     className={liClassName}
                                 >
                                     {item.name}
                                     {item.checked && <FaCheck />}
-                                </li>
+                                </List.Item>
                             )
                         })
                     }
-                    {/* <li className="py-2 px-4 shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]">Arroz</li>
-                    <li className="py-2 px-4 shadow-[rgba(100,100,100,0.5)_0px_1px_0px_0px]">Acete</li>
-                    <li className="py-2 px-4">Cervesa</li> */}
-                </ul>
+                </List>
                 {
                     showAddItem &&
                     <Form>
