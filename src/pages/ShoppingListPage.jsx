@@ -7,8 +7,9 @@ import LinkButton from "../components/LinkButton"
 import { useUIStore } from "../store/store"
 
 export default function ShoppingListPage() {
-    const showAddItem = useUIStore(state => state.showAddItem)
-    const toggleShowAddItem = useUIStore(state => state.toggleShowAddItem)
+    const showAddItem = useUIStore(state => state.onAddItem)
+    // const setShowAddItem = useUIStore(state => state.setOnAddItem)
+    const toggleShowAddItem = useUIStore(state => state.toggleOnAddItem)
     
     return (
         <>
