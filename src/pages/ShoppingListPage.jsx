@@ -6,13 +6,20 @@ import LinkButton from "../components/LinkButton"
 import Form from "../components/Form"
 import InputTekst from "../components/InputText"
 import { ITEMS } from "../data"
-import { useUIStore } from "../store/store"
+import { useShoppingListStore, useUIStore } from "../store/store"
 import List from "../components/List/index"
+import { useEffect, useState } from "react"
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from "../firebase/firebase"
 
 export default function ShoppingListPage() {
     const showAddItem = useUIStore(state => state.onAddItem)
-    // const setShowAddItem = useUIStore(state => state.setOnAddItem)
     const toggleShowAddItem = useUIStore(state => state.toggleOnAddItem)
+    const shoppingList = useShoppingListStore(state => state.shoppingList)
+    const getShoppingList = useShoppingListStore(state => state.getShoppingList)
+    const toggleCheckItem = useShoppingListStore(state => state.toggleCheckItem)
+
+    useEffect(() => getShoppingList(), [])
     
     return (
         <>
@@ -29,7 +36,7 @@ export default function ShoppingListPage() {
             <Main>
                 <List>
                     {
-                        ITEMS.map((item, index, arr) => {
+                        shoppingList.map((item, index, arr) => {
                             let liClassName;
 
                             if ( index !== (arr.length -1) ) {
@@ -44,6 +51,7 @@ export default function ShoppingListPage() {
                                 <List.Item
                                     key={item.id}
                                     className={liClassName}
+                                    onClick={toggleCheckItem}
                                 >
                                     {item.name}
                                     {item.checked && <FaCheck />}
