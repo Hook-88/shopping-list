@@ -6,20 +6,54 @@ import LinkButton from "../components/LinkButton"
 import Form from "../components/Form"
 import InputTekst from "../components/InputText"
 import { ITEMS } from "../data"
-import { useShoppingListStore, useUIStore } from "../store/store"
 import List from "../components/List/index"
 import { useEffect, useState } from "react"
-import { doc, onSnapshot } from "firebase/firestore"
+import { doc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
+import getFirstCharUpperCase from "../utility/getFirstCharUpperCase"
+import AddItemForm from "../components/AddItemForm"
+import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
-    const showAddItem = useUIStore(state => state.onAddItem)
-    const toggleShowAddItem = useUIStore(state => state.toggleOnAddItem)
-    const shoppingList = useShoppingListStore(state => state.shoppingList)
-    const getShoppingList = useShoppingListStore(state => state.getShoppingList)
-    const toggleCheckItem = useShoppingListStore(state => state.toggleCheckItem)
+    const [shoppingList, setShoppingList] = useState([])
+    const [onAddItem, setOnAddItem] = useState(false)
+    const docRef = doc(db, "shoppingList", "wA03LYangQz8a20aIKFV")
 
-    useEffect(() => getShoppingList(), [])
+    function toggleOnAddItem() {
+        setOnAddItem(prevOnAddItem => !prevOnAddItem)
+    }
+
+    async function toggleCheckItem(itemId) {
+        const newItemsArray = shoppingList.map(item => item.id === itemId ? {...item, checked: !item.checked} : item)
+
+        await updateDoc(docRef, {items: newItemsArray})
+    }
+
+    async function addItemToShoppingList(item) {
+        const itemObj = {
+            id: nanoid(),
+            name: item.itemName.toLowerCase(),
+            checked: false
+        }
+        const newItemsArray = [...shoppingList, itemObj]
+
+        await updateDoc(docRef, {items: newItemsArray})
+    }
+
+    async function deleteCheckedItemFromShoppingList() {
+        const newItemsArray = shoppingList.filter(item => item.checked === false)
+
+        await updateDoc(docRef, {items: newItemsArray})
+    }
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, "shoppingList", "wA03LYangQz8a20aIKFV"), snapshot => {
+            setShoppingList(snapshot.data().items)
+            
+        })
+        
+        return unsub
+    },[])
     
     return (
         <>
@@ -27,9 +61,9 @@ export default function ShoppingListPage() {
                 <h1 className="col-start-3 col-span-8 text-center my-2">Shopping List</h1>
                 <button 
                     className="col-span-2 flex justify-end items-center pr-4"
-                    onClick={toggleShowAddItem}
+                    onClick={toggleOnAddItem}
                 >
-                    { showAddItem ? <FaCheck /> : <FaPlus /> }
+                    { onAddItem ? <FaCheck /> : <FaPlus /> }
                 </button>
             </Header>
 
@@ -51,9 +85,9 @@ export default function ShoppingListPage() {
                                 <List.Item
                                     key={item.id}
                                     className={liClassName}
-                                    onClick={toggleCheckItem}
+                                    onClick={() => toggleCheckItem(item.id)}
                                 >
-                                    {item.name}
+                                    {getFirstCharUpperCase(item.name)}
                                     {item.checked && <FaCheck />}
                                 </List.Item>
                             )
@@ -61,15 +95,18 @@ export default function ShoppingListPage() {
                     }
                 </List>
                 {
-                    showAddItem &&
-                    <Form>
-                        <InputTekst 
-                            placeholder="Item"
-                        />
-                    </Form>
+                    onAddItem &&
+                    <AddItemForm onSubmit={addItemToShoppingList} />
                 }
 
-                {!showAddItem && <LinkButton to="recipes">Recipes</LinkButton>}
+                <button 
+                    className="col-span-12 py-2 bg-white/10 rounded text-red-700"
+                    onClick={deleteCheckedItemFromShoppingList}
+                >
+                    Delete checked items
+                </button>
+
+                {!onAddItem && <LinkButton to="recipes">Recipes</LinkButton>}
 
             </Main>
         </>
