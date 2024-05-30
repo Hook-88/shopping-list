@@ -99,14 +99,16 @@ export default function ShoppingListPage() {
                     <AddItemForm onSubmit={addItemToShoppingList} />
                 }
 
+                {!onAddItem && <LinkButton to="recipes">Recipes</LinkButton>}
+                
                 <button 
-                    className="col-span-12 py-2 bg-white/10 rounded text-red-700"
+                    className="col-span-12 py-2 bg-white/10 rounded text-red-700 disabled:text-red-700/40"
                     onClick={deleteCheckedItemFromShoppingList}
+                    disabled={shoppingList.every(item => item.checked === false)}
                 >
                     Delete checked items
                 </button>
 
-                {!onAddItem && <LinkButton to="recipes">Recipes</LinkButton>}
 
             </Main>
         </>
