@@ -1,4 +1,4 @@
-import { FaEllipsis } from "react-icons/fa6"
+import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
 import PageHeader from "../../components/PageHeader/PageHeader"
 import { ITEMS } from "../../data"
 import List from "../../components/List/List"
@@ -27,8 +27,21 @@ export default function ShoppingListPage() {
                     {
                         ITEMS.map(item => (
                             <li key={item.id}>
-                                <Card>
+                                <Card className="flex items-center justify-between">
                                     {item.name}
+                                    { item.quantity > 1 && ` (${item.quantity}x)` }
+                                    <div className="flex gap-2">
+                                        {
+                                            item.quantity > 1 && (
+                                                <button className="p-1 border rounded border-white/30 bg-red-900">
+                                                    <FaMinus />
+                                                </button>
+                                            )
+                                        }
+                                        <button className="p-1 border rounded border-white/30 bg-sky-900">
+                                            <FaPlus />
+                                        </button>
+                                    </div>
                                 </Card>
                             </li>
                         ))
