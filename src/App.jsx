@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import ShoppingListPage from "./pages/shoppingList/ShoppingListPage"
 
 export default function App() {
     
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<h1>Shopping list</h1>}/>
+                <Route path="/" element={<ShoppingListPage />}/>
             </Routes>
         </BrowserRouter>
     )
