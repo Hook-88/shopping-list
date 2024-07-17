@@ -3,6 +3,8 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import { ITEMS } from "../../data"
 import List from "../../components/List/List"
 import Card from "../../components/Card"
+import ButtonIncrement from "../../components/Buttons/ButtonIncrement"
+import ButtonDecrement from "../../components/Buttons/ButtonDecrement"
 
 
 export default function ShoppingListPage() {
@@ -31,17 +33,9 @@ export default function ShoppingListPage() {
                                     {item.name}
                                     { item.quantity > 1 && ` (${item.quantity}x)` }
                                     <div className="flex gap-2">
-                                        {
-                                            item.quantity > 1 && (
-                                                <button className="p-1 border rounded border-white/30 bg-red-900">
-                                                    <FaMinus />
-                                                </button>
-                                            )
-                                        }
-                                        <button className="p-1 border rounded border-white/30 bg-sky-900">
-                                            <FaPlus />
-                                        </button>
-                                    </div>
+                                        { item.quantity > 1 && <ButtonDecrement /> }
+                                        <ButtonIncrement />
+                                    </div>  
                                 </Card>
                             </li>
                         ))
