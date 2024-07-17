@@ -2,7 +2,7 @@
 export default function ListList({children}) {
     
     return (
-        <ul>
+        <ul className="space-y-3">
             {children}
         </ul>
 )

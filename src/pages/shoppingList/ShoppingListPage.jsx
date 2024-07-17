@@ -2,6 +2,7 @@ import { FaEllipsis } from "react-icons/fa6"
 import PageHeader from "../../components/PageHeader/PageHeader"
 import { ITEMS } from "../../data"
 import List from "../../components/List/List"
+import Card from "../../components/Card"
 
 
 export default function ShoppingListPage() {
@@ -14,7 +15,7 @@ export default function ShoppingListPage() {
                     <FaEllipsis />
                 </button>
             </PageHeader>
-            <main className="px-4 mt-14">
+            <main className="px-4 mt-12">
                 <List>
                     <List.Header>
                         <List.Progress />
@@ -26,7 +27,9 @@ export default function ShoppingListPage() {
                     {
                         ITEMS.map(item => (
                             <li key={item.id}>
-                                {item.name}
+                                <Card>
+                                    {item.name}
+                                </Card>
                             </li>
                         ))
                     }
