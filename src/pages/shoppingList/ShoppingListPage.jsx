@@ -22,16 +22,15 @@ export default function ShoppingListPage() {
                             <small>Hide selected</small>
                         </button>
                     </List.Header>
-                    <ul>
-                        {
-                            ITEMS.map(item => (
-                                <li key={item.id}>
-                                    {item.name}
-                                </li>
-                            ))
-                        }
-                    </ul>
-
+                    <List.List>
+                    {
+                        ITEMS.map(item => (
+                            <li key={item.id}>
+                                {item.name}
+                            </li>
+                        ))
+                    }
+                    </List.List>
                 </List>
             </main>
         </>
