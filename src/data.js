@@ -1,12 +1,32 @@
 export const ITEMS = [
-    { id: 'gro-001-milk', name: 'Milk', checked: false },
-    { id: 'gro-002-eggs', name: 'Eggs', checked: true },
-    { id: 'gro-003-bread', name: 'Bread', checked: false },
-    { id: 'gro-004-butter', name: 'Butter', checked: true },
-    { id: 'gro-005-cheese', name: 'Cheese', checked: false },
-    { id: 'gro-006-apples', name: 'Apples', checked: true },
-    { id: 'gro-007-bananas', name: 'Bananas', checked: false },
-    { id: 'gro-008-carrots', name: 'Carrots', checked: true },
-    { id: 'gro-009-lettuce', name: 'Lettuce', checked: false },
-    { id: 'gro-010-tomatoes', name: 'Tomatoes', checked: true }
-]
+    {
+      id: 1,
+      name: "apples",
+      category: "fruit",
+      quantity: 6
+    },
+    {
+      id: 2,
+      name: "milk",
+      category: "dairy",
+      quantity: 1
+    },
+    {
+      id: 3,
+      name: "bread",
+      category: "bakery",
+      quantity: 2
+    },
+    {
+      id: 4,
+      name: "chicken",
+      category: "meat",
+      quantity: 1
+    },
+    {
+      id: 5,
+      name: "spinach",
+      category: "vegetables",
+      quantity: 1
+    }
+  ];
