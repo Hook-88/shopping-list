@@ -6,16 +6,15 @@ import modifyQuantityFirebaseItem from "../../firebase/firebaseUtility/modifyQua
 
 
 export default function ShoppingListItemDefault({item}) {
-    const modifyQuantity = modifyQuantityFirebaseItem(item.id)
 
     function handleClickIncrement(event) {
         event.stopPropagation()
-        modifyQuantity(1)
+        modifyQuantityFirebaseItem(item.id, 1)
     }
     
     function handleClickDecrement(event) {
         event.stopPropagation()
-        modifyQuantity(-1)
+        modifyQuantityFirebaseItem(item.id, -1)
     }
 
     return (
