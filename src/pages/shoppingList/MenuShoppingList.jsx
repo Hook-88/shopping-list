@@ -9,8 +9,8 @@ import ConfirmModal from "../../components/Modal/ConfirmModal"
 import { useStore } from "../../store/store"
 
 export default function MenuShoppingList({shoppingList}) {
-    // const shoppingList = useShoppingList()
     const updateModal = useStore(state => state.updateModalObj)
+    const updateModalAddItem = useStore(state => state.updateModalObjAddItem)
 
     async function deleteFirebaseDoc(docId) {
         const docRef = doc(db, "shoppingList", docId)
@@ -35,6 +35,12 @@ export default function MenuShoppingList({shoppingList}) {
         })
     }
 
+    function openAddItemEl() {
+        updateModalAddItem({
+            onSubmit: () => console.log("item added")
+        })
+    }
+
     return (
         <Menu
             className="col-start-6 flex"
@@ -47,6 +53,7 @@ export default function MenuShoppingList({shoppingList}) {
                 <Menu.Item>
                     <button
                         className="px-3 py-1 text-right"
+                        onClick={openAddItemEl}
                     >
                         Add
                     </button>

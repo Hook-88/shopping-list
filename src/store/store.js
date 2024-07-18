@@ -2,7 +2,10 @@ import { create } from 'zustand'
 
 const useStore = create((set) => ({
     modalObj: null,
-    updateModalObj: newObj => set({ modalObj: newObj })
+    updateModalObj: newObj => set({ modalObj: newObj }),
+
+    modalObjAddItem: null,
+    updateModalObjAddItem: newObj => set({ modalObjAddItem: newObj }),
 
 
     // bears: 0,

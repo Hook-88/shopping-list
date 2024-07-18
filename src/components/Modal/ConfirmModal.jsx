@@ -18,10 +18,12 @@ export default function ConfirmModal() {
             return
         }
 
+        // dialogRef.current.close()
+
     }, [modalObj])
 
     function handleOnConfirm() {
-        modalObj.onConfirm()
+        modalObj.onConfirm
         closeModal()
     }
     
@@ -35,7 +37,7 @@ export default function ConfirmModal() {
                     <div className="flex gap-2">
                         <button 
                             className="py-1 px-6 rounded bg-green-900 flex-grow border border-white/10"
-                            onClick={handleOnConfirm}
+                            onClick={modalObj?.onConfirm}
                         >
                             Yes
                         </button>
