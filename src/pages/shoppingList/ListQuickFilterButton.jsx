@@ -1,21 +1,16 @@
-import List from "../../components/List/List"
-import ShoppingListItemDefault from "./ShoppingListItemDefault"
-import ShoppingListItemChecked from "./ShoppingListItemChecked"
 import { FaEye, FaEyeSlash } from "react-icons/fa6"
 
-
-export default function ListQuickFilterButton({itemsArr, filter, onClick}) {
-    const someItemsChecked = itemsArr.some(item => item.selected === true)
+export default function ListQuickFilterButton({filter, onClick, disabled}) {
 
     return (
         <button 
             onClick={onClick}
             className="disabled:text-white/30"
-            disabled={!someItemsChecked}
+            disabled={disabled}
         >
             <small className="flex items-center gap-1">
                 {
-                    filter.length > 0 ? (
+                    filter?.length > 0 ? (
                         <>
                             Show selected
                             <FaEye />

@@ -2,16 +2,14 @@ import List from "../../components/List/List"
 import ShoppingListItemDefault from "./ShoppingListItemDefault"
 import ShoppingListItemChecked from "./ShoppingListItemChecked"
 import ListQuickFilterButton from "./ListQuickFilterButton"
-import getFirebaseDoc from "../../firebase/firebaseUtility/getFirebaseDoc"
-import { db } from "../../firebase/config"
-import { getDoc, updateDoc } from "firebase/firestore"
 import toggleSelectedFirebaseItem from "../../firebase/firebaseUtility/toggleSelectedFirebaseItem"
 import useFilter from "../../hooks/useFilter"
 
 
-export default function ListShoppingList({itemsArr, toggleFilterFn}) {
+export default function ListShoppingList({itemsArr}) {
     const [filter, addFilter, removeFilter] = useFilter([])
     const filteredItemsArray = filter.length > 0 ? itemsArr.filter(item => item.selected === false) : itemsArr
+    const someItemsChecked = itemsArr?.some(item => item.selected === true)
 
     function toggleFilter() {
         filter.length > 0 ? removeFilter("notChecked") : addFilter("notChecked")
@@ -25,6 +23,7 @@ export default function ListShoppingList({itemsArr, toggleFilterFn}) {
                 <ListQuickFilterButton 
                     onClick={() => toggleFilter()}
                     itemsArr={itemsArr}
+                    disabled={!someItemsChecked}
                     filter={filter}
                 />
             </List.Header>
