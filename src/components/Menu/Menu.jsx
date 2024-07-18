@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useRef, useState } from "react"
 import MenuButton from "./MenuButton"
 import MenuDropdown from "./MenuDropdown"
 import MenuItem from "./MenuItem"
@@ -12,10 +12,31 @@ export default function Menu({children, className}) {
         "relative",
         className
     )
+    const menuRef = useRef()
+
+    useEffect(() => {
+
+        function handler(event) {
+            if (!menuRef.current.contains(event.target)) {
+                setOn(false)
+            }
+            
+        }
+        
+        document.addEventListener("mousedown", handler)
+
+        return () => {
+            document.removeEventListener("mousedown", handler)
+        }
+
+    }, [])
     
     return (
         <MenuContext.Provider value={{on, setOn}}>
-            <div className={MenuClassName}>
+            <div 
+                className={MenuClassName}
+                ref={menuRef}
+            >
                 {children}
             </div>
         </MenuContext.Provider>
