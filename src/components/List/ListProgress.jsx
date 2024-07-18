@@ -5,10 +5,8 @@ import { ListContext } from "./List"
 export default function ListProgress() {
     const { itemsArr } = useContext(ListContext)
     const itemsArrLength = itemsArr.length
-    const checkedItemsArrLength = itemsArr.filter(item => item.checked === true).length
+    const checkedItemsArrLength = itemsArr.filter(item => item.selected === true).length
 
-    
-    
     return (
         <small>
             {`(${checkedItemsArrLength}/${itemsArrLength})`}

@@ -1,22 +1,18 @@
-import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
+import { FaEllipsis } from "react-icons/fa6"
 import PageHeader from "../../components/PageHeader/PageHeader"
 import ListShoppingList from "./ListShoppingList"
-import { useState } from "react"
-import { ITEMS } from "../../data"
+import { useEffect, useState } from "react"
+import { collection, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
+import { db } from "../../firebase/config"
+import useShoppingList from "../../hooks/useShoppingList"
 
 
 export default function ShoppingListPage() {
-    const modifiedItems = ITEMS.map(item => ({...item, checked: false}))
-    const [shoppingListItems, setShoppingListItems] = useState(modifiedItems)
     const [filter, setFilter] = useState(null)
-
-    function toggleCheckItem(itemId) {
-        setShoppingListItems(prevShoppingListItems => prevShoppingListItems.map(item => item.id === itemId ? {...item, checked : !item.checked} : item))
-    }
+    const shoppingList = useShoppingList()
 
     function toggleFilter() {
         setFilter(prevFilter => prevFilter ? clearFilters() : addFilterNotChecked())
-
     }
 
     function addFilterNotChecked() {
@@ -39,8 +35,7 @@ export default function ShoppingListPage() {
             </PageHeader>
             <main className="px-4 mt-12">
                 <ListShoppingList 
-                    itemsArr={shoppingListItems}
-                    toggleCheckFn={toggleCheckItem}
+                    itemsArr={shoppingList}
                     filter={filter}
                     toggleFilterFn={toggleFilter}
                 />

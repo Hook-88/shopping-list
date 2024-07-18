@@ -2,12 +2,17 @@ import List from "../../components/List/List"
 import ShoppingListItemDefault from "./ShoppingListItemDefault"
 import ShoppingListItemChecked from "./ShoppingListItemChecked"
 import ListQuickFilterButton from "./ListQuickFilterButton"
+import getFirebaseDoc from "../../firebase/firebaseUtility/getFirebaseDoc"
+import { db } from "../../firebase/config"
+import { getDoc, updateDoc } from "firebase/firestore"
+import toggleSelectedFirebaseItem from "../../firebase/firebaseUtility/toggleSelectedFirebaseItem"
 
 
-export default function ListShoppingList({itemsArr, toggleCheckFn, filter, toggleFilterFn}) {
-    const filteredItemsArray = filter ? itemsArr.filter(item => item.checked === false) : itemsArr
+export default function ListShoppingList({itemsArr, filter, toggleFilterFn}) {
+    const filteredItemsArray = filter ? itemsArr.filter(item => item.selected === false) : itemsArr
 
     return (
+        itemsArr ? 
         <List itemsArr={itemsArr}>
             <List.Header>
                 <List.Progress />
@@ -22,17 +27,19 @@ export default function ListShoppingList({itemsArr, toggleCheckFn, filter, toggl
                 filteredItemsArray.map(item => (
                     <li 
                         key={item.id}
-                        onClick={() => toggleCheckFn(item.id)}
+                        onClick={() => toggleSelectedFirebaseItem(item.id)}
                     >
                         {
-                            item.checked ? 
+                            item.selected ? 
                                 <ShoppingListItemChecked item={item} /> :
-                                <ShoppingListItemDefault item={item} />
+                                <ShoppingListItemDefault 
+                                    item={item}
+                                />
                         }
                     </li>
                 ))
             }
             </List.List>
-        </List>
+        </List> : null
     )
 }

@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6"
 
 
 export default function ListQuickFilterButton({itemsArr, filter, onClick}) {
-    const someItemsChecked = itemsArr.some(item => item.checked === true)
+    const someItemsChecked = itemsArr.some(item => item.selected === true)
 
     return (
         <button 
