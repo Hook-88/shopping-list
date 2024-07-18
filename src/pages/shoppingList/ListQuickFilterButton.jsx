@@ -15,7 +15,7 @@ export default function ListQuickFilterButton({itemsArr, filter, onClick}) {
         >
             <small className="flex items-center gap-1">
                 {
-                    filter ? (
+                    filter.length > 0 ? (
                         <>
                             Show selected
                             <FaEye />
