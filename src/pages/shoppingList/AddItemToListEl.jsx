@@ -52,10 +52,10 @@ export default function AddItemToListEl() {
     
     return (
         <dialog ref={dialogRef}>
-            <div className="fixed inset-0 w-full h-full bg-black/20 backdrop-blur-sm text-white flex flex-col gap-4 justify-end items-center px-4 pb-8">
+            <div className="fixed inset-0 w-full h-full bg-black/20 backdrop-blur-sm text-white flex flex-col gap-4 justify-center items-center px-4">
             {
                 bannerTekst && (
-                    <div className="bg-green-200/40 backdrop-blur w-full rounded border border-white/10 text-center flex-grow-0 py-4">
+                    <div className="bg-green-200/40 backdrop-blur rounded border border-white/10 text-center p-4 fixed inset-x-0 mb-40 mx-4">
                         {bannerTekst}
                     </div>
                 )
