@@ -5,9 +5,11 @@ import ConfirmModal from "../../components/Modal/ConfirmModal"
 import MenuShoppingList from "./MenuShoppingList"
 import Card from "../../components/Card"
 import AddItemToListEl from "./AddItemToListEl"
+import { useStore } from "../../store/store"
 
 export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
+    
 
     return (
         <>
@@ -22,10 +24,10 @@ export default function ShoppingListPage() {
                     itemsArr={shoppingList}
                 />
             </main>
-
             <AddItemToListEl />
-                
             <ConfirmModal />
+            
+            
         </>
     )
 }

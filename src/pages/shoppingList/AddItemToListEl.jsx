@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form"
 export default function AddItemToListEl() {
     const modalObjAddItem = useStore(state => state.modalObjAddItem)
     const updateModalObjAddItem = useStore(state => state.updateModalObjAddItem)
+    const updateBanner = useStore(state => state.updateBanner)
+    const bannerTekst = useStore(state => state.banner)
     const dialogRef = useRef()
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
@@ -33,7 +35,15 @@ export default function AddItemToListEl() {
             selected: false
         }
         modalObjAddItem.onSubmit(itemObj)
+        handleBanner(formData.itemName)
         reset()
+    }
+
+    function handleBanner(name) {
+        updateBanner(`${name} added to shopping list`)
+        setTimeout(() => {
+            updateBanner(null)
+        }, 1000)
     }
 
     function closeModal() {
@@ -43,6 +53,13 @@ export default function AddItemToListEl() {
     return (
         <dialog ref={dialogRef}>
             <div className="fixed inset-0 w-full h-full bg-black/20 backdrop-blur-sm text-white flex items-center px-4">
+            {
+                bannerTekst && (
+                    <div className="bg-green-200/40 p-5 fixed top-10 inset-x-0 backdrop-blur mx-4 rounded border border-white/10 text-center z-10">
+                        {bannerTekst}
+                    </div>
+                )
+            }
                 <Card className="bg-[#1a1a1a] py-2 px-2 border border-white/10 w-full">
                     <form className="grid gap-2" onSubmit={handleSubmit(handleOnSubmit)}>
                         <input 

@@ -7,6 +7,9 @@ const useStore = create((set) => ({
     modalObjAddItem: null,
     updateModalObjAddItem: newObj => set({ modalObjAddItem: newObj }),
 
+    banner: null,
+    updateBanner: bannertekst => set({ banner: bannertekst })
+
 
     // bears: 0,
     // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
