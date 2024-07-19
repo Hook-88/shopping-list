@@ -5,6 +5,7 @@ import Card from "../Card"
 export default function ConfirmModal() {
     const modalObj = useStore(state => state.modalObj)
     const updateModal = useStore(state => state.updateModalObj)
+    const clearFilters = useStore(state => state.clearFilters)
     const dialogRef = useRef()
 
     function closeModal() {
@@ -22,7 +23,12 @@ export default function ConfirmModal() {
 
     function handleOnConfirm() {
         modalObj.onConfirm()
-        closeModal()
+        
+        setTimeout(() => {
+            clearFilters()
+            closeModal()
+
+        }, 100)
     }
     
     return (

@@ -29,8 +29,6 @@ export default function MenuShoppingList({shoppingList}) {
 
     function handleOnConfirm() {
         deleteSelectedItems()
-        clearFilters()
-        updateModal(null)
     }
 
     function deleteSelectedItems() {

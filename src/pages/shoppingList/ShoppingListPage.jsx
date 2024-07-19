@@ -7,17 +7,11 @@ import AddItemToListEl from "./AddItemToListEl"
 import { useEffect } from "react"
 import { useStore } from "../../store/store"
 import addFirebaseDoc from "../../firebase/firebaseUtility/addFirebaseDoc"
+import Card from "../../components/Card"
 
 export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
     const updateModalObjAddItem = useStore(state => state.updateModalObjAddItem)
-    
-    useEffect(() => {
-        if (shoppingList?.length === 0) {
-            openAddItemEl()
-        }
-
-    }, [shoppingList])
 
     function openAddItemEl() {
         updateModalObjAddItem({
@@ -39,12 +33,22 @@ export default function ShoppingListPage() {
             </PageHeader>
             <main className="px-4 mt-12">
                 {
-                    shoppingList?.length > 0 && (
+                    shoppingList?.length > 0 ? (
                         <ListShoppingList 
                             itemsArr={shoppingList}
                         />
+                    ) : (
+                        <Card className="px-2">
+                            <button 
+                                className="bg-green-900 rounded border border-white/30 w-full py-1"
+                                onClick={openAddItemEl}
+                            >
+                                Start Adding items
+                            </button>
+                        </Card>
                     )
                 }
+                
             </main>
             <AddItemToListEl />
             <ConfirmModal />

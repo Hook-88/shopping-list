@@ -34,8 +34,6 @@ export default function ListShoppingList({itemsArr}) {
 
     function handleOnConfirm() {
         deleteSelectedItems()
-        clearFilters()
-        updateModalObj(null)
     }
 
     function deleteSelectedItems() {
