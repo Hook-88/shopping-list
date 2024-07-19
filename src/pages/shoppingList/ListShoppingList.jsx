@@ -3,17 +3,27 @@ import ShoppingListItemDefault from "./ShoppingListItemDefault"
 import ShoppingListItemChecked from "./ShoppingListItemChecked"
 import ListQuickFilterButton from "./ListQuickFilterButton"
 import toggleSelectedFirebaseItem from "../../firebase/firebaseUtility/toggleSelectedFirebaseItem"
-import useFilter from "../../hooks/useFilter"
+import { useStore } from "../../store/store"
 
 
 export default function ListShoppingList({itemsArr}) {
-    const [filter, addFilter, removeFilter] = useFilter([])
-    const filteredItemsArray = filter.length > 0 ? itemsArr.filter(item => item.selected === false) : itemsArr
+    const filters = useStore(state => state.filters)
+    const addFilter = useStore(state => state.addFilter)
+    const clearFilters = useStore(state => state.clearFilters)
+    const filteredItemsArray = filters.length > 0 ? itemsArr.filter(item => item.selected === false) : itemsArr
     const someItemsChecked = itemsArr?.some(item => item.selected === true)
 
     function toggleFilter() {
-        filter.length > 0 ? removeFilter("notChecked") : addFilter("notChecked")
+
+        if (filters.length > 0) {
+            clearFilters()
+
+            return
+        }
+
+        addFilter("notChecked")
     }
+
 
     return (
         itemsArr ? 
@@ -22,9 +32,7 @@ export default function ListShoppingList({itemsArr}) {
                 <List.Progress />
                 <ListQuickFilterButton 
                     onClick={() => toggleFilter()}
-                    itemsArr={itemsArr}
                     disabled={!someItemsChecked}
-                    filter={filter}
                 />
             </List.Header>
             <List.List>

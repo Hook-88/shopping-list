@@ -1,6 +1,8 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa6"
+import { useStore } from "../../store/store"
 
-export default function ListQuickFilterButton({filter, onClick, disabled}) {
+export default function ListQuickFilterButton({onClick, disabled}) {
+    const fiters = useStore(state => state.filters)
 
     return (
         <button 
@@ -10,7 +12,7 @@ export default function ListQuickFilterButton({filter, onClick, disabled}) {
         >
             <small className="flex items-center gap-1">
                 {
-                    filter?.length > 0 ? (
+                    fiters.length > 0 ? (
                         <>
                             Show selected
                             <FaEye />

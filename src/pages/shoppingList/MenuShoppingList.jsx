@@ -11,6 +11,7 @@ import { useStore } from "../../store/store"
 export default function MenuShoppingList({shoppingList}) {
     const updateModal = useStore(state => state.updateModalObj)
     const updateModalAddItem = useStore(state => state.updateModalObjAddItem)
+    const clearFilters = useStore(state => state.clearFilters)
 
     async function addFirebaseDoc(itemObj) {
         const collectionRef = collection(db, "shoppingList")
@@ -31,6 +32,7 @@ export default function MenuShoppingList({shoppingList}) {
 
     function handleOnConfirm() {
         deleteSelectedItems()
+        clearFilters()
         updateModal(null)
     }
 
