@@ -50,7 +50,9 @@ export default function ShoppingListPage() {
                 }
                 
             </main>
-            <AddItemToListEl />
+            <AddItemToListEl 
+                shoppingList={shoppingList}
+            />
             <ConfirmModal />
             
             
