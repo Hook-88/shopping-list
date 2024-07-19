@@ -19,6 +19,7 @@ export default function ListProgress({onClick = () => {}}) {
     return (
         <small onClick={handleClick}>
             {`(${checkedItemsArrLength}/${itemsArrLength})`}
+            { itemsArrLength === checkedItemsArrLength && " completed"}
         </small>
     )
 }
