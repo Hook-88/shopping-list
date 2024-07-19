@@ -4,7 +4,7 @@ import ShoppingListItemChecked from "./ShoppingListItemChecked"
 import ListQuickFilterButton from "./ListQuickFilterButton"
 import toggleSelectedFirebaseItem from "../../firebase/firebaseUtility/toggleSelectedFirebaseItem"
 import { useStore } from "../../store/store"
-
+import deleteFirebaseDoc from "../../firebase/firebaseUtility/deleteFirebaseDoc"
 
 export default function ListShoppingList({itemsArr}) {
     const filters = useStore(state => state.filters)
@@ -12,6 +12,7 @@ export default function ListShoppingList({itemsArr}) {
     const clearFilters = useStore(state => state.clearFilters)
     const filteredItemsArray = filters.length > 0 ? itemsArr.filter(item => item.selected === false) : itemsArr
     const someItemsChecked = itemsArr?.some(item => item.selected === true)
+    const updateModalObj = useStore(state => state.updateModalObj)
 
     function toggleFilter() {
 
@@ -24,12 +25,32 @@ export default function ListShoppingList({itemsArr}) {
         addFilter("notChecked")
     }
 
+    function handleClick() {
+        updateModalObj({
+            question: "Delete checked items",
+            onConfirm: handleOnConfirm
+        })
+    }
+
+    function handleOnConfirm() {
+        deleteSelectedItems()
+        clearFilters()
+        updateModalObj(null)
+    }
+
+    function deleteSelectedItems() {
+        itemsArr.filter(item => item.selected === true)
+            .forEach(filteredItem => deleteFirebaseDoc("shoppingList", filteredItem.id))
+    }
+
 
     return (
         itemsArr ? 
         <List itemsArr={itemsArr}>
             <List.Header>
-                <List.Progress />
+                <List.Progress 
+                    onClick={handleClick}
+                />
                 <ListQuickFilterButton 
                     onClick={() => toggleFilter()}
                     disabled={!someItemsChecked}

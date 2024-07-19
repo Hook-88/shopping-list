@@ -3,12 +3,31 @@ import ListShoppingList from "./ListShoppingList"
 import useShoppingList from "../../hooks/useShoppingList"
 import ConfirmModal from "../../components/Modal/ConfirmModal"
 import MenuShoppingList from "./MenuShoppingList"
-import Card from "../../components/Card"
 import AddItemToListEl from "./AddItemToListEl"
+import { useEffect } from "react"
+import { useStore } from "../../store/store"
+import addFirebaseDoc from "../../firebase/firebaseUtility/addFirebaseDoc"
 
 export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
+    const updateModalObjAddItem = useStore(state => state.updateModalObjAddItem)
     
+    useEffect(() => {
+        if (shoppingList?.length === 0) {
+            openAddItemEl()
+        }
+
+    }, [shoppingList])
+
+    function openAddItemEl() {
+        updateModalObjAddItem({
+            onSubmit: handleOnSubmit
+        })
+    }
+
+    function handleOnSubmit(itemObj) {
+        addFirebaseDoc("shoppingList", itemObj)
+    }
 
     return (
         <>
@@ -19,9 +38,13 @@ export default function ShoppingListPage() {
                 />
             </PageHeader>
             <main className="px-4 mt-12">
-                <ListShoppingList 
-                    itemsArr={shoppingList}
-                />
+                {
+                    shoppingList?.length > 0 && (
+                        <ListShoppingList 
+                            itemsArr={shoppingList}
+                        />
+                    )
+                }
             </main>
             <AddItemToListEl />
             <ConfirmModal />
