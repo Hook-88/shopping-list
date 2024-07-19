@@ -4,14 +4,14 @@ import { useStore } from "../../store/store"
 import { useForm } from "react-hook-form"
 
 export default function AddItemToListEl() {
+    const modalObjAddItem = useStore(state => state.modalObjAddItem)
+    const updateModalObjAddItem = useStore(state => state.updateModalObjAddItem)
+    const dialogRef = useRef()
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             itemName: ""
         }
     })
-    const modalObjAddItem = useStore(state => state.modalObjAddItem)
-    const updateModalObjAddItem = useStore(state => state.updateModalObjAddItem)
-    const dialogRef = useRef()
 
     function closeModal() {
         dialogRef.current.close()
@@ -49,13 +49,13 @@ export default function AddItemToListEl() {
                             type="text" 
                             className="bg-white/10 rounded px-2 py-1"
                             placeholder="item..."
+                            autoFocus
                             required
                             {...register("itemName")}
                         />
                         <div className="flex gap-2">
                             <button 
                                 className="py-1 px-6 rounded bg-green-900 flex-grow border border-white/10"
-                                // onClick={handleOnSubmit}
                             >
                                 Add to list
                             </button>
@@ -69,8 +69,7 @@ export default function AddItemToListEl() {
                             </button>
 
                         </div>
-                    </form>
-                    
+                    </form> 
                 </Card>
             </div>
         </dialog>
