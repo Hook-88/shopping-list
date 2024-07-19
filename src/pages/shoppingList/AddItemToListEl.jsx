@@ -26,8 +26,13 @@ export default function AddItemToListEl() {
 
     }, [modalObjAddItem])
 
-    function handleOnSubmit() {
-        modalObjAddItem.onSubmit()
+    function handleOnSubmit(formData) {
+        const itemObj = {
+            name: formData.itemName.trim().toLowerCase(),
+            quantity: 1,
+            selected: false
+        }
+        modalObjAddItem.onSubmit(itemObj)
         reset()
     }
 
@@ -45,7 +50,7 @@ export default function AddItemToListEl() {
                             className="bg-white/10 rounded px-2 py-1"
                             placeholder="item..."
                             required
-                            {...register("itemNAme")}
+                            {...register("itemName")}
                         />
                         <div className="flex gap-2">
                             <button 

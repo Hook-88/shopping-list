@@ -3,7 +3,7 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import ListShoppingList from "./ListShoppingList"
 import useShoppingList from "../../hooks/useShoppingList"
 import Menu from "../../components/Menu/Menu"
-import { deleteDoc, doc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase/config"
 import ConfirmModal from "../../components/Modal/ConfirmModal"
 import { useStore } from "../../store/store"
@@ -11,6 +11,12 @@ import { useStore } from "../../store/store"
 export default function MenuShoppingList({shoppingList}) {
     const updateModal = useStore(state => state.updateModalObj)
     const updateModalAddItem = useStore(state => state.updateModalObjAddItem)
+
+    async function addFirebaseDoc(itemObj) {
+        const collectionRef = collection(db, "shoppingList")
+
+        await addDoc(collectionRef, itemObj)
+    }
 
     async function deleteFirebaseDoc(docId) {
         const docRef = doc(db, "shoppingList", docId)
@@ -37,7 +43,7 @@ export default function MenuShoppingList({shoppingList}) {
 
     function openAddItemEl() {
         updateModalAddItem({
-            onSubmit: () => console.log("item added")
+            onSubmit: addFirebaseDoc
         })
     }
 
