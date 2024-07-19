@@ -1,39 +1,23 @@
 import { FaEllipsis } from "react-icons/fa6"
-import PageHeader from "../../components/PageHeader/PageHeader"
-import ListShoppingList from "./ListShoppingList"
-import useShoppingList from "../../hooks/useShoppingList"
 import Menu from "../../components/Menu/Menu"
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore"
-import { db } from "../../firebase/config"
-import ConfirmModal from "../../components/Modal/ConfirmModal"
 import { useStore } from "../../store/store"
+import deleteFirebaseDoc from "../../firebase/firebaseUtility/deleteFirebaseDoc"
+import addFirebaseDoc from "../../firebase/firebaseUtility/addFirebaseDoc"
 
 export default function MenuShoppingList({shoppingList}) {
     const updateModal = useStore(state => state.updateModalObj)
     const updateModalAddItem = useStore(state => state.updateModalObjAddItem)
     const clearFilters = useStore(state => state.clearFilters)
-
-    async function addFirebaseDoc(itemObj) {
-        const collectionRef = collection(db, "shoppingList")
-
-        await addDoc(collectionRef, itemObj)
+    const someItemsChecked = shoppingList ? shoppingList.some(item => item.selected === true) : false
+    
+    function openAddItemEl() {
+        updateModalAddItem({
+            onSubmit: handleOnSubmit
+        })
     }
 
-    async function deleteFirebaseDoc(docId) {
-        const docRef = doc(db, "shoppingList", docId)
-
-        await deleteDoc(docRef)
-    }
-
-    function deleteSelectedItems() {
-        shoppingList.filter(item => item.selected === true)
-            .forEach(filteredItem => deleteFirebaseDoc(filteredItem.id))
-    }
-
-    function handleOnConfirm() {
-        deleteSelectedItems()
-        clearFilters()
-        updateModal(null)
+    function handleOnSubmit(itemObj) {
+        addFirebaseDoc("shoppingList", itemObj)
     }
 
     function openDialog() {
@@ -43,10 +27,15 @@ export default function MenuShoppingList({shoppingList}) {
         })
     }
 
-    function openAddItemEl() {
-        updateModalAddItem({
-            onSubmit: addFirebaseDoc
-        })
+    function handleOnConfirm() {
+        deleteSelectedItems()
+        clearFilters()
+        updateModal(null)
+    }
+
+    function deleteSelectedItems() {
+        shoppingList.filter(item => item.selected === true)
+            .forEach(filteredItem => deleteFirebaseDoc("shoppingList", filteredItem.id))
     }
 
     return (
@@ -69,8 +58,10 @@ export default function MenuShoppingList({shoppingList}) {
                 </Menu.Item>
                 <Menu.Item>
                     <button
-                        className="px-3 py-1"
+                        className="px-3 py-1 disabled:text-white/20"
                         onClick={openDialog}
+                        disabled={!someItemsChecked}
+
                     >
                         Remove
                     </button>
