@@ -64,6 +64,7 @@ export default function AddItemToListEl({shoppingList}) {
         }
 
         addFirebaseDoc("shoppingList", itemObj)
+        handleBanner(itemObj.name)
     }
 
     function filterGroceries(list, historyGroceries) {
@@ -85,21 +86,26 @@ export default function AddItemToListEl({shoppingList}) {
                     )
                 }                
                 <Card className="bg-[#1a1a1a] py-2 px-2 border border-white/10 w-full">
-                    <ul className="flex flex-wrap-reverse gap-2 mb-4">
-                        {
-                            filteredItems
-                                .slice(0, 5)
-                                .map(item => (
-                                    <li 
-                                        key={item.id}
-                                        className="p-2 px-4 border border-white/30 rounded flex-grow text-center"
-                                        onClick={() => handleClick(item)}
-                                    >
-                                        {getStringFirstCharCap(item.name)}
-                                    </li>
-                                ))
-                        }
-                    </ul>
+                    {
+                        filteredItems.length > 0 && (
+                            <ul className="flex flex-wrap-reverse gap-2 mb-4">
+                                {
+                                    filteredItems
+                                        .slice(0, 5)
+                                        .map(item => (
+                                            <li 
+                                                key={item.id}
+                                                className="p-2 px-4 border border-white/30 rounded flex-grow text-center"
+                                                onClick={() => handleClick(item)}
+                                            >
+                                                {getStringFirstCharCap(item.name)}
+                                            </li>
+                                        ))
+                                }
+                            </ul>
+                        )
+                        
+                    }
                     <form className="grid gap-2" onSubmit={handleSubmit(handleOnSubmit)}>
                         <input 
                             type="text" 
