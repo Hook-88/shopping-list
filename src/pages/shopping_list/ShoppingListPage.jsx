@@ -1,8 +1,9 @@
 import MenuShoppingList from "./MenuShoppingList"
-import { ITEMS } from "../../data"
-import List from "../../components/List/List"
+import ListShoppingList from "./ListShoppingList"
+import useShoppingList from "../../hooks/useShoppingList"
 
 export default function ShoppingListPage() {
+    const shoppingList = useShoppingList()
     
     return (
         <>
@@ -11,20 +12,13 @@ export default function ShoppingListPage() {
                 <MenuShoppingList />
             </header>
             <main className="px-4">
-                <List listItemsArr={ITEMS}>
-                    <List.Header>
-                        <List.Progress />
-                    </List.Header>
-                    <List.Body>
-                        {
-                            ITEMS.map(item => (
-                                <List.Item key={item.id}>
-                                    {item.name}
-                                </List.Item>
-                            ))
-                        }
-                    </List.Body>
-                </List>
+                {
+                    shoppingList ? (
+                        <ListShoppingList 
+                            itemsArr={shoppingList}
+                        />
+                    ) : "Loading..."
+                }   
             </main>
         </>
     )
