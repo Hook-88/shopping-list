@@ -4,7 +4,7 @@ import { useContext } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
 
 export default function MenuShoppingList() {
-    const { openConfirmDialog, shoppingList } = useContext(ShoppingListPageContext)
+    const { openConfirmDialog, shoppingList, openAddItemEl } = useContext(ShoppingListPageContext)
     const someItemsSelected = shoppingList ? shoppingList.some(item => item.selected === true) : false
     
     return (
@@ -14,7 +14,10 @@ export default function MenuShoppingList() {
             </Menu.Button>
             <Menu.Dropdown className="right-0 top-10">
                 <Menu.Item>
-                    <button className="px-4 py-2">
+                    <button 
+                        className="px-4 py-2"
+                        onClick={openAddItemEl}
+                    >
                         Add
                     </button>
                 </Menu.Item>

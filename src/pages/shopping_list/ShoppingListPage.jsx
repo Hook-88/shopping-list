@@ -1,14 +1,11 @@
 import MenuShoppingList from "./MenuShoppingList"
 import ListShoppingList from "./ListShoppingList"
 import useShoppingList from "../../hooks/useShoppingList"
-import { doc, getDoc, updateDoc } from "firebase/firestore"
-import { db } from "../../firebase/firebase"
 import deleteShoppingListFirebaseDoc from "../../firebase/utility/deleteShoppingListFirebaseDoc"
-import Card from "../../components/Card"
-import Button from "../../components/Button"
 import {ConfirmDeleteDialogEl} from "./ConfirmDeleteDialogEl"
 import { createContext, useRef } from "react"
 import { useStore } from "../../store/store"
+import { AddItemToListEl } from "./AddItemToListEl"
 
 const ShoppingListPageContext = createContext()
 
@@ -16,6 +13,7 @@ export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
     const updateConfirmDialogObj = useStore(state => state.updateConfirmDialogObj)
     const dialogRef = useRef()
+    const addItemToListRef = useRef()
 
     function deleteSelectedItems() {
         shoppingList.filter(item => item.selected === true)
@@ -34,10 +32,19 @@ export default function ShoppingListPage() {
         dialogRef.current.close()
     }
 
+    function openAddItemEl() {
+        addItemToListRef.current.showModal()
+    }
+
+    function closeAddItemToListEl() {
+        addItemToListRef.current.close()
+    }
+
     return (
         <ShoppingListPageContext.Provider value={{
             openConfirmDialog,
-            shoppingList
+            shoppingList,
+            openAddItemEl
         }}>
             <header className="bg-white/10 px-4 py-2 text-lg grid grid-cols-6 mb-4">
                 <h1 className="col-span-4 col-start-2 text-center">Shopping List</h1>
@@ -57,6 +64,12 @@ export default function ShoppingListPage() {
                 ref={dialogRef}
                 onCancel={closeConfirmDialog}
             />
+
+            <AddItemToListEl 
+                onCancel={closeAddItemToListEl}
+                ref={addItemToListRef}
+            />
+
         </ShoppingListPageContext.Provider>
     )
 }
