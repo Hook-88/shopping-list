@@ -77,7 +77,7 @@ export default function AddItemToListEl({shoppingList}) {
     
     return (
         <dialog ref={dialogRef}>
-            <div className="fixed inset-0 w-full h-full bg-black/20 backdrop-blur-sm text-white flex flex-col gap-4 justify-end items-center px-4">
+            <div className="fixed inset-0 w-full h-full bg-black/20 backdrop-blur-sm text-white flex flex-col gap-4 justify-end items-center px-4 pb-4">
                 {
                     bannerTekst && (
                         <div className="bg-green-200/40 backdrop-blur w-full rounded border border-white/10 text-center flex-grow-0 py-4">
@@ -127,7 +127,7 @@ export default function AddItemToListEl({shoppingList}) {
                                 type="button"
                                 onClick={closeModal}
                             >
-                                Cancel
+                                Close
                             </button>
 
                         </div>
