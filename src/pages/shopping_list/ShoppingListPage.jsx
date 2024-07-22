@@ -1,9 +1,18 @@
 import MenuShoppingList from "./MenuShoppingList"
 import ListShoppingList from "./ListShoppingList"
 import useShoppingList from "../../hooks/useShoppingList"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
+import { db } from "../../firebase/firebase"
 
 export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
+
+    async function toggleSelectFirebaseItem(docId) {
+        const docRef = doc(db, "shoppingList", docId)
+        const docSnap = await getDoc(docRef)
+
+        await updateDoc(docRef, { selected: !docSnap.data().selected })
+    }
     
     return (
         <>

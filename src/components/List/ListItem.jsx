@@ -1,7 +1,7 @@
-export default function ListItem({children}) {
+export default function ListItem({children, onClick}) {
     
     return (
-        <li>
+        <li onClick={onClick}>
             {children}
         </li>
     )
