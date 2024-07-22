@@ -22,7 +22,7 @@ export default function ConfirmDeleteDialog(props, ref) {
     return (
         <dialog ref={ref}>
             <div className="bg-black/10 backdrop-blur fixed inset-0 flex flex-col justify-center px-4">
-                <Card className="text-center text-white px-2 pt-4">
+                <Card className="text-center text-white px-2 pt-4 bg-[#1a1a1a]">
                     <p className="mb-4">
                         {question}
                     </p>

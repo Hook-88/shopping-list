@@ -1,9 +1,11 @@
 import { FaEllipsis } from "react-icons/fa6"
 import Menu from "../../components/Menu/Menu"
+import { useContext } from "react"
+import { ShoppingListPageContext } from "./ShoppingListPage"
 
-export default function MenuShoppingList({deleteItemsFn}) {
-
-
+export default function MenuShoppingList() {
+    const { openConfirmDialog, shoppingList } = useContext(ShoppingListPageContext)
+    const someItemsSelected = shoppingList ? shoppingList.some(item => item.selected === true) : false
     
     return (
         <Menu>
@@ -18,8 +20,9 @@ export default function MenuShoppingList({deleteItemsFn}) {
                 </Menu.Item>
                 <Menu.Item>
                     <button 
-                        className="px-4 py-2"
-                        onClick={deleteItemsFn}
+                        className="px-4 py-2 disabled:text-white/30"
+                        onClick={openConfirmDialog}
+                        disabled={!someItemsSelected}
                     >
                         Remove
                     </button>

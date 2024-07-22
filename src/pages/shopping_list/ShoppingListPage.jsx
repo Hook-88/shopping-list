@@ -7,8 +7,10 @@ import deleteShoppingListFirebaseDoc from "../../firebase/utility/deleteShopping
 import Card from "../../components/Card"
 import Button from "../../components/Button"
 import {ConfirmDeleteDialogEl} from "./ConfirmDeleteDialogEl"
-import { useRef } from "react"
+import { createContext, useRef } from "react"
 import { useStore } from "../../store/store"
+
+const ShoppingListPageContext = createContext()
 
 export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
@@ -33,12 +35,13 @@ export default function ShoppingListPage() {
     }
 
     return (
-        <>
+        <ShoppingListPageContext.Provider value={{
+            openConfirmDialog,
+            shoppingList
+        }}>
             <header className="bg-white/10 px-4 py-2 text-lg grid grid-cols-6 mb-4">
                 <h1 className="col-span-4 col-start-2 text-center">Shopping List</h1>
-                <MenuShoppingList 
-                    deleteItemsFn={openConfirmDialog}
-                />
+                <MenuShoppingList />
             </header>
             <main className="px-4">
                 {
@@ -54,6 +57,8 @@ export default function ShoppingListPage() {
                 ref={dialogRef}
                 onCancel={closeConfirmDialog}
             />
-        </>
+        </ShoppingListPageContext.Provider>
     )
 }
+
+export { ShoppingListPageContext }
