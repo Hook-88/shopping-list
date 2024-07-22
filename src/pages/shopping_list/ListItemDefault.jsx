@@ -1,7 +1,8 @@
 import Card from "../../components/Card"
-import { FaMinus, FaPlus } from "react-icons/fa6"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import modifyQuantityFirebaseItem from "../../firebase/utility/modifyQuantityFirebaseItem"
+import ButtonIncrement from "./ButtonIncrement"
+import ButtonDecrement from "./ButtonDecrement"
 
 export default function ListItemDefault({item}) {
 
@@ -24,21 +25,14 @@ export default function ListItemDefault({item}) {
             <div className="flex gap-2">
                 {
                     item.quantity > 1 && (
-                        <button 
-                            className="p-1.5 border border-white/30 rounded bg-red-900"
+                        <ButtonDecrement 
                             onClick={handleClickDecrement}
-                        >
-                            <FaMinus />
-                        </button>
+                        />
                     )
                 }
-                <button 
-                    className="p-1.5 border border-white/30 rounded bg-sky-900"
+                <ButtonIncrement 
                     onClick={handleClickIncrement}
-                >
-                    <FaPlus />  
-                </button>
-
+                />
             </div>
         </Card>
     )
