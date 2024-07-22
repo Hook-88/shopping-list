@@ -6,6 +6,8 @@ import {ConfirmDeleteDialogEl} from "./ConfirmDeleteDialogEl"
 import { createContext, useRef } from "react"
 import { useStore } from "../../store/store"
 import { AddItemToListEl } from "./AddItemToListEl"
+import Card from "../../components/Card"
+import Button from "../../components/Button"
 
 const ShoppingListPageContext = createContext()
 
@@ -52,12 +54,22 @@ export default function ShoppingListPage() {
             </header>
             <main className="px-4">
                 {
-                    shoppingList ? (
+                    shoppingList && shoppingList.length > 0 ? (
                         <ListShoppingList 
                             itemsArr={shoppingList}
                         />
-                    ) : "Loading..."
-                }   
+                    ) : (
+                        <Card className="py-3">
+                            <Button 
+                                className="w-full bg-green-900"
+                                onClick={openAddItemEl}
+                            >
+                                Start adding items
+                            </Button>
+                        </Card>  
+                    )
+                }
+                 
             </main>
 
             <ConfirmDeleteDialogEl 
