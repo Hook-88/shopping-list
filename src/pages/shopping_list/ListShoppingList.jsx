@@ -5,7 +5,6 @@ import toggleSelectFirebaseItem from "../../firebase/utility/toggleSelectFirebas
 
 export default function ListShoppingList({itemsArr}) {
 
-    
     return (
         <List 
             listItemsArr={itemsArr}
@@ -21,7 +20,9 @@ export default function ListShoppingList({itemsArr}) {
                             onClick={() => toggleSelectFirebaseItem(item.id)}
                         >
                             {
-                                item.selected ? <ListItemSelected item={item} /> : <ListItemDefault  item={item}/>
+                                item.selected ? 
+                                    <ListItemSelected item={item} /> : 
+                                    <ListItemDefault  item={item}/>
                             }
                         </List.Item>
                     ))
