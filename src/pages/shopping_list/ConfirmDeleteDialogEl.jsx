@@ -1,30 +1,35 @@
 import { useStore } from "../../store/store"
 import Card from "../../components/Card"
 import Button from "../../components/Button"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, forwardRef } from "react"
 
-export default function ConfirmDeleteDialog() {
+export default function ConfirmDeleteDialog(props, ref) {
     const confirmDialogObj = useStore(state => state.confirmDialogObj)
-    const dialogRef = useRef()
+    const question = confirmDialogObj?.question ? confirmDialogObj.question : "Are you positive?"
 
     function closeDialog() {
-        dialogRef.current.close()
+        props.onCancel()
     }
 
-    useEffect(() => {
+    function handleOnConfirm() {
+        confirmDialogObj.onConfirm()
+        setTimeout(() => {
+            closeDialog()
+        }, 100)
 
-    }, [])
+    }
 
     return (
-        <dialog ref={dialogRef}>
+        <dialog ref={ref}>
             <div className="bg-black/10 backdrop-blur fixed inset-0 flex flex-col justify-center px-4">
                 <Card className="text-center text-white px-2 pt-4">
                     <p className="mb-4">
-                        Are you sure?
+                        {question}
                     </p>
                     <div className="flex gap-2">
                         <Button
                             className="bg-green-900 flex-grow"
+                            onClick={handleOnConfirm}
                         >
                             Yes
                         </Button>
@@ -41,3 +46,5 @@ export default function ConfirmDeleteDialog() {
         </dialog>
     )
 }
+
+export const ConfirmDeleteDialogEl = forwardRef(ConfirmDeleteDialog)
