@@ -1,6 +1,9 @@
 import List from "../../components/List/List"
+import ListItemDefault from "./ListItemDefault"
+import ListItemSelected from "./ListItemSelected"
 
 export default function ListShoppingList({itemsArr}) {
+
     
     return (
         <List 
@@ -13,7 +16,9 @@ export default function ListShoppingList({itemsArr}) {
                 {
                     itemsArr.map(item => (
                         <List.Item key={item.id}>
-                            {item.name}
+                            {
+                                item.selected ? <ListItemSelected item={item} /> : <ListItemDefault  item={item}/>
+                            }
                         </List.Item>
                     ))
                 }
