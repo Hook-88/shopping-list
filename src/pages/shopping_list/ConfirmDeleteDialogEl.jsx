@@ -1,7 +1,7 @@
 import { useStore } from "../../store/store"
 import Card from "../../components/Card"
 import Button from "../../components/Button"
-import { useEffect, useRef, forwardRef } from "react"
+import { forwardRef } from "react"
 
 export default function ConfirmDeleteDialog(props, ref) {
     const confirmDialogObj = useStore(state => state.confirmDialogObj)

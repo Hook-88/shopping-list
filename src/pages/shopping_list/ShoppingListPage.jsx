@@ -2,13 +2,12 @@ import MenuShoppingList from "./MenuShoppingList"
 import ListShoppingList from "./ListShoppingList"
 import useShoppingList from "../../hooks/useShoppingList"
 import deleteShoppingListFirebaseDoc from "../../firebase/utility/deleteShoppingListFirebaseDoc"
-import {ConfirmDeleteDialogEl} from "./ConfirmDeleteDialogEl"
+import { ConfirmDeleteDialogEl } from "./ConfirmDeleteDialogEl"
 import { createContext, useRef } from "react"
 import { useStore } from "../../store/store"
 import { AddItemToListEl } from "./AddItemToListEl"
 import Card from "../../components/Card"
 import Button from "../../components/Button"
-import useFilter from "../../hooks/useFilter"
 
 const ShoppingListPageContext = createContext()
 
