@@ -2,7 +2,28 @@ import { create } from 'zustand'
 
 export const useStore = create((set) => ({
     confirmDialogObj: null,
-    updateConfirmDialogObj: (newObj) => set({ confirmDialogObj: newObj })
+    updateConfirmDialogObj: (newObj) => set({ confirmDialogObj: newObj }),
+
+    listFilters: [],
+    clearFilters: () => set({ listFilters: [] }),
+    addFilter: filterString => set(state => {
+        if (!state.listFilters.includes(filterString)) {
+            return {
+                listFilters: [...state.listFilters, filterString]
+            }
+        }
+
+        return { listFilters: state.listFilters }
+    }),
+    removeFilter: filterString => set(state => {
+        if (state.listFilters.includes(filterString)) {
+            return {
+                listFilters: state.listFilters.filter(filter => filter !== filterString)
+            }
+        }
+
+        return { listFilters: state.listFilters }
+    })
 
 
     // bears: 0,

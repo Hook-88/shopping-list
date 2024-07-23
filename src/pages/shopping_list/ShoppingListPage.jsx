@@ -8,6 +8,7 @@ import { useStore } from "../../store/store"
 import { AddItemToListEl } from "./AddItemToListEl"
 import Card from "../../components/Card"
 import Button from "../../components/Button"
+import useFilter from "../../hooks/useFilter"
 
 const ShoppingListPageContext = createContext()
 
@@ -46,7 +47,7 @@ export default function ShoppingListPage() {
         <ShoppingListPageContext.Provider value={{
             openConfirmDialog,
             shoppingList,
-            openAddItemEl
+            openAddItemEl,
         }}>
             <header className="bg-white/10 px-4 py-2 text-lg grid grid-cols-6 mb-4">
                 <h1 className="col-span-4 col-start-2 text-center">Shopping List</h1>
@@ -69,7 +70,6 @@ export default function ShoppingListPage() {
                         </Card>  
                     )
                 }
-                 
             </main>
 
             <ConfirmDeleteDialogEl 

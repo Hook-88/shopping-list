@@ -5,6 +5,7 @@ import { useEffect, useRef, forwardRef } from "react"
 
 export default function ConfirmDeleteDialog(props, ref) {
     const confirmDialogObj = useStore(state => state.confirmDialogObj)
+    const clearFilters = useStore(state => state.clearFilters)
     const question = confirmDialogObj?.question ? confirmDialogObj.question : "Are you positive?"
 
     function closeDialog() {
@@ -13,7 +14,9 @@ export default function ConfirmDeleteDialog(props, ref) {
 
     function handleOnConfirm() {
         confirmDialogObj.onConfirm()
+
         setTimeout(() => {
+            clearFilters()
             closeDialog()
         }, 100)
 
