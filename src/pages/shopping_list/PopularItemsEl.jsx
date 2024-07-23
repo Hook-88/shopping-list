@@ -16,6 +16,7 @@ export default function PopularItemsEl() {
         const shoppingListStringArr = shoppingList?.map(item => item.name)
         const shoppingListHistoryStringArr = shoppingListHistory?.map(historyItem => historyItem.name)
         const filteredArr = shoppingListHistoryStringArr?.filter(item => {
+            
             if (shoppingListStringArr.includes(item)) {
                 return false
             }
@@ -48,7 +49,7 @@ export default function PopularItemsEl() {
         popularItems?.length > 0 ?
         <ul className="flex flex-wrap-reverse gap-2 mb-4">
             {
-                popularItems.slice(0, 5)
+                popularItems?.slice(0, 5)
                     .map(item => (
                         <li 
                             key={item}
