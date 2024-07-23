@@ -4,8 +4,12 @@ import Button from "../../components/Button"
 import { useEffect, useRef, forwardRef } from "react"
 import { useForm } from "react-hook-form"
 import addFirebaseDocToShoppingList from "../../firebase/utility/addFirebaseDocToShoppingList"
+import Banner from "../../components/Banner"
+import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 
 export default function AddItemToList(props, ref) {
+    const setBannerText = useStore(state => state.setBannerText)
+    const clearBanner = useStore(state => state.clearBanner)
     const { reset, handleSubmit, register } = useForm({
         defaultValues: {
             itemName: ""
@@ -24,13 +28,24 @@ export default function AddItemToList(props, ref) {
         }
 
         addFirebaseDocToShoppingList(itemObj)
+        handleBanner(itemObj.name)
         reset()
+    }
+
+    function handleBanner(itemName) {
+        setBannerText(`${getStringFirstCharCap(itemName)} added to shopping list`)
+        setTimeout(() => {
+            clearBanner()
+        }, 1000)
     }
 
     return (
         <dialog ref={ref}>
-            <div className="bg-black/10 backdrop-blur fixed inset-0 flex flex-col justify-center px-4">
-                <Card className="text-center text-white px-2 bg-[#1a1a1a]">
+            <div className="bg-black/10 backdrop-blur fixed inset-0 flex flex-col justify-end px-4 pb-4">
+                
+                <Banner />
+
+                <Card className="text-center text-white px-2 bg-[#1a1a1a] mt-4">
                     <form className="grid gap-2" onSubmit={handleSubmit(handleOnSubmit)}>
                         <input 
                             type="text"

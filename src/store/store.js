@@ -23,7 +23,11 @@ export const useStore = create((set) => ({
         }
 
         return { listFilters: state.listFilters }
-    })
+    }),
+
+    banner: null,
+    setBannerText: textString => set(state => ({ banner: {...state.banner, bannerText: textString}})),
+    clearBanner: () => set({ banner: null })
 
 
     // bears: 0,
