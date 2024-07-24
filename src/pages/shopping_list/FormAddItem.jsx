@@ -3,8 +3,7 @@ import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
 import addFirebaseDocToShoppingList from "../../firebase/utility/addFirebaseDocToShoppingList"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
-import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore"
-import { db } from "../../firebase/firebase"
+import logItemInFirebaseHistory from "../../firebase/utility/logItemInFirebaseHistory"
 
 export default function FormAddItem({onCancel}) {
     const setBannerText = useStore(state => state.setBannerText)
@@ -28,7 +27,7 @@ export default function FormAddItem({onCancel}) {
 
         addFirebaseDocToShoppingList(itemObj)
         handleBanner(itemObj.name)
-        logItemInHistory(itemObj.name)
+        logItemInFirebaseHistory(itemObj.name)
         reset()
     }
 
@@ -37,33 +36,6 @@ export default function FormAddItem({onCancel}) {
         setTimeout(() => {
             clearBanner()
         }, 1000)
-    }
-
-    async function logItemInHistory(itemName) {
-        const collectionRef = collection(db, "history/shoppingList/items")
-        const q = query(collectionRef, where("name", "==", itemName))
-        const queryDocs = await getDocs(q)
-        
-
-
-        if (queryDocs.docs.length > 0) {
-            // increment quantity in firebase history
-            queryDocs.forEach(doc => {
-                incrementHistoryItemQuantity(doc.id)
-            })
-
-            return
-        }
-
-        await addDoc(collectionRef, {name: itemName, quantity: 1})
-        
-    }
-
-    async function incrementHistoryItemQuantity(docId) {
-        const docRef = doc(db, "history/shoppingList/items", docId)
-        const docSnap = await getDoc(docRef)
-
-        await updateDoc(docRef, { quantity: docSnap.data().quantity + 1 })
     }
 
     return (
