@@ -10,7 +10,7 @@ export default function MainShoppingListPage() {
     
     return (
         <PageMain>
-            {
+            {/* {
                 shoppingList && shoppingList.length > 0 ? (
                     <ListShoppingList 
                         itemsArr={shoppingList}
@@ -25,6 +25,22 @@ export default function MainShoppingListPage() {
                         </Button>
                     </Card>  
                 )
+            } */}
+            {
+                shoppingList && shoppingList.length > 0 ? (
+                    <ListShoppingList 
+                        itemsArr={shoppingList}
+                    />
+                ) : shoppingList?.length === 0 ? (
+                    <Card className="py-3">
+                        <Button 
+                            className="w-full bg-green-900"
+                            onClick={openAddItemEl}
+                        >
+                            Start adding items
+                        </Button>
+                    </Card> 
+                ) : "Loading..."
             }
         </PageMain>
     )
