@@ -52,8 +52,6 @@ export default function PopularItemsEl() {
         const collectionRef = collection(db, "history/shoppingList/items")
         const q = query(collectionRef, where("name", "==", itemName))
         const queryDocs = await getDocs(q)
-        
-
 
         if (queryDocs.docs.length > 0) {
             // increment quantity in firebase history
