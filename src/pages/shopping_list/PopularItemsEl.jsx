@@ -42,6 +42,7 @@ export default function PopularItemsEl() {
 
     function handleBanner(itemName) {
         setBannerText(`${getStringFirstCharCap(itemName)} added to shopping list`)
+        
         setTimeout(() => {
             clearBanner()
         }, 1000)
