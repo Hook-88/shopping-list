@@ -23,7 +23,7 @@ export default function MainShoppingListPage() {
                         >
                             Start adding items
                         </Button>
-                    </Card> 
+                    </Card>     
                 ) : "Loading..."
             }
         </PageMain>

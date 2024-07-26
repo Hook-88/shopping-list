@@ -33,6 +33,7 @@ export default function FormAddItem({onCancel}) {
 
     function handleBanner(itemName) {
         setBannerText(`${getStringFirstCharCap(itemName)} added to shopping list`)
+        
         setTimeout(() => {
             clearBanner()
         }, 1000)

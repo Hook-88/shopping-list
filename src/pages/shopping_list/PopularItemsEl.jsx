@@ -49,20 +49,21 @@ export default function PopularItemsEl() {
     }
 
     return (
-        popularItems?.length > 0 ?
-        <ul className="flex flex-wrap-reverse gap-2 mb-4">
-            {
-                popularItems?.slice(0, 5)
-                    .map(item => (
-                        <li 
-                            key={item}
-                            className="border rounded py-2 px-4 flex-grow"
-                            onClick={() => handleClick(item)}
-                        >
-                            {getStringFirstCharCap(item)}
-                        </li>
-                    ))
-            }
-        </ul> : null
+        popularItems?.length > 0 ? (
+            <ul className="flex flex-wrap-reverse gap-2 mb-4">
+                {
+                    popularItems.slice(0, 5)
+                        .map(item => (
+                            <li 
+                                key={item}
+                                className="border rounded py-2 px-4 flex-grow"
+                                onClick={() => handleClick(item)}
+                            >
+                                {getStringFirstCharCap(item)}
+                            </li>
+                        ))
+                }
+            </ul>
+        ) : null
     )
 }
