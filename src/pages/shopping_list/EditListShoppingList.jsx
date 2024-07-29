@@ -6,8 +6,10 @@ import { useContext } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
 import { useStore } from "../../store/store"
 import ListQuickFilterButton from "./ListQuickFilterButton"
+import EditListItemDefault from "./EditListItemDefault"
+import EditListItemSelected from "./EditListItemSelected"
 
-export default function ListShoppingList({itemsArr}) {
+export default function EditListShoppingList({itemsArr}) {
     const { openConfirmDialog } = useContext(ShoppingListPageContext)
     const listFilters = useStore(state => state.listFilters)
     const listItemsArray = listFilters.length > 0 ? itemsArr.filter(item => item.selected === false) : itemsArr
@@ -17,23 +19,23 @@ export default function ListShoppingList({itemsArr}) {
             listItemsArr={itemsArr}
         >
             <List.Header>
-                <List.Progress onClick={openConfirmDialog}/>
-                <ListQuickFilterButton 
-                    disabledValue={!itemsArr.some(item => item.selected === true)}
-                />
+                <small className="text-center w-full">
+                    Select item to edit
+                </small>
             </List.Header>
             <List.Body>
                 {
                     listItemsArray.map(item => (
                         <List.Item 
                             key={item.id}
-                            onClick={() => toggleSelectFirebaseItem(item.id)}
-                            className="border rounded border-transparent"
+                            // onClick={() => toggleSelectFirebaseItem(item.id)}
+                            // className={"border rounded" + item.selected ? "border-white" : "border-transparent"}
+                            className={`border rounded ${item.selected ? "border-white/40" : "border-transparent"}`}
                         >
                             {
                                 item.selected ? 
-                                    <ListItemSelected item={item} /> : 
-                                    <ListItemDefault  item={item}/>
+                                    <EditListItemSelected item={item} /> : 
+                                    <EditListItemDefault  item={item}/>
                             }
                         </List.Item>
                     ))

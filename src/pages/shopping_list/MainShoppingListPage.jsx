@@ -4,6 +4,7 @@ import ListShoppingList from "./ListShoppingList"
 import Button from "../../components/Button"
 import { useContext } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
+import EditListShoppingList from "./EditListShoppingList"
 
 export default function MainShoppingListPage() {
     const { shoppingList, openAddItemEl } = useContext(ShoppingListPageContext)
@@ -12,7 +13,7 @@ export default function MainShoppingListPage() {
         <PageMain>
             {
                 shoppingList && shoppingList.length > 0 ? (
-                    <ListShoppingList 
+                    <EditListShoppingList 
                         itemsArr={shoppingList}
                     />
                 ) : shoppingList?.length === 0 ? (
