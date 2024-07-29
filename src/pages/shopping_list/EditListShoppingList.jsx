@@ -2,7 +2,7 @@ import List from "../../components/List/List"
 import ListItemDefault from "./ListItemDefault"
 import ListItemSelected from "./ListItemSelected"
 import toggleSelectFirebaseItem from "../../firebase/utility/toggleSelectFirebaseItem"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
 import { useStore } from "../../store/store"
 import ListQuickFilterButton from "./ListQuickFilterButton"
@@ -10,9 +10,20 @@ import EditListItemDefault from "./EditListItemDefault"
 import EditListItemSelected from "./EditListItemSelected"
 
 export default function EditListShoppingList({itemsArr}) {
-    const { openConfirmDialog } = useContext(ShoppingListPageContext)
-    const listFilters = useStore(state => state.listFilters)
-    const listItemsArray = listFilters.length > 0 ? itemsArr.filter(item => item.selected === false) : itemsArr
+    const [editItemsArr, setEditItemsArr] = useState([])
+
+    useEffect(() => {
+        setEditItemsArr(itemsArr.map(item => ({...item, selected: false})))
+    }, [])
+
+    function selectItem(itemId) {
+        setEditItemsArr(prevItems => 
+            prevItems.map(item => item.id === itemId ? 
+                {...item, selected: true} : 
+                {...item, selected: false}
+            )
+        )
+    }
 
     return (
         <List 
@@ -25,12 +36,11 @@ export default function EditListShoppingList({itemsArr}) {
             </List.Header>
             <List.Body>
                 {
-                    listItemsArray.map(item => (
+                    editItemsArr.map(item => (
                         <List.Item 
                             key={item.id}
-                            // onClick={() => toggleSelectFirebaseItem(item.id)}
-                            // className={"border rounded" + item.selected ? "border-white" : "border-transparent"}
                             className={`border rounded ${item.selected ? "border-white/40" : "border-transparent"}`}
+                            onClick={() => selectItem(item.id)}
                         >
                             {
                                 item.selected ? 
