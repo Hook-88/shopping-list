@@ -4,17 +4,34 @@ import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import Button from "../../components/Button"
 import { FaEdit } from "react-icons/fa"
 import { useForm } from "react-hook-form"
+import updateFirebaseShoppingListDoc from "../../firebase/utility/updateFirebaseShoppingListDoc"
 
-export default function EditListItemSelected({item}) {
+export default function EditListItemSelected({item, onCancel}) {
     const {register, reset, handleSubmit} = useForm({
         defaultValues: {
             itemName: getStringFirstCharCap(item?.name)
         }
     })
+
+    function onSubmit(formData) {
+        const string = formData.itemName.trim().toLowerCase()
+        updateFirebaseShoppingListDoc(item.id, string)
+        setTimeout(() => {
+            onCancel()
+        }, 50)
+    }
+
+    function handleCancel(event) {
+        event.stopPropagation()
+        onCancel()
+        reset()
+    }
+
+
     
     return (
         <Card className="py-3 px-2 grid">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <input 
                     type="text" 
                     placeholder="item..."
@@ -33,6 +50,7 @@ export default function EditListItemSelected({item}) {
                 <Button
                     className="bg-red-900"
                     type="button"
+                    onClick={e => handleCancel(e)}
                 >
                     Cancel
                 </Button>

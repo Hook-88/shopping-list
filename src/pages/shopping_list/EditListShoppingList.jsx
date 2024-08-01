@@ -14,7 +14,7 @@ export default function EditListShoppingList({itemsArr}) {
 
     useEffect(() => {
         setEditItemsArr(itemsArr.map(item => ({...item, selected: false})))
-    }, [])
+    }, [itemsArr])
 
     function selectItem(itemId) {
         setEditItemsArr(prevItems => 
@@ -23,6 +23,10 @@ export default function EditListShoppingList({itemsArr}) {
                 {...item, selected: false}
             )
         )
+    }
+
+    function selectNone() {
+        setEditItemsArr(prevItems => prevItems.map(item => ({...item, selected: false})))
     }
 
     return (
@@ -43,9 +47,14 @@ export default function EditListShoppingList({itemsArr}) {
                             onClick={() => selectItem(item.id)}
                         >
                             {
-                                item.selected ? 
-                                    <EditListItemSelected item={item} /> : 
-                                    <EditListItemDefault  item={item}/>
+                                item.selected ? (
+                                    <EditListItemSelected 
+                                        item={item}
+                                        onCancel={selectNone} 
+                                    /> ) : (
+                                    <EditListItemDefault  
+                                        item={item}
+                                    /> )
                             }
                         </List.Item>
                     ))

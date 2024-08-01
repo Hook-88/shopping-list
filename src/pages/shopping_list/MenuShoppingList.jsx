@@ -4,7 +4,7 @@ import { useContext } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
 
 export default function MenuShoppingList() {
-    const { openConfirmDialog, shoppingList, openAddItemEl } = useContext(ShoppingListPageContext)
+    const { openConfirmDialog, shoppingList, openAddItemEl, toggleEditItemsView, editItemsView } = useContext(ShoppingListPageContext)
     const someItemsSelected = shoppingList ? shoppingList.some(item => item.selected === true) : false
     
     return (
@@ -28,6 +28,17 @@ export default function MenuShoppingList() {
                         disabled={!someItemsSelected}
                     >
                         Remove
+                    </button>
+                </Menu.Item>
+                <Menu.Item>
+                    <button 
+                        className="px-4 py-2 disabled:text-white/30"
+                        onClick={toggleEditItemsView}
+                        // disabled={!someItemsSelected}
+                    >
+                        {
+                            editItemsView ? "Shop" : "Edit"
+                        } 
                     </button>
                 </Menu.Item>
             </Menu.Dropdown>

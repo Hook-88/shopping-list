@@ -1,10 +1,9 @@
 import PageMain from "../../components/PageMain"
 import Card from "../../components/Card"
-import ListShoppingList from "./ListShoppingList"
 import Button from "../../components/Button"
 import { useContext } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
-import EditListShoppingList from "./EditListShoppingList"
+import ListShoppingListEl from "./ListShoppingListEl"
 
 export default function MainShoppingListPage() {
     const { shoppingList, openAddItemEl } = useContext(ShoppingListPageContext)
@@ -13,9 +12,7 @@ export default function MainShoppingListPage() {
         <PageMain>
             {
                 shoppingList && shoppingList.length > 0 ? (
-                    <EditListShoppingList 
-                        itemsArr={shoppingList}
-                    />
+                    <ListShoppingListEl />
                 ) : shoppingList?.length === 0 ? (
                     <Card className="py-3">
                         <Button 

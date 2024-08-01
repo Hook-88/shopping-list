@@ -1,7 +1,7 @@
 import useShoppingList from "../../hooks/useShoppingList"
 import deleteShoppingListFirebaseDoc from "../../firebase/utility/deleteShoppingListFirebaseDoc"
 import { ConfirmDeleteDialogEl } from "./ConfirmDeleteDialogEl"
-import { createContext, useRef } from "react"
+import { createContext, useRef, useState } from "react"
 import { useStore } from "../../store/store"
 import { AddItemToListEl } from "./AddItemToListEl"
 import HeaderShoppingListPage from "./HeaderShoppingListPage"
@@ -12,6 +12,7 @@ const ShoppingListPageContext = createContext()
 export default function ShoppingListPage() {
     const shoppingList = useShoppingList()
     const updateConfirmDialogObj = useStore(state => state.updateConfirmDialogObj)
+    const [editItemsView, setEditItemsView] = useState(false)
     const dialogRef = useRef()
     const addItemToListRef = useRef()
 
@@ -40,13 +41,20 @@ export default function ShoppingListPage() {
         addItemToListRef.current.showModal()
     }
 
+    function toggleEditItemsView() {
+        setEditItemsView(prev => !prev)
+    }
+
     return (
         <ShoppingListPageContext.Provider value={{
             openConfirmDialog,
             shoppingList,
             openAddItemEl,
+            editItemsView,
+            toggleEditItemsView
         }}>
             <HeaderShoppingListPage />
+
             <MainShoppingListPage />
 
             <ConfirmDeleteDialogEl 
