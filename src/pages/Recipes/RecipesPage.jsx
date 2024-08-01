@@ -5,6 +5,8 @@ import { createContext, useEffect, useRef, useState } from "react"
 import useRecipes from "../../hooks/useRecipes"
 import HeaderRecipesPage from "./HeaderRecipesPage"
 import MainRecipesPage from "./MainRecipesPage"
+import Button from "../../components/Button"
+import AddRecipeEl from "./AddRecipeEl"
 
 const RecipesPageContext = createContext()
 
@@ -15,10 +17,15 @@ export default function RecipesPage() {
     function openDialog() {
         dialogRef.current.showModal()
     }
+
+    function closeDialog() {
+        dialogRef.current.close()
+    }
     
     return (
         <RecipesPageContext.Provider value={{
             openDialog,
+            closeDialog,
             recipes
         }}>
             <HeaderRecipesPage />
@@ -30,11 +37,8 @@ export default function RecipesPage() {
                         bg-black/10 backdrop-blur fixed inset-0 
                         flex flex-col justify-end px-4 pb-4
                     "
-                >    
-
-                    <Card className="text-center text-white px-2 bg-[#1a1a1a] mt-4">
-                        here the form
-                    </Card>
+                >
+                    <AddRecipeEl />    
                 </div>
             </dialog>
 
