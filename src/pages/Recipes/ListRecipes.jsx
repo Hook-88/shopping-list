@@ -25,17 +25,6 @@ export default function ListRecipes({listItemArr}) {
                         </List.Item>
                     ))
                 }
-                {/* <List.Item>
-                    <Link 
-                        className="
-                            border border-blue-700/60 bg-transparent text-blue-700 
-                            flex items-center justify-between px-4 py-2 rounded
-                        "
-                    >
-                        Arepas
-                        <FaAngleRight />
-                    </Link>
-                </List.Item> */}
             </List.Body>
         </List>
     )
