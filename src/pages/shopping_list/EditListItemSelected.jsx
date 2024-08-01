@@ -5,8 +5,11 @@ import Button from "../../components/Button"
 import { FaEdit } from "react-icons/fa"
 import { useForm } from "react-hook-form"
 import updateFirebaseShoppingListDoc from "../../firebase/utility/updateFirebaseShoppingListDoc"
+import { useContext } from "react"
+import { ShoppingListPageContext } from "./ShoppingListPage"
 
 export default function EditListItemSelected({item, onCancel}) {
+    const { toggleEditItemsView } = useContext(ShoppingListPageContext)
     const {register, reset, handleSubmit} = useForm({
         defaultValues: {
             itemName: getStringFirstCharCap(item?.name)
@@ -18,6 +21,7 @@ export default function EditListItemSelected({item, onCancel}) {
         updateFirebaseShoppingListDoc(item.id, string)
         setTimeout(() => {
             onCancel()
+            toggleEditItemsView()
         }, 50)
     }
 

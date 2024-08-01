@@ -34,7 +34,6 @@ export default function MenuShoppingList() {
                     <button 
                         className="px-4 py-2 disabled:text-white/30"
                         onClick={toggleEditItemsView}
-                        // disabled={!someItemsSelected}
                     >
                         {
                             editItemsView ? "Shop" : "Edit"
