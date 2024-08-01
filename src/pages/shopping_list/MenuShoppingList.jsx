@@ -2,6 +2,7 @@ import { FaEllipsis } from "react-icons/fa6"
 import Menu from "../../components/Menu/Menu"
 import { useContext } from "react"
 import { ShoppingListPageContext } from "./ShoppingListPage"
+import { Link } from "react-router-dom"
 
 export default function MenuShoppingList() {
     const { openConfirmDialog, shoppingList, openAddItemEl, toggleEditItemsView, editItemsView } = useContext(ShoppingListPageContext)
@@ -39,6 +40,14 @@ export default function MenuShoppingList() {
                             editItemsView ? "Shop" : "Edit"
                         } 
                     </button>
+                </Menu.Item>
+                <Menu.Item>
+                    <Link 
+                        className="px-4 py-2 block"
+                        to="recipes"
+                    >
+                        Recipes
+                    </Link>
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>

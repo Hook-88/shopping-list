@@ -1,7 +1,13 @@
-export default function MenuItem({children}) {
+import { twMerge } from "tailwind-merge"
+
+export default function MenuItem({children, className}) {
+    const liClassName = twMerge(
+        "border-b border-white/30 last:border-none",
+        className
+    )
     
     return (
-        <li className="border-b border-white/30 last:border-none">
+        <li className={liClassName}>
             {children}
         </li>
     )
