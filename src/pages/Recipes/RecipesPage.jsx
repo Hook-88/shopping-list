@@ -6,25 +6,18 @@ import List from "../../components/List/List"
 import Card from "../../components/Card"
 import ListRecipes from "./ListRecipes"
 import Menu from "../../components/Menu/Menu"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
+import useRecipes from "../../hooks/useRecipes"
 
 export default function RecipesPage() {
-    const [recipes, setRecipes] = useState(null)
+    const recipes = useRecipes()
+    const dialogRef = useRef()
 
-    useEffect(() => {
-        const collectionRef = collection(db, "recipes")
-        const q = query(collectionRef, orderBy("name"))
-        const unsub = onSnapshot(q, collectionSnapshot => {
-            const arr = collectionSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-
-            setRecipes(arr)
-        })
-
-        return unsub
-    }, [])
-
+    function openDialog() {
+        dialogRef.current.showModal()
+    }
     
     return (
         <>
@@ -42,8 +35,13 @@ export default function RecipesPage() {
                         <FaEllipsis />
                     </Menu.Button>
                     <Menu.Dropdown className="right-0 top-10">
-                        <Menu.Item className="px-4 py-2 text-nowrap">
-                            Add Recipe
+                        <Menu.Item>
+                            <button 
+                                className="px-4 py-2 text-nowrap"
+                                onClick={openDialog}
+                            >
+                                Add recipe
+                            </button>
                         </Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
@@ -58,6 +56,21 @@ export default function RecipesPage() {
                 }
                 
             </PageMain>
+
+            <dialog ref={dialogRef}>
+                <div 
+                    className="
+                        bg-black/10 backdrop-blur fixed inset-0 
+                        flex flex-col justify-end px-4 pb-4
+                    "
+                >    
+
+                    <Card className="text-center text-white px-2 bg-[#1a1a1a] mt-4">
+                        here the form
+                    </Card>
+                </div>
+            </dialog>
+
         </>
     )
 }
