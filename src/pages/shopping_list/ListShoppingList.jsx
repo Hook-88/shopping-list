@@ -17,7 +17,7 @@ export default function ListShoppingList({itemsArr}) {
             listItemsArr={itemsArr}
         >
             <List.Header>
-                <List.Progress onClick={openConfirmDialog}/>
+                <List.Progress onClick={openConfirmDialog} allSelectedText="completed"/>
                 <ListQuickFilterButton 
                     disabledValue={!itemsArr.some(item => item.selected === true)}
                 />
