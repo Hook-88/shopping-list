@@ -11,6 +11,7 @@ import useRecipe from "../../hooks/useRecipe"
 import useRecipeIngredients from "../../hooks/useRecipeIngredients"
 import { createContext, useEffect, useState } from "react"
 import ListIngredients from "./ListIngredients"
+import addFirebaseDocToShoppingList from "../../firebase/utility/addFirebaseDocToShoppingList"
 
 const RecipePageContext = createContext()
 
@@ -45,6 +46,20 @@ export default function RecipePage() {
         )
     }
 
+    function addIngredientsToShoppingist() {
+        const selectedIngredients = localIngredients.filter(ingredient => ingredient.selected === true)
+        
+        selectedIngredients.forEach(ingredient => {
+            const ingredientObj = {
+                name: ingredient.name,
+                quantity: 1,
+                selected: false
+            }
+
+            addFirebaseDocToShoppingList(ingredientObj)
+        })
+    }
+
     return ( 
         <RecipePageContext.Provider value={
             {
@@ -70,10 +85,12 @@ export default function RecipePage() {
                     localIngredients &&
                     <Card className="mt-8">
                         <Button
+                            onClick={addIngredientsToShoppingist}
                             disabled={noneSelected} 
                             className="
-                                w-full bg-green-900 disabled:bg-green-900/50 disabled:text-white/50
-
+                                w-full bg-green-900
+                              disabled:bg-green-900/50 
+                              disabled:text-white/50
                             "
                         >
                             Add selection to shopping list
