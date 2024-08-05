@@ -1,15 +1,8 @@
-import PageHeader from "../../components/PageHeader"
-import { Link, useParams } from "react-router-dom"
-import { FaAngleLeft, FaCheck } from "react-icons/fa6"
-import LinkNavBack from "../../components/Link/LinkNavBack"
-import PageMain from "../../components/PageMain"
+import { FaCheck } from "react-icons/fa6"
 import List from "../../components/List/List"
 import Card from "../../components/Card"
-import Button from "../../components/Button"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
-import useRecipe from "../../hooks/useRecipe"
-import useRecipeIngredients from "../../hooks/useRecipeIngredients"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { RecipePageContext } from "./RecipePage"
 
 export default function ListIngredients() {
@@ -19,7 +12,7 @@ export default function ListIngredients() {
         selectAllIngredients 
     }  = useContext(RecipePageContext)
 
-    const allIngredientsSelected = localIngredients.every(ingredient => ingredient.selected === true)
+    const allIngredientsSelected = localIngredients?.every(ingredient => ingredient.selected === true)
 
     return ( 
         localIngredients ? 

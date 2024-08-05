@@ -19,6 +19,7 @@ export default function RecipePage() {
     const recipe = useRecipe(recipeId)
     const ingredients = useRecipeIngredients(recipeId)
     const [localIngredients, setLocalIngrdients] = useState(null)
+    const noneSelected = localIngredients?.every(ingredient => ingredient.selected === false)
 
     useEffect(() => {
         setLocalIngrdients(
@@ -64,12 +65,23 @@ export default function RecipePage() {
             </PageHeader>
             <PageMain>
                 <ListIngredients />
+
+                {
+                    localIngredients &&
+                    <Card className="mt-8">
+                        <Button
+                            disabled={noneSelected} 
+                            className="
+                                w-full bg-green-900 disabled:bg-green-900/50 disabled:text-white/50
+
+                            "
+                        >
+                            Add selection to shopping list
+                        </Button>
+                    </Card>
+                }
                 
-                <Card className="mt-8">
-                    <Button className="w-full bg-green-900">
-                        Add selection to shopping list
-                    </Button>
-                </Card>
+                
             </PageMain>
         </RecipePageContext.Provider>
     )
