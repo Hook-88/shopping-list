@@ -13,7 +13,8 @@ export default function ListRecipes({listItemArr}) {
                     listItemArr.map(recipe => (
                         <List.Item key={recipe.id}>
                             <Link
-                                to={recipe.id} 
+                                to={recipe.id}
+                                state={{recipeName: recipe.name}} 
                                 className="
                                     border border-blue-700/60 bg-transparent text-blue-700 
                                     flex items-center justify-between px-4 py-2 rounded

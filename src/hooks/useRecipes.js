@@ -12,7 +12,6 @@ export default function useRecipes() {
             const arr = collectionSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
 
             setRecipes(arr)
-            console.log(arr)
         })
 
         return unsub
