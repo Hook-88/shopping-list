@@ -9,7 +9,10 @@ import Button from "../../components/Button"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import useRecipe from "../../hooks/useRecipe"
 import useRecipeIngredients from "../../hooks/useRecipeIngredients"
-import { useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
+import ListIngredients from "./ListIngredients"
+
+const RecipePageContext = createContext()
 
 export default function RecipePage() {
     const { recipeId } = useParams()
@@ -34,8 +37,21 @@ export default function RecipePage() {
         )
     }
 
+    function selectAllIngredients(value) {
+        setLocalIngrdients(
+            prevLocalIngredients => prevLocalIngredients
+                .map(ingredient => ({ ...ingredient, selected: value}))
+        )
+    }
+
     return ( 
-        <>
+        <RecipePageContext.Provider value={
+            {
+                localIngredients,
+                selectAllIngredients,
+                toggleSelectIngredient
+            }
+        }>
             <PageHeader>
                 <LinkNavBack />
                 <h1 className="col-span-4 col-start-2 text-center">
@@ -47,59 +63,16 @@ export default function RecipePage() {
                 </h1>
             </PageHeader>
             <PageMain>
-                {
-                    localIngredients ? 
-                    <List listItemsArr={localIngredients}>
-                        <List.Header>
-                            <List.Progress />
-                                <button className="text-xs">
-                                    Select all
-                                </button>
-                        </List.Header>
-                        <List.Body>
-                            {
-                                localIngredients.map(ingredient => {
-                                    
-                                    if (ingredient.selected) {
-                                        
-                                        return (
-                                            <List.Item 
-                                                className="border rounded border-white/50"
-                                                key={ingredient.id}
-                                                onClick={() => toggleSelectIngredient(ingredient.id)}
-                                            >
-                                                <Card className="flex items-center py-3">
-                                                    {ingredient.name}
-                                                    <FaCheck className="ml-auto"/>
-                                                </Card>
-                                            </List.Item>
-                                        )
-                                    }
-
-                                    return (
-                                        <List.Item 
-                                            className="border rounded border-transparent"
-                                            key={ingredient.id}
-                                            onClick={() => toggleSelectIngredient(ingredient.id)}
-                                        >
-                                            <Card className="flex items-center py-3">
-                                                {ingredient.name}
-                                            </Card>
-                                        </List.Item>
-                                    )
-                                })
-                            }
-                        </List.Body>
-                    </List> : "Loading..."
-                }
+                <ListIngredients />
                 
-
                 <Card className="mt-8">
                     <Button className="w-full bg-green-900">
                         Add selection to shopping list
                     </Button>
                 </Card>
             </PageMain>
-        </>
+        </RecipePageContext.Provider>
     )
 }
+
+export { RecipePageContext }
