@@ -9,7 +9,7 @@ import Button from "../../components/Button"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import useRecipe from "../../hooks/useRecipe"
 import useRecipeIngredients from "../../hooks/useRecipeIngredients"
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useRef, useState } from "react"
 import ListIngredients from "./ListIngredients"
 import addFirebaseDocToShoppingList from "../../firebase/utility/addFirebaseDocToShoppingList"
 
@@ -21,6 +21,9 @@ export default function RecipePage() {
     const ingredients = useRecipeIngredients(recipeId)
     const [localIngredients, setLocalIngrdients] = useState(null)
     const noneSelected = localIngredients?.every(ingredient => ingredient.selected === false)
+    const dialogRef = useRef()
+    const [dialogContent, setDialogContent] = useState(null)
+    
 
     useEffect(() => {
         setLocalIngrdients(
@@ -60,6 +63,83 @@ export default function RecipePage() {
         })
     }
 
+    function handleClickAddSelection() {
+        openDialog()
+    }
+
+    function handleAddIngredientsToShoppingList() {
+        addIngredientsToShoppingist()
+        selectAllIngredients(false)
+        setDialogContent(<ConfirmNavigateToShoppingList />)
+    }
+
+    function openDialog() {
+        setDialogContent(<ConfirmAddSelectionModal />)
+        dialogRef.current.showModal()
+    }
+
+    function closeDialog() {
+        dialogRef.current.close()
+    }
+
+    function ConfirmAddSelectionModal() {
+        
+        return (
+            <Card className="text-center text-white px-2 bg-[#1a1a1a] mt-4">
+                <p className="mb-4">
+                    Add selection to shopping list?
+                </p>
+
+                <div className="flex gap-2">
+                    <Button
+                        className="bg-green-900 flex-grow"
+                        onClick={handleAddIngredientsToShoppingList}
+                    >
+                        Yes
+                    </Button>
+
+                    <Button
+                        className="bg-red-900"
+                        onClick={closeDialog}
+                    >
+                        No
+                    </Button>
+                </div>
+            </Card>
+        )
+    }
+
+    function ConfirmNavigateToShoppingList() {
+
+        return (
+            <Card className="text-center text-white px-2 bg-[#1a1a1a] mt-4">
+                <p className="mb-4">
+                    Go to shopping list?
+                </p>
+
+                <div className="flex gap-2">
+                    <Link 
+                        to="/"
+                        className="flex-grow"
+                    >
+                        <Button
+                            className="bg-green-900 w-full"
+                        >
+                            Yes
+                        </Button>
+                    </Link>
+
+                    <Button
+                        className="bg-red-900"
+                        onClick={closeDialog}
+                    >
+                        No
+                    </Button>
+                </div>
+            </Card>
+        )
+    }
+
     return ( 
         <RecipePageContext.Provider value={
             {
@@ -85,7 +165,7 @@ export default function RecipePage() {
                     localIngredients &&
                     <Card className="mt-8">
                         <Button
-                            onClick={addIngredientsToShoppingist}
+                            onClick={handleClickAddSelection}
                             disabled={noneSelected} 
                             className="
                                 w-full bg-green-900
@@ -98,8 +178,14 @@ export default function RecipePage() {
                     </Card>
                 }
                 
-                
             </PageMain>
+
+            <dialog ref={dialogRef}>
+                <div className="bg-black/10 backdrop-blur fixed inset-0 flex flex-col justify-center px-4 pb-4">
+                    {dialogContent}
+                </div>
+            </dialog>
+
         </RecipePageContext.Provider>
     )
 }
