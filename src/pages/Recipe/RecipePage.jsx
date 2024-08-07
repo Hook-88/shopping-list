@@ -12,6 +12,9 @@ import useRecipeIngredients from "../../hooks/useRecipeIngredients"
 import { createContext, useEffect, useRef, useState } from "react"
 import ListIngredients from "./ListIngredients"
 import addFirebaseDocToShoppingList from "../../firebase/utility/addFirebaseDocToShoppingList"
+import { DialogEl } from "../../components/Dialog"
+import Menu from "../../components/Menu/Menu"
+import { FaEllipsis } from "react-icons/fa6"
 
 const RecipePageContext = createContext()
 
@@ -157,6 +160,21 @@ export default function RecipePage() {
                             "Loading..."
                     }
                 </h1>
+                <Menu>
+                    <Menu.Button className="justify-end">
+                        <FaEllipsis />
+                    </Menu.Button>
+                    <Menu.Dropdown className="right-0 top-10">
+                        <Menu.Item>
+                            <Link
+                                to="edit" 
+                                className="px-4 py-2 text-nowrap"
+                            >
+                                Edit recipe
+                            </Link>
+                        </Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
             </PageHeader>
             <PageMain>
                 <ListIngredients />
@@ -180,11 +198,10 @@ export default function RecipePage() {
                 
             </PageMain>
 
-            <dialog ref={dialogRef}>
-                <div className="bg-black/10 backdrop-blur fixed inset-0 flex flex-col justify-center px-4 pb-4">
-                    {dialogContent}
-                </div>
-            </dialog>
+            <DialogEl ref={dialogRef}>
+                {dialogContent}
+            </DialogEl>
+
 
         </RecipePageContext.Provider>
     )
