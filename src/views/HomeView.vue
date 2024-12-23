@@ -2,7 +2,5 @@
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">
-    This is home view
-  </h1>
+  <button class="bg-sky-600 py-2 px-4 rounded">Add new list &plus;</button>
 </template>
