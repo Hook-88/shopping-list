@@ -3,6 +3,6 @@
 
 <template>
   <h1 class="text-3xl font-bold underline">
-    Hello world! wdw
+    This is home view
   </h1>
 </template>
