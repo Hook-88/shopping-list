@@ -8,9 +8,21 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 
   <header class="text-2xl text-center p-2 border-b border-[#d1d2d3]/20 grid grid-cols-6">
     <h1 class="col-start-2 col-span-4">Shopping List</h1>
-    <button class="flex items-center justify-end pr-2">
-      <FontAwesomeIcon :icon="faBars" />
-    </button>
+    <div class="relative grid">
+      <button class="flex items-center justify-end pr-2">
+        <FontAwesomeIcon :icon="faBars" />
+      </button>
+      <ul class="
+          absolute text-xl text-nowrap
+          border border-[#d1d2d3]/20 rounded-sm
+          right-1 top-9
+          backdrop backdrop-blur-sm
+        ">
+        <li class="px-4 py-2 border-b border-[#d1d2d3]/20">New List</li>
+        <li class="px-4 py-2 border-b border-[#d1d2d3]/20">Recipes</li>
+        <li class="px-4 py-2">Settings</li>
+      </ul>
+    </div>
 
     <!-- <nav>
           <RouterLink to="/">Home</RouterLink>
