@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
 
 const isOpen = ref<boolean>(false)
+const dropdownRef = useTemplateRef('dropdown')
 
 function toggleOpen() {
   isOpen.value = !isOpen.value
@@ -11,13 +12,26 @@ function toggleOpen() {
 
 function closeMenu() {
   isOpen.value = false
-
 }
+
+function handleClickDocument(event: MouseEvent) {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target as Node)) {
+    closeMenu()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickDocument)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickDocument)
+})
 
 </script>
 
 <template>
-  <div class="relative grid">
+  <div class="relative grid" ref="dropdown">
     <button class="flex items-center justify-end pr-2" @click="toggleOpen">
       <FontAwesomeIcon :icon="faBars" />
     </button>
