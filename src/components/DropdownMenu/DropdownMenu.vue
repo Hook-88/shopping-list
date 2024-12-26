@@ -1,15 +1,28 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
+import { ref } from 'vue'
+
+const isOpen = ref<boolean>(false)
+
+function toggleOpen() {
+  isOpen.value = !isOpen.value
+}
+
+function closeMenu() {
+  isOpen.value = false
+
+}
+
 </script>
 
 <template>
   <div class="relative grid">
-    <button class="flex items-center justify-end pr-2">
+    <button class="flex items-center justify-end pr-2" @click="toggleOpen">
       <FontAwesomeIcon :icon="faBars" />
     </button>
-    <ul class="
-          absolute text-xl text-nowrap
+    <ul @click="closeMenu" v-if="isOpen" class="
+          absolute text-xl text-nowrap text-right
           border border-[#d1d2d3]/20 rounded-sm
           right-1 top-9
           backdrop backdrop-blur-sm
