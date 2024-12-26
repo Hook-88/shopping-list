@@ -15,16 +15,20 @@ function closeMenu() {
 }
 
 function handleClickDocument(event: MouseEvent) {
+  // check if dropdownRef has the menu as value
+  // check if dropwdown.value does not contain the element that was clicked
   if (dropdownRef.value && !dropdownRef.value.contains(event.target as Node)) {
     closeMenu()
   }
 }
 
 onMounted(() => {
+  //To close menu on outside click
   document.addEventListener('click', handleClickDocument)
 })
 
 onUnmounted(() => {
+  //Remove event to prevent memory leak
   document.removeEventListener('click', handleClickDocument)
 })
 
