@@ -37,7 +37,9 @@ onUnmounted(() => {
 <template>
   <div class="relative grid" ref="dropdown">
     <button class="flex items-center justify-end pr-2" @click="toggleOpen">
-      <FontAwesomeIcon :icon="faBars" />
+      <slot name="button">
+        <FontAwesomeIcon :icon="faBars" />
+      </slot>
     </button>
     <ul @click="closeMenu" v-if="isOpen" class="
           absolute text-xl text-nowrap text-right
@@ -45,9 +47,7 @@ onUnmounted(() => {
           right-1 top-9
           backdrop backdrop-blur-sm
         ">
-      <li class="px-4 py-2 border-b border-[#d1d2d3]/20">New List</li>
-      <li class="px-4 py-2 border-b border-[#d1d2d3]/20">Recipes</li>
-      <li class="px-4 py-2">Settings</li>
+      <slot></slot>
     </ul>
   </div>
 </template>
