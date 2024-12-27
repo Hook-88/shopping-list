@@ -36,3 +36,37 @@ const handleClose = (): void => {
     </div>
   </dialog>
 </template> -->
+
+<script setup lang="ts">
+import { useDialogStore } from '@/stores/dialog'
+import { useTemplateRef, watch } from 'vue';
+const dialogStore = useDialogStore()
+const dialogRef = useTemplateRef('dialog')
+
+watch(() => dialogStore.isOpen, (isOpen: boolean) => {
+  if (isOpen) {
+    dialogRef.value?.showModal()
+    return
+  }
+
+  dialogRef.value?.close()
+})
+
+function handleClose() {
+  dialogStore.close()
+}
+
+</script>
+
+<template>
+  <dialog ref="dialog" @close="handleClose">
+    <div>
+      <header>
+        <h2>{{ dialogStore.dialogTitle }}</h2>
+      </header>
+      <main>
+        <component :is="dialogStore.component" />
+      </main>
+    </div>
+  </dialog>
+</template>
