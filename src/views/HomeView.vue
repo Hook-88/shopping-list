@@ -1,26 +1,7 @@
 <script setup lang="ts">
 import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
-// import { useDialogStore } from '@/stores/dialog'
 import BaseForm from '@/components/Forms/BaseForm.vue'
-import { useDialogStore } from '@/stores/dialog';
-
-// const dialogStore = useDialogStore()
-
-// function handleClickNewList() {
-//   dialogStore.open({
-//     component: BaseForm,
-//     title: 'User Form',
-//   })
-// }
-const dialogStore = useDialogStore()
-
-function handleClickNewList() {
-  dialogStore.open({
-    component: BaseForm,
-    title: 'Add new list...'
-  })
-}
 
 </script>
 
@@ -30,7 +11,7 @@ function handleClickNewList() {
     <h1 class="col-start-2 col-span-4">Shopping List</h1>
     <DropdownMenu>
       <MenuItem>
-      <button @click="handleClickNewList">New List</button>
+      <button>New List</button>
       </MenuItem>
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>
