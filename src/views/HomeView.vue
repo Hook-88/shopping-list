@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
+import { useDialogStore } from '@/stores/dialog'
+import BaseForm from '@/components/Forms/BaseForm.vue'
+
+const dialogStore = useDialogStore()
+
+function handleClickNewList() {
+  dialogStore.open({
+    component: BaseForm,
+    title: 'User Form',
+  })
+}
 
 </script>
 
@@ -9,7 +20,9 @@ import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
   <header class="text-2xl text-center p-2 border-b border-[#d1d2d3]/20 grid grid-cols-6">
     <h1 class="col-start-2 col-span-4">Shopping List</h1>
     <DropdownMenu>
-      <MenuItem>New List</MenuItem>
+      <MenuItem>
+      <button @click="handleClickNewList">New List</button>
+      </MenuItem>
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>
     </DropdownMenu>
