@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useDialogStore } from '@/stores/dialog'
 
@@ -35,4 +35,4 @@ const handleClose = (): void => {
       </main>
     </div>
   </dialog>
-</template>
+</template> -->
