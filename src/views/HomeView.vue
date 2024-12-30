@@ -7,7 +7,9 @@ import { useDialogStore } from '@/stores/dialog'
 const dialogStore = useDialogStore()
 
 function handleClickNewList() {
-  dialogStore.open()
+  dialogStore.open({
+    component: BaseForm
+  })
 }
 
 </script>
