@@ -20,15 +20,17 @@ watch(
 
 function closeModal() {
   dialogStore.close()
+
 }
 
 </script>
 
 <template>
-  <dialog ref="dialogRef" @close="closeModal"
-    class="w-full h-full bg-transparent backdrop:backdrop-blur flex items-center justify-center">
-    <div class="p-4 bg-[#181818] border border-[#d1d2d3]/20 rounded-sm">
-      <BaseForm />
+  <dialog ref="dialogRef" @close="closeModal" class="w-full h-full bg-transparent backdrop:backdrop-blur">
+    <div class="h-full w-full flex items-center justify-center">
+      <div class="p-4 bg-[#181818] border border-[#d1d2d3]/20 rounded-sm">
+        <BaseForm />
+      </div>
     </div>
   </dialog>
 </template>
