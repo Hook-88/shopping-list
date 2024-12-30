@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseForm from '../Forms/BaseForm.vue';
+import BaseForm from '../Forms/BaseForm.vue'
 </script>
 
 <template>
