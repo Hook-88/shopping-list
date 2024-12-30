@@ -8,7 +8,8 @@ const dialogStore = useDialogStore()
 
 function handleClickNewList() {
   dialogStore.open({
-    component: BaseForm
+    component: BaseForm,
+    title: 'Add new list'
   })
 }
 
@@ -33,7 +34,6 @@ function handleClickNewList() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col">
-    <button class="bg-sky-600 py-2 px-4 rounded">Add new list &plus;</button>
-
+    <button class="bg-sky-600 py-2 px-4 rounded">Add new item &plus;</button>
   </main>
 </template>

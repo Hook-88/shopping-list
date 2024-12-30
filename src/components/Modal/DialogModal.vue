@@ -28,7 +28,8 @@ function closeModal() {
     <div class="h-full w-full flex flex-col items-center justify-center text-[#d1d2d3]">
 
       <div class="p-4 pt-2 bg-[#181818] border border-[#d1d2d3]/20 rounded-sm">
-        <h2 class="self-start text-lg border-b border-[#d1d2d3]/20 mb-4">Add new List:</h2>
+        <h2 v-if="dialogStore.dialogTitle" class="self-start text-lg border-b border-[#d1d2d3]/20 mb-4">{{
+          dialogStore.dialogTitle }}:</h2>
         <component :is="dialogStore.component"></component>
       </div>
 
