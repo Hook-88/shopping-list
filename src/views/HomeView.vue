@@ -2,6 +2,13 @@
 import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import BaseForm from '@/components/Forms/BaseForm.vue'
+import { useDialogStore } from '@/stores/dialog'
+
+const dialogStore = useDialogStore()
+
+function handleClickNewList() {
+  dialogStore.open()
+}
 
 </script>
 
@@ -11,7 +18,7 @@ import BaseForm from '@/components/Forms/BaseForm.vue'
     <h1 class="col-start-2 col-span-4">Shopping List</h1>
     <DropdownMenu>
       <MenuItem>
-      <button>New List</button>
+      <button @click="handleClickNewList">New List</button>
       </MenuItem>
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>

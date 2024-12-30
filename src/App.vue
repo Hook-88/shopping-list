@@ -16,8 +16,8 @@ import DialogModal from './components/Modal/DialogModal.vue';
       <small>&copy; 2024 Hook-88</small>
     </footer>
     <!-- TODO ADD dialog ref to open en close -->
-    <DialogModal />
   </div>
+  <DialogModal />
 
 
 </template>
