@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import BaseButton from '@/components/buttons/BaseButton.vue'
 import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import BaseForm from '@/components/Forms/BaseForm.vue'
 import { useDialogStore } from '@/stores/dialog'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { markRaw } from 'vue'
 
 const dialogStore = useDialogStore()
@@ -35,6 +38,9 @@ function handleClickNewList() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col">
-    <button class="bg-sky-700 py-2 px-4 rounded">Add new item &plus;</button>
+    <!-- <BaseButton>
+      Add new item
+      <FontAwesomeIcon :icon="faPlus" />
+    </BaseButton> -->
   </main>
 </template>
