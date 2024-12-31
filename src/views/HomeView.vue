@@ -6,9 +6,14 @@ import BaseForm from '@/components/Forms/BaseForm.vue'
 import { useDialogStore } from '@/stores/dialog'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { markRaw } from 'vue'
+import { markRaw, onMounted } from 'vue'
+import BaseList from '@/components/Lists/BaseList.vue'
+import BaseItem from '@/components/Lists/BaseItem.vue'
+import { useShoppingList } from '@/stores/shoppingList'
+import { GROCERIES } from '@/data/data'
 
 const dialogStore = useDialogStore()
+const shoppingListStore = useShoppingList()
 
 function handleClickNewList() {
   dialogStore.open({
@@ -16,6 +21,10 @@ function handleClickNewList() {
     title: 'Add new list'
   })
 }
+
+onMounted(() => {
+  shoppingListStore.items = GROCERIES
+})
 
 </script>
 
@@ -30,7 +39,6 @@ function handleClickNewList() {
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>
     </DropdownMenu>
-
     <!-- <nav>
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/about">About</RouterLink>
@@ -38,6 +46,7 @@ function handleClickNewList() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col">
+    <BaseList :item-component="BaseItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
     <!-- <BaseButton>
       Add new item
       <FontAwesomeIcon :icon="faPlus" />

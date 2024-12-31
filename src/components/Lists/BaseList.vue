@@ -19,6 +19,6 @@ defineProps<Props<BaseItem>>()
 
 <template>
   <ul class="space-y-2">
-    <component :is="itemComponent" v-for="(item, index) in listItems" :key="index" item:item />
+    <component :is="itemComponent" v-for="(item, index) in listItems" :key="index" :item="item" />
   </ul>
 </template>
