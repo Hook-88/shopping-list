@@ -3,12 +3,13 @@ import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import BaseForm from '@/components/Forms/BaseForm.vue'
 import { useDialogStore } from '@/stores/dialog'
+import { markRaw } from 'vue'
 
 const dialogStore = useDialogStore()
 
 function handleClickNewList() {
   dialogStore.open({
-    component: BaseForm,
+    component: markRaw(BaseForm),
     title: 'Add new list'
   })
 }
