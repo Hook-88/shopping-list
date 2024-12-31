@@ -11,6 +11,7 @@ import BaseList from '@/components/Lists/BaseList.vue'
 import BaseItem from '@/components/Lists/BaseItem.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { GROCERIES } from '@/data/data'
+import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
@@ -46,7 +47,7 @@ onMounted(() => {
   </header>
 
   <main class="flex-grow px-2 flex flex-col">
-    <BaseList :item-component="BaseItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
+    <BaseList :item-component="ShoppingItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
     <!-- <BaseButton>
       Add new item
       <FontAwesomeIcon :icon="faPlus" />
