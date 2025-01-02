@@ -8,6 +8,11 @@ interface Item {
   quantity: number
 }
 
+interface NewItem {
+  name: string
+  quantity: number
+}
+
 export const useShoppingList = defineStore('shopping-list', () => {
   const items = ref<Item[] | null>(null)
 
@@ -56,14 +61,14 @@ export const useShoppingList = defineStore('shopping-list', () => {
     items.value = items.value?.filter((item) => item.id !== itemId)
   }
 
-  function addItem(itemName: string) {
+  function addItem(itemObj: NewItem) {
     if (!items.value || items.value.length === 0) {
       throw new Error('no items to mutate')
     }
 
     const newItem: Item = {
-      name: itemName,
-      quantity: 1,
+      name: itemObj.name,
+      quantity: itemObj.quantity,
       id: uuid(),
     }
 
