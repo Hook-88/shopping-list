@@ -47,8 +47,17 @@ export const useShoppingList = defineStore('shopping-list', () => {
     }
   }
 
+  function deleteItem(itemId: string) {
+    if (!items.value || items.value.length === 0) {
+      throw new Error('no items to mutate')
+    }
+
+    items.value = items.value?.filter((item) => item.id !== itemId)
+  }
+
   return {
     items,
     mutateQuantity,
+    deleteItem,
   }
 })

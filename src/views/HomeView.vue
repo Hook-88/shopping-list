@@ -32,6 +32,13 @@ const noSelection = computed(() => {
   return selectIdStore.selectedIds.length === 0
 })
 
+//Delete items
+function handleClickDelete() {
+  selectIdStore.selectedIds.forEach(id => shoppingListStore.deleteItem(id))
+  selectIdStore.deSelectAll()
+
+}
+
 </script>
 
 <template>
@@ -53,7 +60,7 @@ const noSelection = computed(() => {
 
   <main class="flex-grow px-2 flex flex-col gap-4">
     <BaseList :item-component="ShoppingItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
-    <DangerButton :disabled="noSelection">Delete Selected</DangerButton>
+    <DangerButton :disabled="noSelection" @click="handleClickDelete">Delete Selected</DangerButton>
     <!-- <BaseButton>
       Add new item
       <FontAwesomeIcon :icon="faPlus" />

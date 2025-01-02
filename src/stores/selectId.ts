@@ -22,10 +22,15 @@ export const useSelectId = defineStore('select-id', () => {
     }
   }
 
+  function deSelectAll() {
+    selectedIds.value = []
+  }
+
   return {
     selectedIds,
     selectId,
     deSelectId,
     toggleSelect,
+    deSelectAll,
   }
 })
