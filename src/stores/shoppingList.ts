@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { v4 as uuid } from 'uuid'
 
 interface Item {
   name: string
@@ -55,9 +56,24 @@ export const useShoppingList = defineStore('shopping-list', () => {
     items.value = items.value?.filter((item) => item.id !== itemId)
   }
 
+  function addItem(itemName: string) {
+    if (!items.value || items.value.length === 0) {
+      throw new Error('no items to mutate')
+    }
+
+    const newItem: Item = {
+      name: itemName,
+      quantity: 1,
+      id: uuid(),
+    }
+
+    items.value.unshift(newItem)
+  }
+
   return {
     items,
     mutateQuantity,
     deleteItem,
+    addItem,
   }
 })
