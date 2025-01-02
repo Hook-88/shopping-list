@@ -30,6 +30,7 @@ function handleClickItem() {
 
 //Muate quantity
 const shoppingListStore = useShoppingList()
+const isMore = computed(() => props.item.quantity > 1)
 
 function handleClickIncrement() {
   shoppingListStore.mutateQuantity(props.item.id, 'increment')
@@ -45,13 +46,13 @@ function handleClickDecrement() {
   <li class="border border-[#d1d2d3]/20 p-2 rounded-sm flex items-center" @click="handleClickItem"
     :class="isSelected && 'bg-green-800'">
     <h3>{{ item.name }}</h3>
-    <span v-if="item.quantity > 1">({{ item.quantity }}x)</span>
+    <span v-if="isMore">({{ item.quantity }}x)</span>
     <span v-if="isSelected" class="px-2 py-1 ml-auto">
       <FontAwesomeIcon :icon="faCheck" />
     </span>
 
     <div v-else class="flex gap-2 ml-auto">
-      <button class="px-2 py-1 rounded-sm bg-red-800" @click.stop="handleClickDecrement">
+      <button v-if="isMore" class="px-2 py-1 rounded-sm bg-red-800" @click.stop="handleClickDecrement">
         <FontAwesomeIcon :icon="faMinus" />
       </button>
       <button class="px-2 py-1 rounded-sm bg-sky-700" @click.stop="handleClickIncrement">
