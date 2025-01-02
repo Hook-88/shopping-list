@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
 import { computed } from 'vue'
@@ -26,8 +26,6 @@ function handleClickItem() {
   selectIdStore.toggleSelect(props.item.id)
 }
 
-
-
 </script>
 
 <template>
@@ -35,7 +33,11 @@ function handleClickItem() {
     :class="isSelected && 'bg-green-800'">
     <h3>{{ item.name }}</h3>
     <span v-if="item.quantity > 1">({{ item.quantity }}x)</span>
-    <div class="flex gap-2 ml-auto">
+    <span v-if="isSelected" class="px-2 py-1 ml-auto">
+      <FontAwesomeIcon :icon="faCheck" />
+    </span>
+
+    <div v-else class="flex gap-2 ml-auto">
       <button class="px-2 py-1 rounded-sm bg-red-800">
         <FontAwesomeIcon :icon="faMinus" />
       </button>
