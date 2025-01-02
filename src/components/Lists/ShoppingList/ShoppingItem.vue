@@ -3,6 +3,7 @@ import { faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
 import { computed } from 'vue'
+import { useShoppingList } from '@/stores/shoppingList'
 
 interface Item {
   name: string
@@ -16,6 +17,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
+//Select Item
 const selectIdStore = useSelectId()
 
 const isSelected = computed(() => {
@@ -24,6 +26,17 @@ const isSelected = computed(() => {
 
 function handleClickItem() {
   selectIdStore.toggleSelect(props.item.id)
+}
+
+//Muate quantity
+const shoppingListStore = useShoppingList()
+
+function handleClickIncrement() {
+  shoppingListStore.mutateQuantity(props.item.id, 'increment')
+}
+
+function handleClickDecrement() {
+  shoppingListStore.mutateQuantity(props.item.id, 'decrement')
 }
 
 </script>
@@ -38,10 +51,10 @@ function handleClickItem() {
     </span>
 
     <div v-else class="flex gap-2 ml-auto">
-      <button class="px-2 py-1 rounded-sm bg-red-800">
+      <button class="px-2 py-1 rounded-sm bg-red-800" @click.stop="handleClickDecrement">
         <FontAwesomeIcon :icon="faMinus" />
       </button>
-      <button class="px-2 py-1 rounded-sm bg-sky-700">
+      <button class="px-2 py-1 rounded-sm bg-sky-700" @click.stop="handleClickIncrement">
         <FontAwesomeIcon :icon="faPlus" />
       </button>
     </div>

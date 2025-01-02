@@ -24,7 +24,7 @@ function handleClickNewList() {
 }
 
 onMounted(() => {
-  shoppingListStore.items = GROCERIES
+  // shoppingListStore.items = GROCERIES
 })
 
 </script>
