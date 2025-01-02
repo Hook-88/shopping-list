@@ -3,11 +3,14 @@ import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import BaseForm from '@/components/Forms/BaseForm.vue'
 import { useDialogStore } from '@/stores/dialog'
-import { markRaw, onMounted } from 'vue'
+import { computed, markRaw, onMounted } from 'vue'
 import BaseList from '@/components/Lists/BaseList.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { GROCERIES } from '@/data/data'
 import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
+import BaseButton from '@/components/buttons/BaseButton.vue'
+import DangerButton from '@/components/buttons/DangerButton.vue'
+import { useSelectId } from '@/stores/selectId'
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
@@ -21,6 +24,12 @@ function handleClickNewList() {
 
 onMounted(() => {
   shoppingListStore.items = GROCERIES
+})
+
+const selectIdStore = useSelectId()
+
+const noSelection = computed(() => {
+  return selectIdStore.selectedIds.length === 0
 })
 
 </script>
@@ -42,8 +51,9 @@ onMounted(() => {
         </nav> -->
   </header>
 
-  <main class="flex-grow px-2 flex flex-col">
+  <main class="flex-grow px-2 flex flex-col gap-4">
     <BaseList :item-component="ShoppingItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
+    <DangerButton :disabled="noSelection">Delete Selected</DangerButton>
     <!-- <BaseButton>
       Add new item
       <FontAwesomeIcon :icon="faPlus" />
