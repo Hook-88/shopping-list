@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { GROCERIES } from '@/data/data'
 
 interface Item {
   name: string
@@ -9,7 +8,7 @@ interface Item {
 }
 
 export const useShoppingList = defineStore('shopping-list', () => {
-  const items = ref<Item[] | null>(GROCERIES)
+  const items = ref<Item[] | null>(null)
 
   function mutateQuantity(id: string, action: 'increment' | 'decrement') {
     //check if items has a value and is longer than 1
@@ -44,9 +43,6 @@ export const useShoppingList = defineStore('shopping-list', () => {
           return item
         })
 
-        break
-
-      default:
         break
     }
   }

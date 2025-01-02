@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import BaseButton from '@/components/buttons/BaseButton.vue'
 import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import BaseForm from '@/components/Forms/BaseForm.vue'
 import { useDialogStore } from '@/stores/dialog'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { markRaw, onMounted } from 'vue'
 import BaseList from '@/components/Lists/BaseList.vue'
-import BaseItem from '@/components/Lists/BaseItem.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { GROCERIES } from '@/data/data'
 import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
@@ -24,7 +20,7 @@ function handleClickNewList() {
 }
 
 onMounted(() => {
-  // shoppingListStore.items = GROCERIES
+  shoppingListStore.items = GROCERIES
 })
 
 </script>
