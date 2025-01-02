@@ -62,8 +62,8 @@ export const useShoppingList = defineStore('shopping-list', () => {
   }
 
   function addItem(itemObj: NewItem) {
-    if (!items.value || items.value.length === 0) {
-      throw new Error('no items to mutate')
+    if (!items.value) {
+      items.value = []
     }
 
     const newItem: Item = {
@@ -72,7 +72,7 @@ export const useShoppingList = defineStore('shopping-list', () => {
       id: uuid(),
     }
 
-    items.value.unshift(newItem)
+    items.value = [newItem, ...items.value]
   }
 
   return {

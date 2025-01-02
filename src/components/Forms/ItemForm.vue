@@ -2,12 +2,17 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons/faClose'
 import { useDialogStore } from '@/stores/dialog'
-import { reactive } from 'vue'
+import { onMounted, reactive, useTemplateRef } from 'vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import DangerButton from '../buttons/DangerButton.vue'
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
+
+const nameInputRef = useTemplateRef('name-input')
+onMounted(() => {
+  nameInputRef.value?.focus()
+})
 
 function handleClickClose() {
   dialogStore.close()
@@ -29,7 +34,7 @@ function handleSubmit() {
 <template>
   <form @submit.prevent="handleSubmit">
     <label for="item-name" class="text-[#d1d2d3] block">Item name:</label>
-    <input id="item-name" type="text" placeholder="Item..." required v-model="formData['item-name']"
+    <input ref="name-input" id="item-name" type="text" placeholder="Item..." required v-model="formData['item-name']"
       class="px-2 py-1 rounded-sm bg-[#1f1f1f] border border-[#d1d2d3]/20 text-[#d1d2d3]" />
 
     <label for="item-quantity" class="text-[#d1d2d3] block mt-2">Quantity:</label>

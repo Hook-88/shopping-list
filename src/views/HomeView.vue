@@ -10,6 +10,9 @@ import { GROCERIES } from '@/data/data'
 import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
 import DangerButton from '@/components/buttons/DangerButton.vue'
 import { useSelectId } from '@/stores/selectId'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import BaseButton from '@/components/buttons/BaseButton.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const shoppingListStore = useShoppingList()
 
@@ -23,7 +26,7 @@ function handleClickNewItem() {
 }
 
 onMounted(() => {
-  shoppingListStore.items = GROCERIES
+  // shoppingListStore.items = GROCERIES
 })
 
 const selectIdStore = useSelectId()
@@ -60,10 +63,11 @@ function handleClickDelete() {
 
   <main class="flex-grow px-2 flex flex-col gap-4">
     <BaseList :item-component="ShoppingItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
-    <DangerButton :disabled="noSelection" @click="handleClickDelete">Delete Selected</DangerButton>
-    <!-- <BaseButton>
+    <DangerButton v-if="shoppingListStore.items" :disabled="noSelection" @click="handleClickDelete">Delete Selected
+    </DangerButton>
+    <BaseButton v-else @click="handleClickNewItem">
       Add item
       <FontAwesomeIcon :icon="faPlus" />
-    </BaseButton> -->
+    </BaseButton>
   </main>
 </template>

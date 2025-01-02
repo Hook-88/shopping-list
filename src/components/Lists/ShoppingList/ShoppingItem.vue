@@ -46,6 +46,7 @@ function handleClickDecrement() {
   <li class="border border-[#d1d2d3]/20 p-2 rounded-sm flex items-center" @click="handleClickItem"
     :class="isSelected && 'bg-green-800'">
     <h3>{{ item.name }}</h3>
+    &nbsp;
     <span v-if="isMore">({{ item.quantity }}x)</span>
     <span v-if="isSelected" class="px-2 py-1 ml-auto">
       <FontAwesomeIcon :icon="faCheck" />
