@@ -27,6 +27,7 @@ function handleSubmit() {
   shoppingListStore.addItem({ name: formData['item-name'], quantity: formData['item-quantity'] })
   formData['item-name'] = ''
   formData['item-quantity'] = 1
+  nameInputRef.value?.focus()
 }
 
 </script>
