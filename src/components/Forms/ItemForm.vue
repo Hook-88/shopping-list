@@ -18,6 +18,7 @@ const formData = reactive({
 
 function handleSubmit() {
   shoppingListStore.addItem(formData['item-name'])
+  formData['item-name'] = ''
 }
 
 </script>
