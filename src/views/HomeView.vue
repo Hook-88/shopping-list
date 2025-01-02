@@ -12,6 +12,7 @@ import { useSelectId } from '@/stores/selectId'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { GROCERIES } from '@/data/dummy'
 
 const shoppingListStore = useShoppingList()
 
@@ -25,7 +26,7 @@ function handleClickNewItem() {
 }
 
 onMounted(() => {
-  // shoppingListStore.items = GROCERIES
+  shoppingListStore.items = GROCERIES
 })
 
 const selectIdStore = useSelectId()
