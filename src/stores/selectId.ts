@@ -3,8 +3,13 @@ import { ref } from 'vue'
 
 export const useSelectId = defineStore('select-id', () => {
   const selectedIds = ref<string[]>([])
+  const editId = ref<string | null>(null)
 
-  function selectId(id: string) {
+  function selectId(id: string, isEditId: boolean = false) {
+    if (isEditId) {
+      editId.value = id
+      return
+    }
     selectedIds.value.push(id)
   }
 
@@ -28,6 +33,7 @@ export const useSelectId = defineStore('select-id', () => {
 
   return {
     selectedIds,
+    editId,
     selectId,
     deSelectId,
     toggleSelect,
