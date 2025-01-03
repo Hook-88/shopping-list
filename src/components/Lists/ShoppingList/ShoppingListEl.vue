@@ -3,7 +3,7 @@ import BaseList from '@/components/Lists/BaseList.vue'
 import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { useSelectId } from '@/stores/selectId'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import DangerButton from '@/components/buttons/DangerButton.vue'
 
 const shoppingListStore = useShoppingList()
@@ -19,15 +19,34 @@ const noSelection = computed(() => {
   return selectIdStore.selectedIds.length === 0
 })
 
+//Filter items
+const hasFilter = ref(false)
+
+function handleClickFilter() {
+  hasFilter.value = !hasFilter.value
+}
+
+const displayItems = computed(() => {
+  if (!hasFilter.value) {
+    return shoppingListStore.items
+  } else {
+    return shoppingListStore.items?.filter(item => {
+      if (selectIdStore.selectedIds.some(id => id !== item.id)) {
+        return item
+      }
+    })
+  }
+})
+
 </script>
 
 <template>
   <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
     <header class="flex items-center justify-between">
       <small class="text-sm">({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length }})</small>
-      <button class="text-sm p-1">Hide selected</button>
+      <button @click="handleClickFilter" class="text-sm p-1">Hide selected</button>
     </header>
-    <BaseList :item-component="ShoppingItem" :list-items="shoppingListStore.items" />
+    <BaseList :item-component="ShoppingItem" :list-items="displayItems" />
     <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete Selected
     </DangerButton>
   </div>
