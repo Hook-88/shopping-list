@@ -15,16 +15,6 @@ const noSelection = computed(() => {
   return selectIdStore.selectedIds.length === 0
 })
 
-//items to display
-const displayItems = computed(() => {
-
-  if (!shoppingListStore.items) {
-    throw new Error('Shopping list has no value')
-  }
-
-  return shoppingListStore.items
-})
-
 //Open Form
 const dialogStore = useDialogStore()
 
@@ -57,6 +47,20 @@ onMounted(() => {
 
 onUnmounted(() => {
   selectIdStore.selectedIds = prevSelectedIds
+})
+
+//items to display
+const displayItems = computed(() => {
+
+  if (!shoppingListStore.items) {
+    throw new Error('Shopping list has no value')
+  }
+
+  return shoppingListStore.items.filter(item => {
+    if (!prevSelectedIds.some(id => id === item.id)) {
+      return item
+    }
+  })
 })
 
 </script>
