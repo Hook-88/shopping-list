@@ -3,7 +3,7 @@ import BaseList from '@/components/Lists/BaseList.vue'
 import EditShoppingItem from '@/components/Lists/EditShoppingList/EditShoppingItem.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { useSelectId } from '@/stores/selectId'
-import { computed, markRaw } from 'vue'
+import { computed, markRaw, onMounted, onUnmounted } from 'vue'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { useDialogStore } from '@/stores/dialog'
 import ItemForm from '@/components/Forms/ItemForm.vue'
@@ -48,12 +48,23 @@ function handleClickEdit() {
   })
 }
 
+const prevSelectedIds = selectIdStore.selectedIds
+
+
+onMounted(() => {
+  selectIdStore.deSelectAll()
+})
+
+onUnmounted(() => {
+  selectIdStore.selectedIds = prevSelectedIds
+})
+
 </script>
 
 <template>
   <div class="flex flex-col">
-    <header class="text-center">
-      <small class="sm p-1">Select item</small>
+    <header class="text-center p-0.5">
+      <small class="text-sm">Select item</small>
     </header>
     <BaseList :item-component="EditShoppingItem" :list-items="displayItems" />
     <BaseButton @click="handleClickEdit" :disabled="noSelection"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
 import { computed } from 'vue'
