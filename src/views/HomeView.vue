@@ -3,13 +3,12 @@ import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import ItemForm from '@/components/Forms/ItemForm.vue'
 import { useDialogStore } from '@/stores/dialog'
-import { markRaw, ref } from 'vue'
+import { markRaw } from 'vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import ShoppingListEl from '@/components/Lists/ShoppingList/ShoppingListEl.vue'
-import EditShoppingList from '@/components/Lists/EditShoppingList/EditShoppingList.vue'
 
 const shoppingListStore = useShoppingList()
 
@@ -22,13 +21,6 @@ function handleClickNewItem() {
   })
 }
 
-const isEdit = ref(false)
-
-function handleClickEditItem() {
-  isEdit.value = !isEdit.value
-}
-
-
 </script>
 
 <template>
@@ -39,7 +31,6 @@ function handleClickEditItem() {
       <MenuItem>
       <button class="text-right" @click="handleClickNewItem">Add item</button>
       </MenuItem>
-      <MenuItem @click="handleClickEditItem">{{ isEdit ? 'Shopping list' : 'Edit item' }}</MenuItem>
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>
     </DropdownMenu>
@@ -50,8 +41,7 @@ function handleClickEditItem() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <ShoppingListEl v-if="shoppingListStore.items && shoppingListStore.items.length > 0 && !isEdit" />
-    <EditShoppingList v-else-if="isEdit" />
+    <ShoppingListEl v-if="shoppingListStore.items && shoppingListStore.items.length > 0" />
     <BaseButton @click="handleClickNewItem" v-else>
       Add item
       <FontAwesomeIcon :icon="faPlus" />
