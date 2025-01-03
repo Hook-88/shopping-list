@@ -2,7 +2,7 @@
 import { faCaretDown, faCaretUp, faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
-import { computed, ref, markRaw } from 'vue'
+import { computed, markRaw } from 'vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { useDialogStore } from '@/stores/dialog'
 import ItemForm from '@/components/Forms/ItemForm.vue'
