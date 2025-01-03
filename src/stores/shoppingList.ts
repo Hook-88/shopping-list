@@ -71,10 +71,30 @@ export const useShoppingList = defineStore('shopping-list', () => {
     items.value = items.value ? [newItem, ...items.value] : [newItem]
   }
 
+  function mutateItem(itemId: string, itemObj: NewItem) {
+    const arr = items.value?.map((item) => {
+      if (item.id === itemId) {
+        return {
+          ...item,
+          ...itemObj,
+        }
+      }
+
+      return item
+    })
+
+    if (!arr) {
+      throw new Error('Arr is undefined')
+    }
+
+    items.value = arr
+  }
+
   return {
     items,
     mutateQuantity,
     deleteItem,
     addItem,
+    mutateItem,
   }
 })

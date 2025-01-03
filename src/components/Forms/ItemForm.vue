@@ -2,19 +2,30 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons/faClose'
 import { useDialogStore } from '@/stores/dialog'
-import { onMounted, reactive, useTemplateRef } from 'vue'
+import { computed, onMounted, reactive, useTemplateRef } from 'vue'
 import { useShoppingList } from '@/stores/shoppingList'
+import { useSelectId } from '@/stores/selectId'
 import DangerButton from '../buttons/DangerButton.vue'
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
+const selectIdStore = useSelectId()
 
 const props = defineProps<{
   itemData?: {
     name: string,
     quantity: number
+    id: string
   }
 }>()
+
+const actionButtonText = computed(() => {
+  if (props.itemData) {
+    return 'Save item'
+  }
+
+  return 'Add item'
+})
 
 const nameInputRef = useTemplateRef('name-input')
 
@@ -23,6 +34,7 @@ onMounted(() => {
 })
 
 function handleClickClose() {
+  selectIdStore.deSelectAll()
   dialogStore.close()
 }
 
@@ -32,6 +44,10 @@ const formData = reactive({
 })
 
 function handleSubmit() {
+  if (props.itemData) {
+    shoppingListStore.mutateItem(props.itemData.id, { name: formData['item-name'], quantity: formData['item-quantity'] })
+    return
+  }
   shoppingListStore.addItem({ name: formData['item-name'], quantity: formData['item-quantity'] })
   formData['item-name'] = ''
   formData['item-quantity'] = 1
@@ -51,7 +67,7 @@ function handleSubmit() {
       class="px-2 py-1 rounded-sm bg-[#1f1f1f] border border-[#d1d2d3]/20 text-[#d1d2d3]" />
 
     <div class="mt-6 flex gap-2">
-      <button class="py-2 px-4 rounded bg-green-800 flex-grow">Add item</button>
+      <button class="py-2 px-4 rounded bg-green-800 flex-grow">{{ actionButtonText }}</button>
       <DangerButton @click="handleClickClose" type="button">
         <FontAwesomeIcon :icon="faClose" />
       </DangerButton>

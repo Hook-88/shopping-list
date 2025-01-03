@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import BaseList from '@/components/Lists/BaseList.vue'
-import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
 import EditShoppingItem from '@/components/Lists/EditShoppingList/EditShoppingItem.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { useSelectId } from '@/stores/selectId'
-import { computed, ref } from 'vue'
+import { computed, markRaw } from 'vue'
 import BaseButton from '@/components/buttons/BaseButton.vue'
+import { useDialogStore } from '@/stores/dialog'
+import ItemForm from '@/components/Forms/ItemForm.vue'
 
 const shoppingListStore = useShoppingList()
 const selectIdStore = useSelectId()
@@ -14,8 +15,6 @@ const noSelection = computed(() => {
   return selectIdStore.selectedIds.length === 0
 })
 
-
-
 //items to display
 const displayItems = computed(() => {
 
@@ -23,16 +22,31 @@ const displayItems = computed(() => {
     throw new Error('Shopping list has no value')
   }
 
-  // if (hasFilter.value) {
-  //   return shoppingListStore.items?.filter(item => {
-  //     if (!selectIdStore.selectedIds.some(id => id === item.id)) {
-  //       return item
-  //     }
-  //   })
-  // }
-
   return shoppingListStore.items
 })
+
+//Open Form
+const dialogStore = useDialogStore()
+
+function handleClickEdit() {
+  const item = shoppingListStore.items?.find(item => item.id === selectIdStore.selectedIds[0])
+
+  if (!item) {
+    throw new Error('No matching item')
+  }
+
+  dialogStore.open({
+    component: markRaw(ItemForm),
+    title: `Edit ${item.name}`,
+    props: {
+      itemData: {
+        name: item.name,
+        quantity: item.quantity,
+        id: item.id
+      }
+    }
+  })
+}
 
 </script>
 
@@ -42,7 +56,8 @@ const displayItems = computed(() => {
       <small class="sm p-1">Select item</small>
     </header>
     <BaseList :item-component="EditShoppingItem" :list-items="displayItems" />
-    <BaseButton class="mt-4">
+    <BaseButton @click="handleClickEdit" :disabled="noSelection"
+      class="mt-4 disabled:bg-sky-700/40 disabled:text-white/40">
       Edit Item
     </BaseButton>
   </div>

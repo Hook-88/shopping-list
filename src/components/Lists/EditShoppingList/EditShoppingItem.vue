@@ -3,7 +3,6 @@ import { faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
 import { computed } from 'vue'
-import { useShoppingList } from '@/stores/shoppingList'
 
 interface Item {
   name: string
@@ -29,6 +28,7 @@ function handleClickItem() {
   selectIdStore.selectId(props.item.id)
 }
 
+//display quantity if more than 0
 const isMore = computed(() => props.item.quantity > 1)
 
 </script>
