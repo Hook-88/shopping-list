@@ -11,55 +11,58 @@ const selectIdStore = useSelectId()
 
 //Delete items
 function handleClickDelete() {
-    selectIdStore.selectedIds.forEach(id => shoppingListStore.deleteItem(id))
-    selectIdStore.deSelectAll()
+  selectIdStore.selectedIds.forEach(id => shoppingListStore.deleteItem(id))
+  selectIdStore.deSelectAll()
 }
 
 const noSelection = computed(() => {
-    return selectIdStore.selectedIds.length === 0
+  return selectIdStore.selectedIds.length === 0
 })
 
 //Filter items
 const hasFilter = ref(false)
 
 const filterButtonText = computed(() => {
-    return hasFilter.value ? 'Show selected' : 'Hide selected'
+  return hasFilter.value ? 'Show selected' : 'Hide selected'
 })
 
 function handleClickFilter() {
-    hasFilter.value = !hasFilter.value
+  hasFilter.value = !hasFilter.value
 }
 
 
 
 //items to display
 const displayItems = computed(() => {
-    if (!hasFilter.value) {
-        return shoppingListStore.items
-    } else {
-        return shoppingListStore.items?.filter(item => {
-            if (!selectIdStore.selectedIds.some(id => id === item.id)) {
-                return item
-            }
-        })
-    }
 
+  if (!shoppingListStore.items) {
+    throw new Error('Shopping list has no value')
+  }
 
+  if (hasFilter.value) {
+    return shoppingListStore.items?.filter(item => {
+      if (!selectIdStore.selectedIds.some(id => id === item.id)) {
+        return item
+      }
+    })
+  }
+
+  return shoppingListStore.items
 })
 
 </script>
 
 <template>
-    <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
-        <header class="flex items-center justify-between">
-            <small class="text-sm">({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length
-                }})</small>
-            <button @click="handleClickFilter" class="text-sm p-1 disabled:text-white/40">{{
-                filterButtonText
-            }}</button>
-        </header>
-        <BaseList :item-component="ShoppingItem" :list-items="displayItems" />
-        <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete Selected
-        </DangerButton>
-    </div>
+  <div class="flex flex-col">
+    <header class="flex items-center justify-between">
+      <small class="text-sm">({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length
+        }})</small>
+      <button :disabled="noSelection" @click="handleClickFilter" class="text-sm p-1 disabled:text-white/40">{{
+        filterButtonText
+        }}</button>
+    </header>
+    <BaseList :item-component="ShoppingItem" :list-items="displayItems" />
+    <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete selection
+    </DangerButton>
+  </div>
 </template>
