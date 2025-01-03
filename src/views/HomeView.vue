@@ -12,7 +12,7 @@ import { useSelectId } from '@/stores/selectId'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import ShoppingList from '@/components/Lists/ShoppingList/ShoppingList.vue'
+import ShoppingListEl from '@/components/Lists/ShoppingList/ShoppingListEl.vue'
 
 const shoppingListStore = useShoppingList()
 
@@ -35,7 +35,6 @@ const noSelection = computed(() => {
 function handleClickDelete() {
   selectIdStore.selectedIds.forEach(id => shoppingListStore.deleteItem(id))
   selectIdStore.deSelectAll()
-
 }
 
 </script>
@@ -58,15 +57,15 @@ function handleClickDelete() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <!-- <ShoppingList /> -->
-    <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
+    <ShoppingListEl />
+    <!-- <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
       <header>
         <small>({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length }})</small>
       </header>
       <BaseList :item-component="ShoppingItem" :list-items="shoppingListStore.items" />
       <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete Selected
       </DangerButton>
-    </div>
+    </div> -->
     <BaseButton @click="handleClickNewItem">
       Add item
       <FontAwesomeIcon :icon="faPlus" />
