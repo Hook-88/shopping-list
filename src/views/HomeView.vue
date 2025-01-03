@@ -3,7 +3,7 @@ import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import ItemForm from '@/components/Forms/ItemForm.vue'
 import { useDialogStore } from '@/stores/dialog'
-import { computed, markRaw, onMounted } from 'vue'
+import { computed, markRaw } from 'vue'
 import BaseList from '@/components/Lists/BaseList.vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
@@ -12,7 +12,7 @@ import { useSelectId } from '@/stores/selectId'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { GROCERIES } from '@/data/dummy'
+// import ShoppingList from '@/components/Lists/ShoppingList/ShoppingList.vue'
 
 const shoppingListStore = useShoppingList()
 
@@ -24,10 +24,6 @@ function handleClickNewItem() {
     title: 'Add new item'
   })
 }
-
-onMounted(() => {
-  shoppingListStore.items = GROCERIES
-})
 
 const selectIdStore = useSelectId()
 
@@ -62,10 +58,16 @@ function handleClickDelete() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <BaseList :item-component="ShoppingItem" v-if="shoppingListStore.items" :list-items="shoppingListStore.items" />
-    <DangerButton v-if="shoppingListStore.items" :disabled="noSelection" @click="handleClickDelete">Delete Selected
-    </DangerButton>
-    <BaseButton v-else @click="handleClickNewItem">
+    <!-- <ShoppingList /> -->
+    <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
+      <header>
+        <small>({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length }})</small>
+      </header>
+      <BaseList :item-component="ShoppingItem" :list-items="shoppingListStore.items" />
+      <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete Selected
+      </DangerButton>
+    </div>
+    <BaseButton @click="handleClickNewItem">
       Add item
       <FontAwesomeIcon :icon="faPlus" />
     </BaseButton>

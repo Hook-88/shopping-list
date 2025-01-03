@@ -62,17 +62,13 @@ export const useShoppingList = defineStore('shopping-list', () => {
   }
 
   function addItem(itemObj: NewItem) {
-    if (!items.value) {
-      items.value = []
-    }
-
     const newItem: Item = {
       name: itemObj.name,
       quantity: itemObj.quantity,
       id: uuid(),
     }
 
-    items.value = [newItem, ...items.value]
+    items.value = items.value ? [newItem, ...items.value] : [newItem]
   }
 
   return {
