@@ -57,16 +57,8 @@ function handleClickDelete() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <ShoppingListEl />
-    <!-- <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
-      <header>
-        <small>({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length }})</small>
-      </header>
-      <BaseList :item-component="ShoppingItem" :list-items="shoppingListStore.items" />
-      <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete Selected
-      </DangerButton>
-    </div> -->
-    <BaseButton @click="handleClickNewItem">
+    <ShoppingListEl v-if="shoppingListStore.items && shoppingListStore.items.length > 0" />
+    <BaseButton @click="handleClickNewItem" v-else>
       Add item
       <FontAwesomeIcon :icon="faPlus" />
     </BaseButton>
