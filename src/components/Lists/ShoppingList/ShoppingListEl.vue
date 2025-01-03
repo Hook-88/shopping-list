@@ -23,8 +23,9 @@ const noSelection = computed(() => {
 
 <template>
   <div class="flex flex-col" v-if="shoppingListStore.items && shoppingListStore.items.length > 0">
-    <header>
-      <small>({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length }})</small>
+    <header class="flex items-center justify-between">
+      <small class="text-sm">({{ selectIdStore.selectedIds.length }}/{{ shoppingListStore.items?.length }})</small>
+      <button class="text-sm p-1">Hide selected</button>
     </header>
     <BaseList :item-component="ShoppingItem" :list-items="shoppingListStore.items" />
     <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete Selected

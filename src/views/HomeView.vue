@@ -3,12 +3,8 @@ import DropdownMenu from '@/components/DropdownMenu/DropdownMenu.vue'
 import MenuItem from '@/components/DropdownMenu/MenuItem.vue'
 import ItemForm from '@/components/Forms/ItemForm.vue'
 import { useDialogStore } from '@/stores/dialog'
-import { computed, markRaw } from 'vue'
-import BaseList from '@/components/Lists/BaseList.vue'
+import { markRaw } from 'vue'
 import { useShoppingList } from '@/stores/shoppingList'
-import ShoppingItem from '@/components/Lists/ShoppingList/ShoppingItem.vue'
-import DangerButton from '@/components/buttons/DangerButton.vue'
-import { useSelectId } from '@/stores/selectId'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -25,17 +21,6 @@ function handleClickNewItem() {
   })
 }
 
-const selectIdStore = useSelectId()
-
-const noSelection = computed(() => {
-  return selectIdStore.selectedIds.length === 0
-})
-
-//Delete items
-function handleClickDelete() {
-  selectIdStore.selectedIds.forEach(id => shoppingListStore.deleteItem(id))
-  selectIdStore.deSelectAll()
-}
 
 </script>
 
