@@ -46,6 +46,7 @@ const formData = reactive({
 function handleSubmit() {
   if (props.itemData) {
     shoppingListStore.mutateItem(props.itemData.id, { name: formData['item-name'], quantity: formData['item-quantity'] })
+    dialogStore.close()
     return
   }
   shoppingListStore.addItem({ name: formData['item-name'], quantity: formData['item-quantity'] })
