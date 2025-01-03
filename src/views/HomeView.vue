@@ -9,6 +9,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import ShoppingListEl from '@/components/Lists/ShoppingList/ShoppingListEl.vue'
+import EditShoppingList from '@/components/Lists/EditShoppingList/EditShoppingList.vue'
 
 const shoppingListStore = useShoppingList()
 
@@ -18,6 +19,19 @@ function handleClickNewItem() {
   dialogStore.open({
     component: markRaw(ItemForm),
     title: 'Add new item'
+  })
+}
+
+function handleClickEditItem() {
+  dialogStore.open({
+    component: markRaw(ItemForm),
+    title: 'Add new item',
+    props: {
+      itemData: {
+        name: 'test',
+        quantity: 7
+      }
+    }
   })
 }
 
@@ -32,7 +46,7 @@ function handleClickNewItem() {
       <MenuItem>
       <button @click="handleClickNewItem">Add item</button>
       </MenuItem>
-
+      <MenuItem @click="handleClickEditItem">Edit Item</MenuItem>
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>
     </DropdownMenu>
@@ -43,7 +57,8 @@ function handleClickNewItem() {
   </header>
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <ShoppingListEl v-if="shoppingListStore.items && shoppingListStore.items.length > 0" />
+    <EditShoppingList v-if="shoppingListStore.items && shoppingListStore.items.length > 0" />
+    <!-- <ShoppingListEl v-if="shoppingListStore.items && shoppingListStore.items.length > 0" /> -->
     <BaseButton @click="handleClickNewItem" v-else>
       Add item
       <FontAwesomeIcon :icon="faPlus" />

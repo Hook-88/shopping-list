@@ -30,7 +30,7 @@ function closeModal() {
       <div class="p-4 pt-2 bg-[#181818] border border-[#d1d2d3]/20 rounded-sm">
         <h2 v-if="dialogStore.dialogTitle" class="self-start text-lg border-b border-[#d1d2d3]/20 mb-4">{{
           dialogStore.dialogTitle }}:</h2>
-        <component :is="dialogStore.component"></component>
+        <component :is="dialogStore.component" v-bind="dialogStore.props"></component>
       </div>
 
     </div>

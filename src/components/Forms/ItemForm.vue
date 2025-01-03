@@ -9,7 +9,15 @@ import DangerButton from '../buttons/DangerButton.vue'
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
 
+const props = defineProps<{
+  itemData?: {
+    name: string,
+    quantity: number
+  }
+}>()
+
 const nameInputRef = useTemplateRef('name-input')
+
 onMounted(() => {
   nameInputRef.value?.focus()
 })
@@ -19,8 +27,8 @@ function handleClickClose() {
 }
 
 const formData = reactive({
-  ['item-name']: '',
-  ['item-quantity']: 1
+  ['item-name']: props.itemData ? props.itemData.name : '',
+  ['item-quantity']: props.itemData ? props.itemData.quantity : 1,
 })
 
 function handleSubmit() {
