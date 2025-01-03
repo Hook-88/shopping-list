@@ -32,6 +32,7 @@ function handleClickNewItem() {
       <MenuItem>
       <button @click="handleClickNewItem">Add item</button>
       </MenuItem>
+
       <MenuItem>Recipes</MenuItem>
       <MenuItem>Settings</MenuItem>
     </DropdownMenu>
