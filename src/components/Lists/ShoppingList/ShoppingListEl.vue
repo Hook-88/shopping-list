@@ -15,11 +15,15 @@ const dialogStore = useDialogStore()
 //Delete items
 function handleClickDelete() {
   dialogStore.open({
-    title: 'Are you sure?',
+    title: 'Do you want to delete',
     component: markRaw(ConfirmButtons),
     props: {
       onConfirm: handleDeleteSelection,
-      onClose: dialogStore.close
+      onClose: dialogStore.close,
+      items: selectIdStore.selectedIds.map(id => {
+        const foundItem = shoppingListStore.items?.find(item => item.id === id)
+        return foundItem?.name
+      })
     }
   })
 }
