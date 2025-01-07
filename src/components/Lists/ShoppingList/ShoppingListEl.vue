@@ -72,7 +72,6 @@ const displayItems = computed(() => {
 
 //progress
 
-
 </script>
 
 <template>
@@ -82,7 +81,7 @@ const displayItems = computed(() => {
         }})</small>
       <button :disabled="noSelection" @click="handleClickFilter" class="text-sm p-1 disabled:text-white/40">{{
         filterButtonText
-        }}</button>
+      }}</button>
     </header>
     <BaseList :item-component="ShoppingItem" :list-items="displayItems" />
     <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete selection
