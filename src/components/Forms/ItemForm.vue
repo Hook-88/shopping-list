@@ -19,6 +19,8 @@ const props = defineProps<{
   }
 }>()
 
+
+//submit button
 const actionButtonText = computed(() => {
   if (props.itemData) {
     return 'Save item'
@@ -27,32 +29,52 @@ const actionButtonText = computed(() => {
   return 'Add item'
 })
 
-const nameInputRef = useTemplateRef('name-input')
+// Focus on input field
+
+const nameInputRef = useTemplateRef<HTMLInputElement>('name-input')
 
 onMounted(() => {
-  nameInputRef.value?.focus()
+  if (!nameInputRef.value) {
+    throw new Error('name input ref has no value')
+  }
+  nameInputRef.value.focus()
 })
 
+//close dialog
 function handleClickClose() {
   selectIdStore.deSelectAll()
   dialogStore.close()
 }
 
+//formdata
 const formData = reactive({
   ['item-name']: props.itemData ? props.itemData.name : '',
   ['item-quantity']: props.itemData ? props.itemData.quantity : 1,
 })
 
+
+//Submit form
 function handleSubmit() {
   if (props.itemData) {
     shoppingListStore.mutateItem(props.itemData.id, { name: formData['item-name'], quantity: formData['item-quantity'] })
     dialogStore.close()
     return
   }
-  shoppingListStore.addItem({ name: formData['item-name'], quantity: formData['item-quantity'] })
+
+  if (!nameInputRef.value) {
+    throw new Error('name input has no value')
+  }
+
+  shoppingListStore.addItem(
+    {
+      name: formData['item-name'],
+      quantity: formData['item-quantity']
+    }
+  )
+  // reset formdata and focus on name inputfield
   formData['item-name'] = ''
   formData['item-quantity'] = 1
-  nameInputRef.value?.focus()
+  nameInputRef.value.focus()
 }
 
 </script>

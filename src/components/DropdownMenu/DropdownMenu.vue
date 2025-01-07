@@ -28,7 +28,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  //Remove event to prevent memory leak
+  //Remove eventlistner to prevent memory leak
   document.removeEventListener('click', handleClickDocument)
 })
 
