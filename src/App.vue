@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import DialogModal from './components/Modal/DialogModal.vue';
+import DialogModal from './components/Modal/DialogModal.vue'
+import BaseBanner from './components/banner/BaseBanner.vue'
 
 </script>
 
@@ -9,7 +10,7 @@ import DialogModal from './components/Modal/DialogModal.vue';
 
     <RouterView />
 
-
+    <BaseBanner />
     <footer class="text-center p-1">
       <small>&copy; 2024 Hook-88</small>
     </footer>

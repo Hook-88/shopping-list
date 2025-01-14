@@ -6,10 +6,12 @@ import { computed, onMounted, reactive, useTemplateRef } from 'vue'
 import { useShoppingList } from '@/stores/shoppingList'
 import { useSelectId } from '@/stores/selectId'
 import DangerButton from '../buttons/DangerButton.vue'
+import { useBanner } from '@/stores/banner'
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
 const selectIdStore = useSelectId()
+const bannerStore = useBanner()
 
 const props = defineProps<{
   itemData?: {
@@ -71,9 +73,14 @@ function handleSubmit() {
       quantity: formData['item-quantity']
     }
   )
+  bannerStore.openBanner({
+    message: `${formData['item-name']} added`
+  })
+
   // reset formdata and focus on name inputfield
   formData['item-name'] = ''
   formData['item-quantity'] = 1
+
   nameInputRef.value.focus()
 }
 
