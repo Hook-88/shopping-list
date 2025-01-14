@@ -25,7 +25,7 @@ watch(() => bannerStore.isOpen,
 
 <template>
   <div v-if="bannerStore.isOpen"
-    class="bg-green-800/50 border border-green-800 p-4 mx-4 text-center fixed inset-x-0 bottom-12">
+    class="bg-green-800/50 border border-green-800 p-4 mx-4 text-center fixed inset-x-0 top-4">
     <p>{{ bannerStore.message }}</p>
   </div>
 </template>
