@@ -80,7 +80,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" class="grid">
     <label for="item-name" class="text-[#d1d2d3] block">Item name:</label>
     <input ref="name-input" id="item-name" type="text" placeholder="Item..." required v-model="formData['item-name']"
       class="px-2 py-1 rounded-sm bg-[#1f1f1f] border border-[#d1d2d3]/20 text-[#d1d2d3]" />
