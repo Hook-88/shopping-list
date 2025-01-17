@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faCaretDown, faCaretUp, faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp, faCheck, faGear, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
 import { computed, markRaw } from 'vue'
@@ -92,10 +92,11 @@ function handleClickEdit() {
         <FontAwesomeIcon :icon="faCheck" />
       </span>
       <button v-else class="px-2 ml-auto py-1 rounded-sm" @click.stop="handleClickOpen">
-        <FontAwesomeIcon :icon="isOpen ? faCaretUp : faCaretDown" />
+        <FontAwesomeIcon :icon="faGear" />
       </button>
     </div>
-    <div v-if="isOpen" class="flex items-center mt-2 gap-4">
+
+    <!-- <div v-if="isOpen" class="flex items-center mt-2 gap-4">
       <div class="flex gap-2 ml-auto">
         <button :disabled="!isMore"
           class="px-2 py-1 rounded-sm bg-red-800 disabled:text-white/50 disabled:bg-red-800/50"
@@ -108,6 +109,6 @@ function handleClickEdit() {
       </div>
 
       <button class="px-2 py-1 rounded-sm flex-grow bg-sky-700" @click.stop="handleClickEdit">Edit item</button>
-    </div>
+    </div> -->
   </li>
 </template>
