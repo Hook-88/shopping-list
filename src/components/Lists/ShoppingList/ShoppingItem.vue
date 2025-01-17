@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { faCaretDown, faCaretUp, faCheck, faGear, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useSelectId } from '@/stores/selectId'
 import { computed, markRaw } from 'vue'
-import { useShoppingList } from '@/stores/shoppingList'
-import { useDialogStore } from '@/stores/dialog'
-import ItemForm from '@/components/Forms/ItemForm.vue'
+import { useToolbarStore } from '@/stores/toolbar'
+import EditItemButtons from './EditItemButtons/EditItemButtons.vue'
 
 interface Item {
   name: string
@@ -27,88 +26,55 @@ const isSelected = computed(() => {
 })
 
 function handleClickItem() {
-  if (isOpen.value) {
+  if (isSelectedForEdit.value) {
+    selectIdStore.editId = null
+    toolbarStore.close()
     return
   }
   selectIdStore.toggleSelect(props.item.id)
 }
 
-//Muate quantity
-const shoppingListStore = useShoppingList()
-const isMore = computed(() => props.item.quantity > 1)
-
-function handleClickIncrement() {
-  shoppingListStore.mutateQuantity(props.item.id, 'increment')
-}
-
-function handleClickDecrement() {
-  shoppingListStore.mutateQuantity(props.item.id, 'decrement')
-}
-
-//mutate item
-const isOpen = computed(() => {
-  if (selectIdStore.editId === props.item.id) {
-    return true
-  }
-
-  return false
+//Select item for edit
+const isSelectedForEdit = computed(() => {
+  return selectIdStore.editId === props.item.id
 })
 
-function handleClickOpen() {
-  if (isOpen.value) {
+const toolbarStore = useToolbarStore()
+
+function handleClickSelectToEdit() {
+  if (selectIdStore.editId === props.item.id) {
     selectIdStore.editId = null
+    toolbarStore.close()
     return
   }
 
-  selectIdStore.editId = props.item.id
-}
+  selectIdStore.selectId(props.item.id, true)
+  toolbarStore.open({
+    component: markRaw(EditItemButtons)
 
-const dialogStore = useDialogStore()
-
-function handleClickEdit() {
-  dialogStore.open({
-    component: markRaw(ItemForm),
-    title: `Edit ${props.item.name}`,
-    props: {
-      itemData: {
-        name: props.item.name,
-        quantity: props.item.quantity,
-        id: props.item.id
-      }
-    }
   })
 }
 
+const isMore = computed(() => props.item.quantity > 1)
 
 </script>
 
 <template>
-  <li class="border border-[#d1d2d3]/20 p-2 rounded-sm" @click="handleClickItem" :class="isSelected && 'bg-green-800'">
+  <li class="border border-[#d1d2d3]/20 p-2 rounded-sm" @click="handleClickItem" :class="{
+    ['bg-green-800']: isSelected,
+    ['border border-white/80']: isSelectedForEdit
+  }">
     <div class="flex items-center">
+      <h3 v-if="isSelectedForEdit">Edit -&nbsp;</h3>
       <h3>{{ item.name }}</h3>
       &nbsp;
       <span v-if="isMore">({{ item.quantity }}x)</span>
       <span v-if="isSelected" class="px-2 py-1 ml-auto">
         <FontAwesomeIcon :icon="faCheck" />
       </span>
-      <button v-else class="px-2 ml-auto py-1 rounded-sm" @click.stop="handleClickOpen">
+      <button v-else class="px-2 ml-auto py-1 rounded-sm" @click.stop="handleClickSelectToEdit">
         <FontAwesomeIcon :icon="faGear" />
       </button>
     </div>
-
-    <!-- <div v-if="isOpen" class="flex items-center mt-2 gap-4">
-      <div class="flex gap-2 ml-auto">
-        <button :disabled="!isMore"
-          class="px-2 py-1 rounded-sm bg-red-800 disabled:text-white/50 disabled:bg-red-800/50"
-          @click.stop="handleClickDecrement">
-          <FontAwesomeIcon :icon="faMinus" />
-        </button>
-        <button class="px-2 py-1 rounded-sm bg-green-800" @click.stop="handleClickIncrement">
-          <FontAwesomeIcon :icon="faPlus" />
-        </button>
-      </div>
-
-      <button class="px-2 py-1 rounded-sm flex-grow bg-sky-700" @click.stop="handleClickEdit">Edit item</button>
-    </div> -->
   </li>
 </template>

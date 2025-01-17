@@ -45,7 +45,7 @@ onUnmounted(() => {
 
 <template>
   <div class="relative grid" ref="dropdown">
-    <button class="flex items-center justify-end pr-2" @click="toggleOpen">
+    <button class="flex items-center justify-end" @click="toggleOpen">
       <slot name="button">
         <FontAwesomeIcon :icon="faBars" />
       </slot>
