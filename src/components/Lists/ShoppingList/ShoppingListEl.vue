@@ -7,10 +7,12 @@ import { computed, ref, markRaw } from 'vue'
 import DangerButton from '@/components/buttons/DangerButton.vue'
 import { useDialogStore } from '@/stores/dialog'
 import ConfirmButtons from '@/components/Forms/ConfirmButtons.vue'
+import { useToolbarStore } from '@/stores/toolbar'
 
 const shoppingListStore = useShoppingList()
 const selectIdStore = useSelectId()
 const dialogStore = useDialogStore()
+const toolbarStore = useToolbarStore()
 
 //Delete items
 function handleClickDelete() {
@@ -84,7 +86,8 @@ const displayItems = computed(() => {
       }}</button>
     </header>
     <BaseList :item-component="ShoppingItem" :list-items="displayItems" />
-    <DangerButton class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete selection
+    <DangerButton v-if="!toolbarStore.isOpen" class="mt-4" :disabled="noSelection" @click="handleClickDelete">Delete
+      selection
     </DangerButton>
   </div>
 </template>
