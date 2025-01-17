@@ -9,6 +9,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import BaseButton from '@/components/buttons/BaseButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import ShoppingListEl from '@/components/Lists/ShoppingList/ShoppingListEl.vue'
+import BaseToolbar from '@/components/toolbar/BaseToolbar.vue'
 
 const shoppingListStore = useShoppingList()
 
@@ -46,5 +47,6 @@ function handleClickNewItem() {
       Add item
       <FontAwesomeIcon :icon="faPlus" />
     </BaseButton>
+    <BaseToolbar />
   </main>
 </template>
