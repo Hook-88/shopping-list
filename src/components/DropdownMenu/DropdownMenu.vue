@@ -10,7 +10,6 @@ const props = defineProps<{
   isOnBottomSreen?: boolean
 }>()
 
-//TODO computed prop for classname
 const positionClassName = computed(() => {
   return props.isOnBottomSreen ? "right-1 bottom-14" : "-right-2 top-9"
 })

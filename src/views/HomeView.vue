@@ -32,7 +32,7 @@ function handleClickNewItem() {
       <template v-slot:button>
         <FontAwesomeIcon :icon="faBars" class="ml-auto mr-1" />
       </template>
-      <MenuItem>Add new item</MenuItem>
+      <MenuItem @click="handleClickNewItem">Add new item</MenuItem>
       <MenuItem>Go to recipe</MenuItem>
       <MenuItem>Settings</MenuItem>
 
@@ -45,6 +45,6 @@ function handleClickNewItem() {
 
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <BaseButton>Add item +</BaseButton>
+    <BaseButton v-if="!dialogStore.isOpen" @click="handleClickNewItem">Add item +</BaseButton>
   </main>
 </template>
