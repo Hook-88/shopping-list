@@ -12,7 +12,7 @@ const props = defineProps<{
 
 //TODO computed prop for classname
 const positionClassName = computed(() => {
-  return props.isOnBottomSreen ? "right-1 bottom-14" : "right-1 top-9"
+  return props.isOnBottomSreen ? "right-1 bottom-14" : "-right-2 top-9"
 })
 
 function toggleOpen() {
@@ -45,15 +45,16 @@ onUnmounted(() => {
 
 <template>
   <div class="relative grid" ref="dropdown">
-    <button class="flex items-center justify-end" @click="toggleOpen">
+    <button class="flex items-center justify-center" @click="toggleOpen">
       <slot name="button">
         <FontAwesomeIcon :icon="faBars" />
       </slot>
     </button>
     <ul @click="closeMenu" v-if="isOpen" class="
-          absolute text-xl text-nowrap text-right
+          absolute w-screen text-xl text-nowrap text-center
           border border-[#d1d2d3]/20 rounded-sm
           backdrop backdrop-blur-sm
+          ml-10
         " :class="positionClassName">
       <slot></slot>
     </ul>
