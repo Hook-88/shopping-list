@@ -11,7 +11,5 @@ import { RouterLink, RouterView } from 'vue-router'
       <small>&copy; 2024 Hook-88</small>
     </footer>
   </div>
-  <DialogModal />
-
 
 </template>

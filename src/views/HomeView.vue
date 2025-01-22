@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import BaseList from '@/components/BaseList/BaseList.vue'
+import { SHOPPINGLIST } from '@/data'
+import BaseItem from '@/components/BaseList/BaseItem/BaseItem.vue';
+
 
 
 </script>
@@ -15,5 +19,6 @@
 
 
   <main class="flex-grow px-2 flex flex-col gap-4">
+    <BaseList :list-items="SHOPPINGLIST" :item-component="BaseItem" />
   </main>
 </template>
