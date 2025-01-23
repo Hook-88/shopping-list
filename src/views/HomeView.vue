@@ -12,7 +12,6 @@ import NavLink from '@/components/NavLink/NavLink.vue'
 import BaseToolbar from '@/components/BaseToolbar/BaseToolbar.vue';
 
 const dialogStore = useDialogStore()
-
 const shoppingListStore = useShoppingList()
 
 function handleClickAddNewItem() {
