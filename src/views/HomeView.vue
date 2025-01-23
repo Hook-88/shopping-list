@@ -1,25 +1,56 @@
 <script setup lang="ts">
 import ShoppingList from '@/components/ShoppingList/ShoppingList.vue'
-import { faCaretDown, faCaretRight, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faCaretDown, faCaretRight, faCaretUp, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 
+const navIsOpen = ref(false)
+
+function handleClickOpenNav() {
+  navIsOpen.value = !navIsOpen.value
+}
+
+const openNavButtonIcon = computed(() => {
+  return navIsOpen.value ? faCaretUp : faCaretDown
+})
+
+function eventHandler(event: Event) {
+  if (!event.target) {
+    throw new Error('Event does not have a target')
+  }
+
+  const el = event.target as HTMLElement
+
+  if (!el.hasAttribute('popovertarget')) {
+    navIsOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', eventHandler)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', eventHandler)
+})
 
 
 </script>
 
 <template>
 
-  <header class="border-b border-[#d1d2d3]/20 flex">
-    <button class="py-2 px-4 text-2xl text-left flex items-center gap-2" popovertarget="mypopover">
+  <header class="border-b border-[#d1d2d3]/20 flex" :class="navIsOpen && 'bg-[#1c1c1c]'">
+    <button class="py-2 px-4 text-xl text-left flex items-center gap-2 tracking-wider font-bold"
+      popovertarget="mypopover" @click="handleClickOpenNav">
       Shopping List
-      <FontAwesomeIcon :icon="faCaretDown" class="text-xl" />
+      <FontAwesomeIcon :icon="openNavButtonIcon" class="text-xl" />
     </button>
-    <nav id="mypopover" popover class="border-b border-t border-[#d1d2d3]/20 p-0">
-      <RouterLink class="py-1 px-4 border-b border-[#d1d2d3]/20 flex items-center justify-between" to="#">
+    <nav id="mypopover" popover class="border-b border-t border-[#d1d2d3]/20 border-b-[#d1d2d3]/20 p-0">
+      <RouterLink class="py-2 px-4 border-b border-[#d1d2d3]/20 flex items-center justify-between tracking-wide" to="#">
         Recipes
         <FontAwesomeIcon :icon="faCaretRight" />
       </RouterLink>
-      <RouterLink class="py-1 px-4 border-b border-[#d1d2d3]/20 flex items-center justify-between" to="/about">
+      <RouterLink class="py-2 px-4 flex items-center justify-between tracking-wide" to="/about">
         About
         <FontAwesomeIcon :icon="faCaretRight" />
       </RouterLink>
@@ -43,10 +74,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   /* inset: unset; */
   display: flex;
   flex-direction: column;
-  top: 3rem;
+  top: 2.75rem;
   margin: 0;
-  background-color: #181818;
+  background-color: #1c1c1c;
   color: #d1d2d3;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 </style>
