@@ -9,6 +9,6 @@ defineProps<{
 <template>
   <div class="flex gap-2 mt-2">
     <BaseButton class="flex-grow" button-type="confirm">Save</BaseButton>
-    <BaseButton button-type="danger" type="button" @click="onCancel">Cancel</BaseButton>
+    <BaseButton button-type="danger" type="button" @click="onCancel">Close</BaseButton>
   </div>
 </template>
