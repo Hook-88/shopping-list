@@ -21,6 +21,14 @@ const isChecked = computed(() => {
 })
 
 function handleClickItem() {
+  if (isSelectedToEdit.value) {
+    selecIdStore.removeId(props.item.id, true)
+    return
+
+  }
+
+  selecIdStore.removeId(props.item.id, true)
+
   if (isChecked.value) {
     selecIdStore.removeId(props.item.id)
 
