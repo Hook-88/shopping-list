@@ -53,15 +53,15 @@ function handleClickDelete() {
     <FontAwesomeIcon :icon="faMinus" />
   </button>
 
-  <button class="px-4 py-2" @click="handleClickIncrement">
+  <button class="px-4 py-4" @click="handleClickIncrement">
     <FontAwesomeIcon :icon="faPlus" />
   </button>
 
-  <button class="px-4 py-2" @click="handleClickEdit">
+  <button class="px-4 py-4" @click="handleClickEdit">
     <FontAwesomeIcon :icon="faEdit" />
   </button>
 
-  <button class="px-4 py-2" @click="handleClickDelete">
+  <button class="px-4 py-4" @click="handleClickDelete">
     <FontAwesomeIcon :icon="faTrash" />
   </button>
 
