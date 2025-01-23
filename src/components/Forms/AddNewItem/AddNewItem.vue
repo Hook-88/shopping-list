@@ -2,6 +2,7 @@
 import { useDialogStore } from '@/stores/dialog'
 import { useShoppingList } from '@/stores/shoppingList';
 import { onMounted, reactive, useTemplateRef } from 'vue';
+import BaseInput from '@/components/Input/BaseInput.vue';
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
@@ -13,7 +14,12 @@ function handleClickCancel() {
 const inputNameRef = useTemplateRef('input-name-ref')
 
 onMounted(() => {
-  inputNameRef.value?.focus()
+  if (!inputNameRef.value) {
+
+    return
+  }
+
+  inputNameRef.value.focus()
 })
 
 const formData = reactive({
@@ -42,13 +48,15 @@ function resetForm() {
 
 <template>
   <form class="text-[#d1d2d3] px-4 flex flex-col py-2 gap-3 pb-4" @submit.prevent="handleSubmit">
-    <div>
+    <BaseInput label="Name" type="text" placeholder="name item..." required v-model="formData['item-name']"
+      ref="input-name-ref" />
+    <!-- <div>
       <label>Name:</label>
       <br />
       <input type="text" placeholder="working..." required
         class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" ref="input-name-ref"
         v-model="formData['item-name']">
-    </div>
+    </div> -->
 
     <div>
       <label>Quantity:</label>
