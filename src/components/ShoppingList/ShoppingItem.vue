@@ -2,7 +2,8 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCheck, faGear } from '@fortawesome/free-solid-svg-icons'
 import { useSelectId } from '@/stores/selectId'
-import { computed } from 'vue';
+import { computed } from 'vue'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 const props = defineProps<{
   item: {
@@ -21,14 +22,17 @@ const isChecked = computed(() => {
 })
 
 function handleClickItem() {
+  //deselect item to edit if selected to edit
   if (isSelectedToEdit.value) {
     selecIdStore.removeId(props.item.id, true)
     return
 
   }
 
+  //deselect item
   selecIdStore.removeId(props.item.id, true)
 
+  //uncheck item if checked
   if (isChecked.value) {
     selecIdStore.removeId(props.item.id)
 
@@ -42,7 +46,13 @@ function handleClickItem() {
 const isSelectedToEdit = computed(() => {
   return selecIdStore.singleSelectedId === props.item.id
 })
+
+const editItemIcon = computed(() => {
+  return !isSelectedToEdit.value ? faGear : faCircle
+})
+
 function handleClickEditItem() {
+
   if (isSelectedToEdit.value) {
     selecIdStore.removeId(props.item.id, true)
 
@@ -63,7 +73,7 @@ function handleClickEditItem() {
     <p class="ml-3">{{ item.name }}</p>
     <span v-if="item.quantity > 1">&nbsp;({{ item.quantity }}x)</span>
     <button v-if="!isChecked" class="ml-auto p-4" @click.stop="handleClickEditItem">
-      <FontAwesomeIcon :icon="faGear" />
+      <FontAwesomeIcon :icon="editItemIcon" />
     </button>
     <span v-else class="ml-auto p-4">
       <FontAwesomeIcon :icon="faCheck" />
