@@ -22,4 +22,5 @@ onMounted(() => {
 
 <template>
   <BaseList v-if="shopingListItem" :list-items="shopingListItem" :item-component="ShoppingItem" />
+  <button class="rounded border py-3 bg-red-600/50 border-[#d1d2d3]/20">Delete checked items</button>
 </template>
