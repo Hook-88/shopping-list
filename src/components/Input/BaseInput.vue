@@ -29,6 +29,6 @@ defineExpose({
     <label v-if="label">{{ label }}:</label>
     <br v-if="label" />
     <input class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" :value="modelValue"
-      @input="emit('update:modelValue', handleInput)" v-bind="$attrs" ref="inputRef">
+      @input="handleInput" v-bind="$attrs" ref="inputRef">
   </div>
 </template>

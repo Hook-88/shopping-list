@@ -13,13 +13,17 @@ function handleClickCancel() {
 
 const inputNameRef = useTemplateRef('input-name-ref')
 
-onMounted(() => {
+function handleFocus() {
   if (!inputNameRef.value) {
 
     return
   }
 
   inputNameRef.value.focus()
+} a
+
+onMounted(() => {
+  handleFocus()
 })
 
 const formData = reactive({
@@ -36,6 +40,7 @@ function handleSubmit() {
   })
 
   resetForm()
+  handleFocus()
 }
 
 function resetForm() {
@@ -50,27 +55,9 @@ function resetForm() {
   <form class="text-[#d1d2d3] px-4 flex flex-col py-2 gap-3 pb-4" @submit.prevent="handleSubmit">
     <BaseInput label="Name" type="text" placeholder="name item..." required v-model="formData['item-name']"
       ref="input-name-ref" />
-    <!-- <div>
-      <label>Name:</label>
-      <br />
-      <input type="text" placeholder="working..." required
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" ref="input-name-ref"
-        v-model="formData['item-name']">
-    </div> -->
 
-    <div>
-      <label>Quantity:</label>
-      <br />
-      <input type="number" placeholder="quantity...."
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" v-model="formData['item-quantity']">
-    </div>
-
-    <div>
-      <label>Label:</label>
-      <br />
-      <input type="text" placeholder="label...."
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" v-model="formData['item-label']">
-    </div>
+    <BaseInput label="Quantity" type="number" v-model="formData['item-quantity']" />
+    <BaseInput label="Label" type="text" placeholder="Item label..." v-model="formData['item-label']" />
 
     <div class="flex gap-2 mt-2">
       <button class="flex-grow bg-green-800 py-2 px-4">Add item</button>
