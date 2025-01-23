@@ -1,4 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useDialogStore } from '@/stores/dialog'
+
+const dialogStore = useDialogStore()
+
+function handleClickCancel() {
+  dialogStore.close()
+}
+
+</script>
 
 <template>
   <form class="text-[#d1d2d3] px-4 flex flex-col py-2 gap-3 pb-4">
@@ -25,7 +34,7 @@
 
     <div class="flex gap-2 mt-2">
       <button class="flex-grow bg-green-800 py-2 px-4">Add item</button>
-      <button class="bg-red-800 py-2 px-4">Cancel</button>
+      <button class="bg-red-800 py-2 px-4" type="button" @click="handleClickCancel">Cancel</button>
     </div>
   </form>
 </template>
