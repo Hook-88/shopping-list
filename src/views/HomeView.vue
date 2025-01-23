@@ -3,7 +3,7 @@ import ShoppingList from '@/components/ShoppingList/ShoppingList.vue'
 import { useDialogStore } from '@/stores/dialog';
 import { faCaretDown, faCaretRight, faCaretUp, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, markRaw, onMounted, onUnmounted, ref } from 'vue';
 import AddNewItem from '@/components/Forms/AddNewItem/AddNewItem.vue';
 
 const navIsOpen = ref(false)
@@ -40,7 +40,7 @@ onUnmounted(() => {
 
 function handleClickAddNewItem() {
   dialogStore.open({
-    component: AddNewItem
+    component: markRaw(AddNewItem)
   })
 }
 
@@ -66,7 +66,7 @@ function handleClickAddNewItem() {
       </RouterLink>
     </nav>
 
-    <button class="px-6 ml-auto text-xl" @click="handleClickAddNewItem">
+    <button v-if="!dialogStore.isOpen" class="px-6 ml-auto text-xl" @click="handleClickAddNewItem">
       <FontAwesomeIcon :icon="faPlus" />
     </button>
   </header>
