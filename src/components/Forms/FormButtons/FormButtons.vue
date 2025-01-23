@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import BaseButton from '@/components/Buttons/BaseButton.vue';
+
 defineProps<{
   onCancel: () => void
 }>()
@@ -6,7 +8,7 @@ defineProps<{
 
 <template>
   <div class="flex gap-2 mt-2">
-    <button class="flex-grow bg-green-800 py-2 px-4">Add item</button>
-    <button class="bg-red-800 py-2 px-4" type="button" @click="onCancel">Cancel</button>
+    <BaseButton class="flex-grow" button-type="confirm">Add item</BaseButton>
+    <BaseButton button-type="danger">Cancel</BaseButton>
   </div>
 </template>
