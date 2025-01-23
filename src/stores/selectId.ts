@@ -29,10 +29,15 @@ export const useSelectId = defineStore('select-id', () => {
     selectedIds.value = selectedIds.value.filter((selectedId) => selectedId !== id)
   }
 
+  function clearSelection() {
+    selectedIds.value = []
+  }
+
   return {
     selectedIds,
     singleSelectedId,
     addId,
     removeId,
+    clearSelection,
   }
 })
