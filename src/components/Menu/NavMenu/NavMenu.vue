@@ -2,6 +2,9 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { useDialogStore } from '@/stores/dialog'
+
+const dialogStore = useDialogStore()
 
 const navIsOpen = ref(false)
 
@@ -39,7 +42,7 @@ onUnmounted(() => {
   <button class="py-2 px-4 text-xl text-left flex items-center gap-2 tracking-wider font-bold" popovertarget="mypopover"
     @click="handleClickOpenNav">
     Shopping List
-    <FontAwesomeIcon :icon="openNavButtonIcon" class="text-xl" />
+    <FontAwesomeIcon v-if="!dialogStore.isOpen" :icon="openNavButtonIcon" class="text-xl" />
   </button>
   <nav id="mypopover" popover class="border-b border-t border-[#d1d2d3]/20 border-b-[#d1d2d3]/20 p-0">
     <slot></slot>
