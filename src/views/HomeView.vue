@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ShoppingList from '@/components/ShoppingList/ShoppingList.vue'
 import { useDialogStore } from '@/stores/dialog';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { markRaw, onMounted } from 'vue';
 import AddNewItem from '@/components/Forms/AddNewItem/AddNewItem.vue';
@@ -45,4 +45,18 @@ onMounted(() => {
     <BaseButton v-else @click="handleClickAddNewItem">Add
       new item</BaseButton>
   </main>
+
+  <div class="fixed inset-x-0 bottom-10 mx-2 bg-[#1c1c1c] flex justify-between border rounded border-[#d1d2d3]/20">
+    <button class="px-4 py-2">
+      <FontAwesomeIcon :icon="faMinus" />
+    </button>
+
+    <button class="px-4 py-2">
+      <FontAwesomeIcon :icon="faEdit" />
+    </button>
+
+    <button class="px-4 py-2">
+      <FontAwesomeIcon :icon="faPlus" />
+    </button>
+  </div>
 </template>
