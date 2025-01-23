@@ -5,10 +5,13 @@ import { faCaretDown, faCaretRight, faCaretUp, faPlus } from '@fortawesome/free-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, markRaw, onMounted, onUnmounted, ref } from 'vue';
 import AddNewItem from '@/components/Forms/AddNewItem/AddNewItem.vue';
+import { useShoppingList } from '@/stores/shoppingList';
 
 const navIsOpen = ref(false)
 
 const dialogStore = useDialogStore()
+
+const shoppingListStore = useShoppingList()
 
 function handleClickOpenNav() {
   navIsOpen.value = !navIsOpen.value
@@ -44,6 +47,10 @@ function handleClickAddNewItem() {
   })
 }
 
+onMounted(() => {
+  shoppingListStore.shoppingItems = []
+})
+
 
 </script>
 
@@ -73,7 +80,9 @@ function handleClickAddNewItem() {
 
 
   <main class="flex-grow px-2 flex flex-col gap-4">
-    <ShoppingList />
+    <ShoppingList v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0" />
+    <button v-else class="py-2 px-4 rounded-sm bg-sky-800 border border-[#d1d2d3]/20" @click="handleClickAddNewItem">Add
+      new item</button>
   </main>
 </template>
 

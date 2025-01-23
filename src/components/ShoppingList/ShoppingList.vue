@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import BaseList from '@/components/BaseList/BaseList.vue'
 import ShoppingItem from '@/components/ShoppingList/ShoppingItem.vue';
-import { SHOPPINGLIST } from '@/data'
+// import { SHOPPINGLIST } from '@/data'
 import { useShoppingList } from '@/stores/shoppingList';
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSelectId } from '@/stores/selectId';
 
@@ -11,11 +11,6 @@ const shoppingListStore = useShoppingList()
 const { shoppingItems } = storeToRefs(shoppingListStore)
 
 const selectIdStore = useSelectId()
-
-
-onMounted(() => {
-  shoppingListStore.shoppingItems = SHOPPINGLIST
-})
 
 function handleClickDelete() {
   if (!shoppingListStore.shoppingItems) {
