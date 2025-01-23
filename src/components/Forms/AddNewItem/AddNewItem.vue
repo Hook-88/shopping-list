@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { useDialogStore } from '@/stores/dialog'
+import { onMounted, useTemplateRef } from 'vue';
 
 const dialogStore = useDialogStore()
 
 function handleClickCancel() {
   dialogStore.close()
 }
+
+const inputNameRef = useTemplateRef('input-name-ref')
+
+onMounted(() => {
+  inputNameRef.value?.focus()
+})
 
 </script>
 
@@ -15,7 +22,7 @@ function handleClickCancel() {
       <label>Name:</label>
       <br />
       <input type="text" placeholder="working..."
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent">
+        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" ref="input-name-ref">
     </div>
 
     <div>
