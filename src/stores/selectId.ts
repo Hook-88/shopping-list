@@ -31,6 +31,7 @@ export const useSelectId = defineStore('select-id', () => {
 
   return {
     selectedIds,
+    singleSelectedId,
     addId,
     removeId,
   }

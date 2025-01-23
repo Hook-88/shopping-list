@@ -12,8 +12,10 @@ const props = defineProps<{
   }
 }>()
 
-//Check item
+//select store
 const selecIdStore = useSelectId()
+
+//Check item
 const isChecked = computed(() => {
   return selecIdStore.selectedIds.some(selectedId => selectedId === props.item.id)
 })
@@ -28,15 +30,31 @@ function handleClickItem() {
   selecIdStore.addId(props.item.id)
 }
 
+//select item for edit
+const isSelectedToEdit = computed(() => {
+  return selecIdStore.singleSelectedId === props.item.id
+})
+function handleClickEditItem() {
+  if (isSelectedToEdit.value) {
+    selecIdStore.removeId(props.item.id, true)
+
+    return
+  }
+
+  selecIdStore.addId(props.item.id, true)
+}
+
+
 </script>
 
 <template>
   <div class="flex items-center border border-[#d1d2d3]/20 rounded" :class="{
-    ['bg-green-800/50']: isChecked
+    ['bg-green-800/50']: isChecked,
+    ['border-white']: isSelectedToEdit
   }" @click="handleClickItem">
     <p class="ml-3">{{ item.name }}</p>
     <span v-if="item.quantity > 1">&nbsp;({{ item.quantity }}x)</span>
-    <button v-if="!isChecked" class="ml-auto p-4">
+    <button v-if="!isChecked" class="ml-auto p-4" @click.stop="handleClickEditItem">
       <FontAwesomeIcon :icon="faGear" />
     </button>
     <span v-else class="ml-auto p-4">

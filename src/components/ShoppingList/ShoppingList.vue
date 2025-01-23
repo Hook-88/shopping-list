@@ -2,7 +2,7 @@
 import BaseList from '@/components/BaseList/BaseList.vue'
 import ShoppingItem from '@/components/ShoppingList/ShoppingItem.vue';
 import { SHOPPINGLIST } from '@/data'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
 interface ShoppingItem {
   name: string
@@ -16,6 +16,7 @@ const shopingListItem = ref<ShoppingItem[] | null>()
 onMounted(() => {
   shopingListItem.value = SHOPPINGLIST
 })
+
 
 </script>
 
