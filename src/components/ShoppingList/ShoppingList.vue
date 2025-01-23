@@ -32,6 +32,6 @@ const noItemsSelected = computed(() => {
   <BaseList v-if="shoppingItems" :list-items="shoppingItems" :item-component="ShoppingItem" />
   <button class="rounded border py-3 bg-red-600/50 border-[#d1d2d3]/20 disabled:bg-red-800/30 disabled:text-white/40"
     @click="handleClickDelete" :disabled="noItemsSelected">
-    Delete checked items
+    Clear checked items
   </button>
 </template>

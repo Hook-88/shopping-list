@@ -5,6 +5,15 @@ import { onMounted, reactive, useTemplateRef } from 'vue';
 import BaseInput from '@/components/Input/BaseInput.vue';
 import FormButtons from '../FormButtons/FormButtons.vue';
 
+const props = defineProps<{
+  item?: {
+    name: string
+    quantity: number
+    id: string
+    label: string
+  }
+}>()
+
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
 
@@ -28,12 +37,29 @@ onMounted(() => {
 })
 
 const formData = reactive({
-  ['item-name']: "",
-  ['item-quantity']: 1,
-  ['item-label']: ''
+  ['item-name']: props.item ? props.item.name : "",
+  ['item-quantity']: props.item ? props.item.quantity : 1,
+  ['item-label']: props.item ? props.item.label : ""
 })
 
 function handleSubmit() {
+  if (props.item) {
+    const mutatedItem = {
+      name: formData['item-name'],
+      quantity: formData['item-quantity'],
+      label: formData['item-label'],
+      id: props.item.id
+    }
+
+    shoppingListStore.mutateItem(props.item.id, {
+      ...mutatedItem
+    })
+
+    dialogStore.close()
+    return
+  }
+
+
   shoppingListStore.addItem({
     name: formData['item-name'],
     quantity: formData['item-quantity'],
@@ -49,6 +75,9 @@ function resetForm() {
   formData['item-quantity'] = 1
   formData['item-label'] = ""
 }
+
+
+
 
 </script>
 

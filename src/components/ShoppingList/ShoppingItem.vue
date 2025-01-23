@@ -26,19 +26,22 @@ const isChecked = computed(() => {
   return selecIdStore.selectedIds.some(selectedId => selectedId === props.item.id)
 })
 
+function handleToolbar() {
+  selecIdStore.removeId(props.item.id, true)
+  toolbarStore.close()
+}
+
 function handleClickItem() {
   //deselect item to edit if selected to edit
   if (isSelectedToEdit.value) {
-    selecIdStore.removeId(props.item.id, true)
-    toolbarStore.close()
+    handleToolbar()
 
     return
 
   }
 
   //deselect item
-  selecIdStore.removeId(props.item.id, true)
-  toolbarStore.close()
+  handleToolbar()
 
   //uncheck item if checked
   if (isChecked.value) {
@@ -62,8 +65,7 @@ const editItemIcon = computed(() => {
 function handleClickEditItem() {
 
   if (isSelectedToEdit.value) {
-    selecIdStore.removeId(props.item.id, true)
-    toolbarStore.close()
+    handleToolbar()
     return
   }
 
