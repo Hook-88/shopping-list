@@ -2,8 +2,10 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCheck, faGear } from '@fortawesome/free-solid-svg-icons'
 import { useSelectId } from '@/stores/selectId'
-import { computed } from 'vue'
+import { computed, markRaw } from 'vue'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { useToolbarStore } from '@/stores/toolbar'
+import EditButtons from './EditItem/EditButtons.vue'
 
 
 const props = defineProps<{
@@ -13,6 +15,8 @@ const props = defineProps<{
     id: string
   }
 }>()
+
+const toolbarStore = useToolbarStore()
 
 //select store
 const selecIdStore = useSelectId()
@@ -26,12 +30,15 @@ function handleClickItem() {
   //deselect item to edit if selected to edit
   if (isSelectedToEdit.value) {
     selecIdStore.removeId(props.item.id, true)
+    toolbarStore.close()
+
     return
 
   }
 
   //deselect item
   selecIdStore.removeId(props.item.id, true)
+  toolbarStore.close()
 
   //uncheck item if checked
   if (isChecked.value) {
@@ -56,11 +63,14 @@ function handleClickEditItem() {
 
   if (isSelectedToEdit.value) {
     selecIdStore.removeId(props.item.id, true)
-
+    toolbarStore.close()
     return
   }
 
   selecIdStore.addId(props.item.id, true)
+  toolbarStore.open({
+    component: markRaw(EditButtons)
+  })
 }
 
 
