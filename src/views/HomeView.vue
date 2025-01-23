@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import ShoppingList from '@/components/ShoppingList/ShoppingList.vue'
+import { useDialogStore } from '@/stores/dialog';
 import { faCaretDown, faCaretRight, faCaretUp, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import AddNewItem from '@/components/Forms/AddNewItem/AddNewItem.vue';
 
 const navIsOpen = ref(false)
+
+const dialogStore = useDialogStore()
 
 function handleClickOpenNav() {
   navIsOpen.value = !navIsOpen.value
@@ -34,6 +38,12 @@ onUnmounted(() => {
   document.removeEventListener('click', eventHandler)
 })
 
+function handleClickAddNewItem() {
+  dialogStore.open({
+    component: AddNewItem
+  })
+}
+
 
 </script>
 
@@ -56,7 +66,7 @@ onUnmounted(() => {
       </RouterLink>
     </nav>
 
-    <button class="px-6 ml-auto text-xl">
+    <button class="px-6 ml-auto text-xl" @click="handleClickAddNewItem">
       <FontAwesomeIcon :icon="faPlus" />
     </button>
   </header>
