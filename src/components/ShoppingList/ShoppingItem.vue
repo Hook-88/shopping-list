@@ -5,6 +5,7 @@ import { useSelectId } from '@/stores/selectId'
 import { computed } from 'vue'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
+
 const props = defineProps<{
   item: {
     name: string

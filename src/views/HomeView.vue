@@ -9,6 +9,7 @@ import { useShoppingList } from '@/stores/shoppingList'
 import BaseButton from '@/components/Buttons/BaseButton.vue';
 import NavMenu from '@/components/Menu/NavMenu/NavMenu.vue';
 import NavLink from '@/components/NavLink/NavLink.vue'
+import BaseToolbar from '@/components/BaseToolbar/BaseToolbar.vue';
 
 const dialogStore = useDialogStore()
 
@@ -46,7 +47,9 @@ onMounted(() => {
       new item</BaseButton>
   </main>
 
-  <div class="fixed inset-x-0 bottom-10 mx-2 bg-[#1c1c1c] flex justify-between border rounded border-[#d1d2d3]/20">
+  <BaseToolbar />
+
+  <!-- <div class="fixed inset-x-0 bottom-10 mx-2 bg-[#1c1c1c] flex justify-between border rounded border-[#d1d2d3]/20">
     <button class="px-4 py-2">
       <FontAwesomeIcon :icon="faMinus" />
     </button>
@@ -58,5 +61,5 @@ onMounted(() => {
     <button class="px-4 py-2">
       <FontAwesomeIcon :icon="faPlus" />
     </button>
-  </div>
+  </div> -->
 </template>
