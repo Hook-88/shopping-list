@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faGear } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faGear } from '@fortawesome/free-solid-svg-icons'
 import { useSelectId } from '@/stores/selectId'
 import { computed } from 'vue';
 
@@ -31,10 +31,16 @@ function handleClickItem() {
 </script>
 
 <template>
-  <div class="flex items-center border border-[#d1d2d3]/20 rounded" :class="isChecked && 'bg-green-800/50'"
-    @click="handleClickItem">
+  <div class="flex items-center border border-[#d1d2d3]/20 rounded" :class="{
+    ['bg-green-800/50']: isChecked
+  }" @click="handleClickItem">
     <p class="ml-3">{{ item.name }}</p>
     <span v-if="item.quantity > 1">&nbsp;({{ item.quantity }}x)</span>
-    <FontAwesomeIcon :icon="faGear" class="ml-auto p-4" />
+    <button v-if="!isChecked" class="ml-auto p-4">
+      <FontAwesomeIcon :icon="faGear" />
+    </button>
+    <span v-else class="ml-auto p-4">
+      <FontAwesomeIcon :icon="faCheck" />
+    </span>
   </div>
 </template>
