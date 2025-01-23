@@ -3,12 +3,25 @@ import { ref } from 'vue'
 
 export const useSelectId = defineStore('select-id', () => {
   const selectedIds = ref<string[]>([])
+  const singleSelectedId = ref<string | null>()
 
-  function addId(id: string) {
+  function addId(id: string, single: boolean = false) {
+    if (single) {
+      singleSelectedId.value = id
+
+      return
+    }
+
     selectedIds.value = [id, ...selectedIds.value]
   }
 
-  function removeId(id: string) {
+  function removeId(id: string, single: boolean = false) {
+    if (single) {
+      singleSelectedId.value = null
+
+      return
+    }
+
     if (selectedIds.value.length === 0) {
       throw new Error("There's no id to remove...")
     }
