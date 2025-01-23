@@ -19,8 +19,18 @@ export const useShoppingList = defineStore('shopping-list', () => {
     shoppingItems.value = shoppingItems.value.filter((item) => item.id !== itemId)
   }
 
+  function addItem(itemData: { name: string; quantity: number; label: string }) {
+    const newItem: ShoppingItem = {
+      ...itemData,
+      id: Math.random().toString(),
+    }
+
+    shoppingItems.value?.unshift(newItem)
+  }
+
   return {
     shoppingItems,
     deleteItem,
+    addItem,
   }
 })

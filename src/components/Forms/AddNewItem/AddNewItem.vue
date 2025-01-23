@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useDialogStore } from '@/stores/dialog'
-import { onMounted, useTemplateRef } from 'vue';
+import { useShoppingList } from '@/stores/shoppingList';
+import { onMounted, reactive, useTemplateRef } from 'vue';
 
 const dialogStore = useDialogStore()
+const shoppingListStore = useShoppingList()
 
 function handleClickCancel() {
   dialogStore.close()
@@ -14,29 +16,52 @@ onMounted(() => {
   inputNameRef.value?.focus()
 })
 
+const formData = reactive({
+  ['item-name']: "",
+  ['item-quantity']: 1,
+  ['item-label']: ''
+})
+
+function handleSubmit() {
+  shoppingListStore.addItem({
+    name: formData['item-name'],
+    quantity: formData['item-quantity'],
+    label: formData['item-label']
+  })
+
+  resetForm()
+}
+
+function resetForm() {
+  formData['item-name'] = ""
+  formData['item-quantity'] = 1
+  formData['item-label'] = ""
+}
+
 </script>
 
 <template>
-  <form class="text-[#d1d2d3] px-4 flex flex-col py-2 gap-3 pb-4">
+  <form class="text-[#d1d2d3] px-4 flex flex-col py-2 gap-3 pb-4" @submit.prevent="handleSubmit">
     <div>
       <label>Name:</label>
       <br />
-      <input type="text" placeholder="working..."
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" ref="input-name-ref">
+      <input type="text" placeholder="working..." required
+        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" ref="input-name-ref"
+        v-model="formData['item-name']">
     </div>
 
     <div>
       <label>Quantity:</label>
       <br />
       <input type="number" placeholder="quantity...."
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent">
+        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" v-model="formData['item-quantity']">
     </div>
 
     <div>
       <label>Label:</label>
       <br />
       <input type="text" placeholder="label...."
-        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent">
+        class="w-full px-2 py-1 rounded border border-[#d1d2d3]/20 bg-transparent" v-model="formData['item-label']">
     </div>
 
     <div class="flex gap-2 mt-2">
