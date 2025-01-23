@@ -3,6 +3,7 @@ import { useDialogStore } from '@/stores/dialog'
 import { useShoppingList } from '@/stores/shoppingList';
 import { onMounted, reactive, useTemplateRef } from 'vue';
 import BaseInput from '@/components/Input/BaseInput.vue';
+import FormButtons from '../FormButtons/FormButtons.vue';
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingList()
@@ -20,7 +21,7 @@ function handleFocus() {
   }
 
   inputNameRef.value.focus()
-} a
+}
 
 onMounted(() => {
   handleFocus()
@@ -57,11 +58,9 @@ function resetForm() {
       ref="input-name-ref" />
 
     <BaseInput label="Quantity" type="number" v-model="formData['item-quantity']" />
+
     <BaseInput label="Label" type="text" placeholder="Item label..." v-model="formData['item-label']" />
 
-    <div class="flex gap-2 mt-2">
-      <button class="flex-grow bg-green-800 py-2 px-4">Add item</button>
-      <button class="bg-red-800 py-2 px-4" type="button" @click="handleClickCancel">Cancel</button>
-    </div>
+    <FormButtons :onCancel="handleClickCancel" />
   </form>
 </template>
