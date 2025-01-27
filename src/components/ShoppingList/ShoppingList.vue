@@ -68,12 +68,19 @@ const filterButtonText = computed(() => {
 
 <template>
   <div>
-    <header class="text-sm flex items-end justify-between">
-      <h5 class="mb-1" @click="handleClickCompleted">
-        ({{ selectIdStore.selectedIds.length }}/{{ shoppingItems?.length }})
-        <span v-if="listIsCompleted">- Completed</span>
-      </h5>
-      <button class="px-2 pt-2 pb-1" @click="toggleFilter">{{ filterButtonText }}</button>
+    <header>
+      <div class="flex items-center justify-end gap-1">
+        <button class="border border-[#d1d2d3]/20 px-4 py-0.5 rounded-2xl">All</button>
+        <button class="border border-[#d1d2d3]/20 px-4 py-0.5 rounded-2xl bg-sky-800">Groentenboer</button>
+        <button class="border border-[#d1d2d3]/20 px-4 py-0.5 rounded-2xl">Dolarcity</button>
+      </div>
+      <div class="text-sm flex items-end justify-between">
+        <h5 class="mb-1" @click="handleClickCompleted">
+          ({{ selectIdStore.selectedIds.length }}/{{ shoppingItems?.length }})
+          <span v-if="listIsCompleted">- Completed</span>
+        </h5>
+        <button class="px-2 pt-2 pb-1" @click="toggleFilter">{{ filterButtonText }}</button>
+      </div>
     </header>
     <BaseList v-if="shoppingListStore.shoppingItems" :list-items="itemsToDisplay!" :item-component="ShoppingItem" />
   </div>
