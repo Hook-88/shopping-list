@@ -6,6 +6,8 @@ import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSelectId } from '@/stores/selectId';
 import FilterButton from '../Buttons/FilterButton.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 const shoppingListStore = useShoppingList()
 const { shoppingItems } = storeToRefs(shoppingListStore)
@@ -86,7 +88,7 @@ function addLabelFilter(label: string) {
 }
 
 function removeLabelFilter(label: string) {
-  selectedLabelFilters.value.filter(labelFilter => labelFilter !== label)
+  selectedLabelFilters.value = selectedLabelFilters.value.filter(labelFilter => labelFilter !== label)
 }
 
 function handleClickLabelFilter(label: string) {
@@ -94,11 +96,14 @@ function handleClickLabelFilter(label: string) {
 
   if (labelIsInSelectedLabelFilter) {
     removeLabelFilter(label)
-
     return
-  }
 
+  }
   addLabelFilter(label)
+}
+
+function clearLabelFilters() {
+  selectedLabelFilters.value = []
 }
 
 //TODO Add conditional class based on selectedlabelfilters
@@ -109,8 +114,13 @@ function handleClickLabelFilter(label: string) {
   <div>
     <header>
       <div class="flex items-center justify-end gap-1" v-if="someItemsHaveLabel">
-        <FilterButton>All</FilterButton>
-        <FilterButton v-for="(label, index) in labelArray" :key="index" @click="handleClickLabelFilter">
+        <FilterButton class="bg-red-900" @click="clearLabelFilters" v-if="selectedLabelFilters.length > 0">
+          <FontAwesomeIcon :icon="faClose" />
+        </FilterButton>
+        <FilterButton v-for="(label, index) in labelArray" :key="index" @click="() => handleClickLabelFilter(label)"
+          :class="{
+            ['bg-sky-800']: selectedLabelFilters.some(selectedLabel => selectedLabel === label)
+          }">
           {{ label }}
         </FilterButton>
       </div>

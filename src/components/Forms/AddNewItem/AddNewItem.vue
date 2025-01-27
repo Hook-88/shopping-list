@@ -86,7 +86,7 @@ function resetForm() {
     <BaseInput label="Name" type="text" placeholder="name item..." required v-model="formData['item-name']"
       ref="input-name-ref" />
 
-    <BaseInput label="Quantity" type="number" v-model="formData['item-quantity']" />
+    <BaseInput label="Quantity" type="number" required v-model="formData['item-quantity']" />
 
     <BaseInput label="Label" type="text" placeholder="Item label..." v-model="formData['item-label']" />
 
