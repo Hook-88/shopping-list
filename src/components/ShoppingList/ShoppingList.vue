@@ -5,6 +5,7 @@ import { useShoppingList } from '@/stores/shoppingList';
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSelectId } from '@/stores/selectId';
+import FilterButton from '../Buttons/FilterButton.vue';
 
 const shoppingListStore = useShoppingList()
 const { shoppingItems } = storeToRefs(shoppingListStore)
@@ -44,7 +45,7 @@ function toggleFilter() {
 
 const filteredItems = computed(() => {
   if (!shoppingListStore.shoppingItems) {
-    throw new Error('not shopping items is undefined')
+    throw new Error('shopping items is undefined')
   }
 
   return shoppingListStore.shoppingItems.filter(shoppingItem => {
@@ -63,16 +64,30 @@ const filterButtonText = computed(() => {
   return applyFilter.value ? 'Show checked' : 'Hide checked'
 })
 
+//labels
+const someItemsHaveLabel = computed(() => {
+  return labelArray.value.length > 0
+})
+
+const labelArray = computed(() => {
+  if (!shoppingListStore.shoppingItems) {
+    throw new Error('shopping items is undefined')
+  }
+
+  const filterArr = shoppingListStore.shoppingItems.filter(shoppingItems => shoppingItems.label.length > 0)
+
+  return filterArr.map(item => item.label)
+})
+
 
 </script>
 
 <template>
   <div>
     <header>
-      <div class="flex items-center justify-end gap-1">
-        <button class="border border-[#d1d2d3]/20 px-4 py-0.5 rounded-2xl">All</button>
-        <button class="border border-[#d1d2d3]/20 px-4 py-0.5 rounded-2xl bg-sky-800">Groentenboer</button>
-        <button class="border border-[#d1d2d3]/20 px-4 py-0.5 rounded-2xl">Dolarcity</button>
+      <div class="flex items-center justify-end gap-1" v-if="someItemsHaveLabel">
+        <FilterButton>All</FilterButton>
+        <FilterButton v-for="(label, index) in labelArray" :key="index">{{ label }}</FilterButton>
       </div>
       <div class="text-sm flex items-end justify-between">
         <h5 class="mb-1" @click="handleClickCompleted">
