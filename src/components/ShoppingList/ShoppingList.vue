@@ -113,7 +113,7 @@ function clearLabelFilters() {
 <template>
   <div>
     <header>
-      <div class="flex items-center justify-end gap-1" v-if="someItemsHaveLabel">
+      <div class="flex items-center justify-end gap-1 mb-2" v-if="someItemsHaveLabel">
         <FilterButton class="bg-red-900" @click="clearLabelFilters" v-if="selectedLabelFilters.length > 0">
           <FontAwesomeIcon :icon="faClose" />
         </FilterButton>
