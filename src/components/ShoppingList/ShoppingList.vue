@@ -29,7 +29,13 @@ const noItemsSelected = computed(() => {
 </script>
 
 <template>
-  <BaseList v-if="shoppingItems" :list-items="shoppingItems" :item-component="ShoppingItem" />
+  <div>
+    <header class="text-sm flex items-end justify-between">
+      <span class="mb-1">(4/7) - Completed</span>
+      <button class="px-2 pt-2 pb-1">Hide checked</button>
+    </header>
+    <BaseList v-if="shoppingItems" :list-items="shoppingItems" :item-component="ShoppingItem" />
+  </div>
   <button class="rounded border py-3 bg-red-600/50 border-[#d1d2d3]/20 disabled:bg-red-800/30 disabled:text-white/40"
     @click="handleClickDelete" :disabled="noItemsSelected">
     Clear checked items
