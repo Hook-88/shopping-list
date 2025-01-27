@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BaseList from '@/components/BaseList/BaseList.vue'
 import ShoppingItem from '@/components/ShoppingList/ShoppingItem.vue';
-// import { SHOPPINGLIST } from '@/data'
 import { useShoppingList } from '@/stores/shoppingList';
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -31,7 +30,7 @@ const noItemsSelected = computed(() => {
 <template>
   <div>
     <header class="text-sm flex items-end justify-between">
-      <span class="mb-1">(4/7) - Completed</span>
+      <span class="mb-1">({{ selectIdStore.selectedIds.length }}/{{ shoppingItems?.length }}) - Completed</span>
       <button class="px-2 pt-2 pb-1">Hide checked</button>
     </header>
     <BaseList v-if="shoppingItems" :list-items="shoppingItems" :item-component="ShoppingItem" />
