@@ -79,15 +79,40 @@ const labelArray = computed(() => {
   return filterArr.map(item => item.label)
 })
 
+const selectedLabelFilters = ref<string[]>([])
 
+function addLabelFilter(label: string) {
+  selectedLabelFilters.value.push(label)
+}
+
+function removeLabelFilter(label: string) {
+  selectedLabelFilters.value.filter(labelFilter => labelFilter !== label)
+}
+
+function handleClickLabelFilter(label: string) {
+  const labelIsInSelectedLabelFilter = selectedLabelFilters.value.some(filter => filter === label)
+
+  if (labelIsInSelectedLabelFilter) {
+    removeLabelFilter(label)
+
+    return
+  }
+
+  addLabelFilter(label)
+}
+
+//TODO Add conditional class based on selectedlabelfilters
 </script>
+
 
 <template>
   <div>
     <header>
       <div class="flex items-center justify-end gap-1" v-if="someItemsHaveLabel">
         <FilterButton>All</FilterButton>
-        <FilterButton v-for="(label, index) in labelArray" :key="index">{{ label }}</FilterButton>
+        <FilterButton v-for="(label, index) in labelArray" :key="index" @click="handleClickLabelFilter">
+          {{ label }}
+        </FilterButton>
       </div>
       <div class="text-sm flex items-end justify-between">
         <h5 class="mb-1" @click="handleClickCompleted">
