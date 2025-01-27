@@ -3,7 +3,7 @@ import ShoppingList from '@/components/ShoppingList/ShoppingList.vue'
 import { useDialogStore } from '@/stores/dialog';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { markRaw, onMounted } from 'vue';
+import { markRaw } from 'vue';
 import AddNewItem from '@/components/Forms/AddNewItem/AddNewItem.vue';
 import { useShoppingList } from '@/stores/shoppingList'
 import BaseButton from '@/components/Buttons/BaseButton.vue';
@@ -19,11 +19,6 @@ function handleClickAddNewItem() {
     component: markRaw(AddNewItem)
   })
 }
-
-// onMounted(() => {
-//   shoppingListStore.shoppingItems = []
-// })
-
 
 </script>
 
