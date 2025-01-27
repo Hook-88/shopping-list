@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import BaseModal from './components/BaseModal/BaseModal.vue'
+import { onMounted } from 'vue';
+import { useShoppingList } from './stores/shoppingList';
+
+const shoppingListStore = useShoppingList()
+
+onMounted(() => {
+  shoppingListStore.shoppingItems = []
+})
 
 </script>
 

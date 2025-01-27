@@ -20,9 +20,9 @@ function handleClickAddNewItem() {
   })
 }
 
-onMounted(() => {
-  shoppingListStore.shoppingItems = []
-})
+// onMounted(() => {
+//   shoppingListStore.shoppingItems = []
+// })
 
 
 </script>
