@@ -30,7 +30,10 @@ const noItemsSelected = computed(() => {
 <template>
   <div>
     <header class="text-sm flex items-end justify-between">
-      <span class="mb-1">({{ selectIdStore.selectedIds.length }}/{{ shoppingItems?.length }}) - Completed</span>
+      <h5 class="mb-1">
+        ({{ selectIdStore.selectedIds.length }}/{{ shoppingItems?.length }})
+        <span v-if="selectIdStore.selectedIds.length === shoppingItems?.length">- Completed</span>
+      </h5>
       <button class="px-2 pt-2 pb-1">Hide checked</button>
     </header>
     <BaseList v-if="shoppingItems" :list-items="shoppingItems" :item-component="ShoppingItem" />
