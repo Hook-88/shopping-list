@@ -39,10 +39,10 @@ function handleClickCompleted() {
   handleClickDelete()
 }
 
-const applyFilter = ref(false)
+const applyHideFilter = ref(false)
 
 function toggleFilter() {
-  applyFilter.value = !applyFilter.value
+  applyHideFilter.value = !applyHideFilter.value
 }
 
 const filteredItems = computed(() => {
@@ -59,14 +59,20 @@ const filteredItems = computed(() => {
 })
 
 const itemsToDisplay = computed(() => {
-  return applyFilter.value ? filteredItems.value : shoppingListStore.shoppingItems
+  if (applyLabelFilter.value) {
+
+  }
+
+
+  return applyHideFilter.value ? filteredItems.value : shoppingListStore.shoppingItems
 })
 
 const filterButtonText = computed(() => {
-  return applyFilter.value ? 'Show checked' : 'Hide checked'
+  return applyHideFilter.value ? 'Show checked' : 'Hide checked'
 })
 
 //labels
+
 const someItemsHaveLabel = computed(() => {
   return labelArray.value.length > 0
 })
@@ -106,7 +112,7 @@ function clearLabelFilters() {
   selectedLabelFilters.value = []
 }
 
-//TODO Add conditional class based on selectedlabelfilters
+//TODO Add logic to modify display items on selected label
 </script>
 
 
