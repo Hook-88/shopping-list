@@ -59,10 +59,6 @@ const filteredItems = computed(() => {
 })
 
 const itemsToDisplay = computed(() => {
-  if (applyLabelFilter.value) {
-
-  }
-
 
   return applyHideFilter.value ? filteredItems.value : shoppingListStore.shoppingItems
 })
@@ -119,9 +115,9 @@ function clearLabelFilters() {
 <template>
   <div>
     <header>
-      <div class="flex items-center justify-end gap-1 mb-2" v-if="someItemsHaveLabel">
-        <FilterButton class="bg-red-900" @click="clearLabelFilters" v-if="selectedLabelFilters.length > 0">
-          <FontAwesomeIcon :icon="faClose" />
+      <div class="flex items-center justify-start gap-1 mb-2" v-if="someItemsHaveLabel">
+        <FilterButton @click="clearLabelFilters" :class="{ ['bg-sky-900']: selectedLabelFilters.length === 0 }">
+          All
         </FilterButton>
         <FilterButton v-for="(label, index) in labelArray" :key="index" @click="() => handleClickLabelFilter(label)"
           :class="{
