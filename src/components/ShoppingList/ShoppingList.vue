@@ -131,7 +131,7 @@ function clearLabelFilters() {
 <template>
   <div>
     <header>
-      <div class="flex items-center justify-start gap-1 mb-2" v-if="someItemsHaveLabel">
+      <div class="flex items-center flex-wrap justify-start gap-1 mb-2" v-if="someItemsHaveLabel">
         <FilterButton @click="clearLabelFilters" :class="{ ['bg-sky-900']: selectedLabelFilters.length === 0 }">
           All
         </FilterButton>
