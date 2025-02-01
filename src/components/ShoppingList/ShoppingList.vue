@@ -6,8 +6,8 @@ import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSelectId } from '@/stores/selectId';
 import FilterButton from '../Buttons/FilterButton.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+// import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 const shoppingListStore = useShoppingList()
 const { shoppingItems } = storeToRefs(shoppingListStore)
@@ -59,6 +59,18 @@ const filteredItems = computed(() => {
 })
 
 const itemsToDisplay = computed(() => {
+  if (selectedLabelFilters.value.length > 0) {
+    // filter out non filter items
+    return shoppingListStore.shoppingItems?.filter(shoppingItem => {
+      const isInSelectedLabelArr = selectedLabelFilters.value.some(label => label === shoppingItem.label)
+
+      if (isInSelectedLabelArr) {
+        return shoppingItem
+      }
+
+    })
+
+  }
 
   return applyHideFilter.value ? filteredItems.value : shoppingListStore.shoppingItems
 })
@@ -102,6 +114,10 @@ function handleClickLabelFilter(label: string) {
 
   }
   addLabelFilter(label)
+
+  if (shoppingListStore.shoppingItems?.filter(shoppingItem => shoppingItem.label.length > 0).length === selectedLabelFilters.value.length) {
+    clearLabelFilters()
+  }
 }
 
 function clearLabelFilters() {
