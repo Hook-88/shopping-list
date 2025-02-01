@@ -8,6 +8,7 @@ import { useSelectId } from '@/stores/selectId';
 import FilterButton from '../Buttons/FilterButton.vue';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 // import { faClose } from '@fortawesome/free-solid-svg-icons';
+import LabelFilter from '@/Features/LabelFilter/LabelFilter.vue';
 
 const shoppingListStore = useShoppingList()
 const { shoppingItems } = storeToRefs(shoppingListStore)
@@ -124,14 +125,31 @@ function clearLabelFilters() {
   selectedLabelFilters.value = []
 }
 
-//TODO Add logic to modify display items on selected label
+function handleOnToggleFilter(label: string) {
+  const labelIsInSelectedLabelFilter = selectedLabelFilters.value.some(filter => filter === label)
+
+  if (labelIsInSelectedLabelFilter) {
+    removeLabelFilter(label)
+    return
+
+  }
+  addLabelFilter(label)
+
+  if (shoppingListStore.shoppingItems?.filter(shoppingItem => shoppingItem.label.length > 0).length === selectedLabelFilters.value.length) {
+    clearLabelFilters()
+  }
+}
+
+//TODO fix bug not hiding items on label filter
 </script>
 
 
 <template>
   <div>
     <header>
-      <div class="flex items-center flex-wrap justify-start gap-1 mb-2" v-if="someItemsHaveLabel">
+      <LabelFilter @on-clear-filter="clearLabelFilters" :label-arr="labelArray"
+        @on-toggle-filter="handleOnToggleFilter" />
+      <!-- <div class="flex items-center flex-wrap justify-start gap-1 mb-2" v-if="someItemsHaveLabel">
         <FilterButton @click="clearLabelFilters" :class="{ ['bg-sky-900']: selectedLabelFilters.length === 0 }">
           All
         </FilterButton>
@@ -141,7 +159,7 @@ function clearLabelFilters() {
           }">
           {{ label }}
         </FilterButton>
-      </div>
+      </div> -->
       <div class="text-sm flex items-end justify-between">
         <h5 class="mb-1" @click="handleClickCompleted">
           ({{ selectIdStore.selectedIds.length }}/{{ shoppingItems?.length }})
