@@ -10,8 +10,8 @@ defineProps<{
 
 <template>
   <div>
-    <header>
-      <button>
+    <header class="text-sm">
+      <button class="py-1">
         (4/{{ shoppingItems.length }})
       </button>
     </header>
