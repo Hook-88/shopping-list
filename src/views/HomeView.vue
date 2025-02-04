@@ -1,7 +1,10 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 
-</script>
+</script> -->
 
 <template>
-  <h1>This is the homepage</h1>
+  <main class="flex-grow">
+    <h1>This is the homepage</h1>
+
+  </main>
 </template>
