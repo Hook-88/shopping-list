@@ -19,7 +19,7 @@ import { RouterLink } from 'vue-router';
       <FontAwesomeIcon :icon="faPlus" />
     </button>
   </header>
-  <main class="flex-grow">
+  <main class="grow">
     <h1>This is the homepage</h1>
 
   </main>
