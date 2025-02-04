@@ -3,6 +3,7 @@ import { faAngleRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { RouterLink } from 'vue-router'
 import MainNav from '@/components/main-nav/MainNav.vue'
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 </script>
 
@@ -14,7 +15,6 @@ import MainNav from '@/components/main-nav/MainNav.vue'
     </button>
   </header>
   <main class="flex-grow px-2 flex flex-col">
-
-
+    <BaseButton>Add item</BaseButton>
   </main>
 </template>
