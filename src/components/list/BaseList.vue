@@ -9,14 +9,9 @@ defineProps<{
 </script>
 
 <template>
-  <div>
-    <header>
-      <button class="text-sm py-1">(4/8) - completed</button>
-    </header>
-    <ul class="space-y-2">
-      <li v-for="(item, index) in listData" :key="index">
-        <component :is="listComponent" :item="item" />
-      </li>
-    </ul>
-  </div>
+  <ul class="space-y-2">
+    <li v-for="(item, index) in listData" :key="index">
+      <component :is="listComponent" :item="item" />
+    </li>
+  </ul>
 </template>
