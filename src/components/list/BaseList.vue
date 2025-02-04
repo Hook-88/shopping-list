@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <ul>
+  <ul class="space-y-2">
     <li v-for="(item, index) in listData" :key="index">
       <component :is="listComponent" :item="item" />
     </li>
