@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import type { Component } from 'vue';
+
 defineProps<{
   listData: object[]
+  listComponent: Component
 }>()
 
 </script>
@@ -8,7 +11,7 @@ defineProps<{
 <template>
   <ul>
     <li v-for="(item, index) in listData" :key="index">
-      item
+      <component :is="listComponent" :item="item" />
     </li>
   </ul>
 </template>

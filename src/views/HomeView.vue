@@ -6,6 +6,7 @@ import MainNav from '@/components/main-nav/MainNav.vue'
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import BaseList from '@/components/list/BaseList.vue';
+import ShoppingItem from '@/features/shoppinglist/ShoppingItem.vue';
 
 </script>
 
@@ -17,7 +18,7 @@ import BaseList from '@/components/list/BaseList.vue';
     </button>
   </header>
   <main class="flex-grow px-2 flex flex-col">
-    <BaseButton>Add item</BaseButton>
-    <BaseList :list-data="GROCERYITEMS" />
+    <!-- <BaseButton>Add item</BaseButton> -->
+    <BaseList :list-data="GROCERYITEMS" :list-component="ShoppingItem" />
   </main>
 </template>
