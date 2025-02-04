@@ -4,6 +4,7 @@ import FilterButton from '@/components/Buttons/FilterButton.vue'
 
 const props = defineProps<{
   labelArr: string[]
+  // selectedLabelArr: string[]
 }>()
 
 const selectedLabelFilters = ref<string[]>([])
