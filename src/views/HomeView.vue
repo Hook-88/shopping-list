@@ -7,14 +7,14 @@ import MainNav from '@/components/main-nav/MainNav.vue'
 </script>
 
 <template>
-  <header class="flex justify-between border-b border-white/20">
+  <header class="flex items-center justify-between border-b border-white/20">
     <MainNav />
     <button class="px-4">
-      <FontAwesomeIcon :icon="faPlus" />
+      <FontAwesomeIcon :icon="faPlus" class="text-2xl" />
     </button>
   </header>
-  <main class="grow">
-    <h1>This is the homepage</h1>
+  <main class="flex-grow px-2 flex flex-col">
+
 
   </main>
 </template>
