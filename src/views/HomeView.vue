@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { RouterLink } from 'vue-router'
 import MainNav from '@/components/main-nav/MainNav.vue'
 import BaseButton from '@/components/buttons/BaseButton.vue';
+import { GROCERYITEMS } from '@/data/shoppingList';
+import BaseList from '@/components/list/BaseList.vue';
 
 </script>
 
@@ -16,5 +18,6 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
   </header>
   <main class="flex-grow px-2 flex flex-col">
     <BaseButton>Add item</BaseButton>
+    <BaseList :list-data="GROCERYITEMS" />
   </main>
 </template>
