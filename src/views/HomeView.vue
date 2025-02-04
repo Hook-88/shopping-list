@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import ShoppingList from '@/components/ShoppingList/ShoppingList.vue'
+import ShoppingList from '@/components/ShoppingList/ShoppingList.vue';
 
 
 
 </script>
 
 <template>
-
-  <header class="text-2xl text-center p-2 border-b border-[#d1d2d3]/20 grid grid-cols-6">
-    <h1 class="col-start-2 col-span-4">Shopping List</h1>
-    <!-- <nav>
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
-        </nav> -->
+  <header class="flex items-center justify-between border-b border-white/20">
+    <MainNav />
+    <button class="px-4">
+      <FontAwesomeIcon :icon="faPlus" class="text-2xl" />
+    </button>
   </header>
-
-
-  <main class="flex-grow px-2 flex flex-col gap-4">
-    <ShoppingList />
+  <main class="flex-grow px-2 flex flex-col">
+    <!-- <BaseButton>Add item</BaseButton> -->
+    <BaseList :list-data="GROCERYITEMS" :list-component="ShoppingItem" />
   </main>
 </template>
