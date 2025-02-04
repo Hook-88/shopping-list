@@ -2,6 +2,7 @@
 import { useSelectIdsStore } from '@/stores/selectIds';
 import { type GroceryItemInterface } from '@/types/GroceryItem'
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { computed } from 'vue';
 
@@ -35,7 +36,10 @@ function handleClickItem() {
     <h3 class="ml-4">{{ name }}</h3>
     &nbsp;
     <span>({{ quantity }}x)</span>
-    <button class="p-4 ml-auto">
+    <span v-if="itemIdIsSelected" class="p-4 ml-auto">
+      <FontAwesomeIcon :icon="faCheck" />
+    </span>
+    <button v-else class="p-4 ml-auto">
       <FontAwesomeIcon :icon="faCircle" />
     </button>
   </div>
