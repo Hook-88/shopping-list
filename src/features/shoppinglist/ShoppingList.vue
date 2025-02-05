@@ -9,7 +9,7 @@ defineProps<{
 }>()
 
 const { selectedIds, toggleSelectId } = useSelectMultipleIds()
-const { toggleSelect, selectedId } = useSelectSingleId()
+const { toggleSelect, selectedId, clearSelection } = useSelectSingleId()
 
 function itemIsChecked(id: string) {
   return selectedIds.value.includes(id)
@@ -19,8 +19,11 @@ function itemIsSelectedToEdit(id: string) {
   return selectedId.value === id
 }
 
-
 function handleOnToggleCheck(itemId: string) {
+  if (selectedId.value) {
+    clearSelection()
+    return
+  }
   toggleSelectId(itemId)
 }
 

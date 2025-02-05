@@ -22,6 +22,10 @@ const shoppingItemClassName = computed(() => {
         return "flex items-center border border-white/20 rounded-xs bg-green-800"
     }
 
+    if (props.isSelectedToEdit) {
+        return "flex items-center border border-white/80 rounded-xs"
+    }
+
     return "flex items-center border border-white/20 rounded-xs"
 })
 
