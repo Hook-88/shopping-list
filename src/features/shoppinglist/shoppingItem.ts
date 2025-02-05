@@ -3,16 +3,21 @@ import { useSelectSingleIdStore } from '@/stores/selectSingleId'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCircle as faCircleFill } from '@fortawesome/free-solid-svg-icons'
 import { computed } from 'vue'
+import { type GroceryItemInterface } from '@/types/GroceryItem'
 
-export const useShoppingItem = (propsId: string) => {
+export interface shoppingItemInterface extends GroceryItemInterface {
+  isChecked: boolean
+}
+
+export const useShoppingItem = (item: shoppingItemInterface) => {
   //check item
   const selectIdsStore = useSelectIdsStore()
 
   const itemIdIsSelected = computed(() =>
-    selectIdsStore.selectedIds.some((selectedId) => selectedId === propsId),
+    selectIdsStore.selectedIds.some((selectedId) => selectedId === item.id),
   )
 
-  const itemIdIsSingleSelected = computed(() => selectSingleIdStore.selectedId === propsId)
+  const itemIdIsSingleSelected = computed(() => selectSingleIdStore.selectedId === item.id)
 
   function handleClickItem() {
     //deselect item to edit if selected
@@ -23,17 +28,17 @@ export const useShoppingItem = (propsId: string) => {
 
     //check wheter to add item to selection
     if (itemIdIsSelected.value) {
-      selectIdsStore.removeId(propsId)
+      selectIdsStore.removeId(item.id)
       return
     }
-    selectIdsStore.addId(propsId)
+    selectIdsStore.addId(item.id)
   }
 
   // item select to edit
   const selectSingleIdStore = useSelectSingleIdStore()
 
   function handleClickEditItem() {
-    selectSingleIdStore.toggleSelect(propsId)
+    selectSingleIdStore.toggleSelect(item.id)
   }
 
   const circleIcon = computed(() => {
