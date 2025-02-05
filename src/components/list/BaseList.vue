@@ -11,7 +11,7 @@ defineProps<{
 <template>
   <ul class="space-y-2">
     <li v-for="(item, index) in listData" :key="index">
-      <component :is="listComponent" v-bind="item" />
+      <component :is="listComponent" :item="item" />
     </li>
   </ul>
 </template>
