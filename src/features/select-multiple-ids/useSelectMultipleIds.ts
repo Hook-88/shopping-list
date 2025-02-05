@@ -20,7 +20,7 @@ export const useSelectMultipleIds = () => {
     selectId(id)
   }
 
-  function clearSelection() {
+  function clearAll() {
     selectedIds.value = []
   }
 
@@ -29,6 +29,6 @@ export const useSelectMultipleIds = () => {
     selectId,
     deselectId,
     toggleSelectId,
-    clearSelection,
+    clearAll,
   }
 }
