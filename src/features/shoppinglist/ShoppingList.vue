@@ -3,6 +3,7 @@ import { type GroceryItemInterface } from '@/types/GroceryItem';
 import ShoppingItem from '@/features/shoppinglist/ShoppingItem.vue';
 import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleIds';
 import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -47,5 +48,8 @@ function handleOnEditItem(itemId: string) {
           @on-edit-item="handleOnEditItem" />
       </li>
     </ul>
+    <footer class="flex mt-4">
+      <BaseButton button-type="danger" class="flex-grow py-3">Delete checked items</BaseButton>
+    </footer>
   </div>
 </template>
