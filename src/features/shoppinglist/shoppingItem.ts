@@ -18,6 +18,7 @@ export const useShoppingItem = (propsId: string) => {
     //deselect item to edit if selected
     if (selectSingleIdStore.selectedId) {
       selectSingleIdStore.selectedId = null
+      return
     }
 
     //check wheter to add item to selection
