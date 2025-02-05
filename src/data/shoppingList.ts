@@ -1,64 +1,39 @@
-import { type GroceryItemInterface } from '@/types/GroceryItem'
+import { type ShoppingItemInterface } from '@/stores/shoppingItems'
 
-export const GROCERYITEMS: GroceryItemInterface[] = [
+export const GROCERYITEMS: ShoppingItemInterface[] = [
   {
     name: 'Bananas',
-    id: 'FRUIT001',
+    id: 'fruit-001',
     quantity: 6,
     unit: 'pieces',
+    label: 'Fruits',
   },
   {
     name: 'Milk',
-    id: 'DAIRY001',
+    id: 'dairy-001',
     quantity: 1,
-    unit: 'gallon',
+    unit: 'liter',
+    label: 'Dairy',
   },
   {
     name: 'Bread',
-    id: 'BAKERY001',
+    id: 'bakery-001',
     quantity: 2,
     unit: 'loaves',
+    label: 'Bakery',
   },
   {
     name: 'Chicken Breast',
-    id: 'MEAT001',
-    quantity: 2,
-    unit: 'pounds',
-  },
-  {
-    name: 'Carrots',
-    id: 'VEG001',
-    quantity: 1,
-    unit: 'bag',
-  },
-  {
-    name: 'Eggs',
-    id: 'DAIRY002',
-    quantity: 12,
-    unit: 'pieces',
+    id: 'meat-001',
+    quantity: 500,
+    unit: 'grams',
+    label: 'Meat',
   },
   {
     name: 'Tomatoes',
-    id: 'VEG002',
+    id: 'veg-001',
     quantity: 4,
     unit: 'pieces',
-  },
-  {
-    name: 'Cheese',
-    id: 'DAIRY003',
-    quantity: 8,
-    unit: 'ounces',
-  },
-  {
-    name: 'Rice',
-    id: 'GRAIN001',
-    quantity: 5,
-    unit: 'pounds',
-  },
-  {
-    name: 'Orange Juice',
-    id: 'BEV001',
-    quantity: 64,
-    unit: 'ounces',
+    label: 'Vegetables',
   },
 ]

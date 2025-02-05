@@ -4,6 +4,7 @@ import ShoppingItem from '@/features/shoppinglist/ShoppingItem.vue';
 import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleIds';
 import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
 import BaseButton from '@/components/buttons/BaseButton.vue';
+import { useShoppingItemsStore } from '@/stores/shoppingItems';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -32,12 +33,30 @@ function handleOnEditItem(itemId: string) {
   toggleSelect(itemId)
 }
 
+//Delete items
+const shoppingItemsStore = useShoppingItemsStore()
+
+function deleteCheckedItems() {
+  if (!shoppingItemsStore.shoppingItems) {
+    throw new Error('shoppinglistitems is null')
+  }
+
+  shoppingItemsStore.shoppingItems = shoppingItemsStore.shoppingItems.filter(shoppingItem => {
+    const isChecked = itemIsChecked(shoppingItem.id)
+    if (!isChecked) {
+      return shoppingItem
+    }
+
+  })
+}
+
+
 </script>
 
 <template>
   <div>
     <header class="text-sm">
-      <button class="py-1">
+      <button class="py-1" @click="deleteCheckedItems">
         (10/10) - completed
       </button>
     </header>
@@ -49,7 +68,8 @@ function handleOnEditItem(itemId: string) {
       </li>
     </ul>
     <footer class="flex mt-4">
-      <BaseButton button-type="danger" class="flex-grow py-3">Delete checked items</BaseButton>
+      <BaseButton button-type="danger" class="flex-grow py-3" @click="deleteCheckedItems">Delete checked items
+      </BaseButton>
     </footer>
   </div>
 </template>
