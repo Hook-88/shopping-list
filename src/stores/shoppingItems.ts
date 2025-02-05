@@ -12,7 +12,20 @@ export interface ShoppingItemInterface {
 export const useShoppingItemsStore = defineStore('shopping-items-store', () => {
   const shoppingItems = ref<ShoppingItemInterface[] | null>()
 
+  function deleteSelection(selectedIds: string[]) {
+    if (!shoppingItems.value) {
+      throw new Error('Nothing to delete, shoppingitems is undefined')
+    }
+
+    shoppingItems.value = shoppingItems.value.filter((shoppingItem) => {
+      if (!selectedIds.includes(shoppingItem.id)) {
+        return shoppingItem
+      }
+    })
+  }
+
   return {
     shoppingItems,
+    deleteSelection,
   }
 })

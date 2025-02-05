@@ -37,17 +37,7 @@ function handleOnEditItem(itemId: string) {
 const shoppingItemsStore = useShoppingItemsStore()
 
 function deleteCheckedItems() {
-  if (!shoppingItemsStore.shoppingItems) {
-    throw new Error('shoppinglistitems is null')
-  }
-
-  shoppingItemsStore.shoppingItems = shoppingItemsStore.shoppingItems.filter(shoppingItem => {
-    const isChecked = itemIsChecked(shoppingItem.id)
-    if (!isChecked) {
-      return shoppingItem
-    }
-
-  })
+  shoppingItemsStore.deleteSelection(selectedIds.value)
 }
 
 
