@@ -30,6 +30,10 @@ const shoppingItemClassName = computed(() => {
 })
 
 function handleClickItem() {
+  if (selectSingleIdStore.selectedId) {
+    selectSingleIdStore.selectedId = null
+  }
+
   if (itemIdIsSelected.value) {
     selectIdsStore.removeId(props.item.id)
     return
