@@ -11,29 +11,20 @@ const props = defineProps<{
   item: GroceryItemInterface
 }>()
 
+//check item
 const selectIdsStore = useSelectIdsStore()
 
 const itemIdIsSelected = computed(() => selectIdsStore.selectedIds.some(selectedId => selectedId === props.item.id))
 
 const itemIdIsSingleSelected = computed(() => selectSingleIdStore.selectedId === props.item.id)
 
-const shoppingItemClassName = computed(() => {
-  if (itemIdIsSelected.value) {
-    return "flex items-center border border-white/20 rounded-xs bg-green-800"
-  }
-
-  if (itemIdIsSingleSelected.value) {
-    return "flex items-center border border-white/90 rounded-xs"
-  }
-
-  return "flex items-center border border-white/20 rounded-xs"
-})
-
 function handleClickItem() {
+  //deselect item to edit if selected
   if (selectSingleIdStore.selectedId) {
     selectSingleIdStore.selectedId = null
   }
 
+  //check wheter to add item to selection
   if (itemIdIsSelected.value) {
     selectIdsStore.removeId(props.item.id)
     return
@@ -41,7 +32,7 @@ function handleClickItem() {
   selectIdsStore.addId(props.item.id)
 }
 
-
+// item select to edit
 const selectSingleIdStore = useSelectSingleIdStore()
 
 function handleClickEditItem() {
@@ -54,6 +45,21 @@ const circleIcon = computed(() => {
   }
 
   return faCircle
+})
+
+//Classname shopipping item
+const shoppingItemClassName = computed(() => {
+  //class for checked state
+  if (itemIdIsSelected.value) {
+    return "flex items-center border border-white/20 rounded-xs bg-green-800"
+  }
+
+  //class for select to edit state
+  if (itemIdIsSingleSelected.value) {
+    return "flex items-center border border-white/90 rounded-xs"
+  }
+
+  return "flex items-center border border-white/20 rounded-xs"
 })
 
 
