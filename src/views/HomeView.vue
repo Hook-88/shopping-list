@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { faAngleRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { RouterLink } from 'vue-router'
 import MainNav from '@/components/main-nav/MainNav.vue'
-import BaseButton from '@/components/buttons/BaseButton.vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
-import BaseList from '@/components/list/BaseList.vue';
-import ShoppingItem from '@/features/shoppinglist/ShoppingItem.vue';
 import ShoppingList from '@/features/shoppinglist/ShoppingList.vue';
 
 </script>
