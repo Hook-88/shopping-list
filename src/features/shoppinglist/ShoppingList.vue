@@ -5,22 +5,18 @@ import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleId
 import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useFilter } from '../filter/useFilter';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
 }>()
 
+//Check item
 const { selectedIds, toggleSelectId, clearAll } = useSelectMultipleIds()
-const { toggleSelect, selectedId, clearSelection } = useSelectSingleId()
 
 function itemIsChecked(id: string) {
   return selectedIds.value.includes(id)
-}
-
-function itemIsSelectedToEdit(id: string) {
-  return selectedId.value === id
 }
 
 function handleOnToggleCheck(itemId: string) {
@@ -29,6 +25,12 @@ function handleOnToggleCheck(itemId: string) {
     return
   }
   toggleSelectId(itemId)
+}
+
+//Select item to edit
+const { toggleSelect, selectedId, clearSelection } = useSelectSingleId()
+function itemIsSelectedToEdit(id: string) {
+  return selectedId.value === id
 }
 
 function handleOnEditItem(itemId: string) {
@@ -46,10 +48,9 @@ function deleteCheckedItems() {
   clearAll()
 }
 
-
-
-
+// List progress
 const listProgressButtonText = computed(() => {
+
   if (!shoppingItemsStore.shoppingItems) {
     throw new Error('shopping items is null, no progress to show')
   }
@@ -62,38 +63,18 @@ const listProgressButtonText = computed(() => {
 })
 
 
-//Filter
+const allItemsChecked = computed(() => {
 
-const { filter, toggleFilter } = useFilter()
-
-// const filter = ref<'checked' | null>()
-
-// function setFilter(filterType: 'checked' | null = null) {
-//   filter.value = filterType
-// }
-
-// function clearFilter() {
-//   setFilter()
-// }
-
-// function toggleFilter() {
-//   if (filter.value) {
-//     clearFilter()
-//     return
-//   }
-
-//   setFilter('checked')
-// }
-
-
-// items to display
-const displayItems = computed(() => {
-  if (filter.value === 'checked') {
-    return shoppingItemsStore.shoppingItems?.filter(shoppingItem => !itemIsChecked(shoppingItem.id))
+  if (!shoppingItemsStore.shoppingItems) {
+    throw new Error('Shopping items is null')
   }
 
-  return shoppingItemsStore.shoppingItems
+  return selectedIds.value.length === shoppingItemsStore.shoppingItems.length
 })
+
+
+//Filter
+const { filter, toggleFilter } = useFilter()
 
 //filter checked button text
 const filterButtonText = computed(() => {
@@ -107,12 +88,22 @@ const filterButtonText = computed(() => {
 const noItemsChecked = computed(() => selectedIds.value.length === 0)
 
 
+//items to display
+const displayItems = computed(() => {
+  if (filter.value === 'checked') {
+    return shoppingItemsStore.shoppingItems?.filter(shoppingItem => !itemIsChecked(shoppingItem.id))
+  }
+
+  return shoppingItemsStore.shoppingItems
+})
+
+
 </script>
 
 <template>
   <div>
     <header class="text-sm flex items-center justify-between">
-      <button class="py-1" @click="deleteCheckedItems">
+      <button class="py-1" @click="deleteCheckedItems" :disabled="!allItemsChecked">
         {{ listProgressButtonText }}
       </button>
       <button class="py-1 disabled:text-white/40" @click="toggleFilter" :disabled="noItemsChecked">
