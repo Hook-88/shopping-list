@@ -46,12 +46,14 @@ const shoppingItemsStore = useShoppingItemsStore()
 const dialogStore = useDialogStore()
 
 function handleClickDeleteItems() {
+  const itemsChecked = shoppingItemsStore.shoppingItems?.filter(shoppingItem => selectedIds.value.includes(shoppingItem.id))
 
   dialogStore.open({
     title: 'Delete items',
     component: markRaw(ConfirmDelete),
     props: {
-      handleDelete: deleteCheckedItems
+      handleDelete: deleteCheckedItems,
+      itemsToDelete: itemsChecked?.map(shoppingItem => shoppingItem.name)
     }
   })
 }
