@@ -45,12 +45,10 @@ function handleOnEditItem(itemId: string) {
 const shoppingItemsStore = useShoppingItemsStore()
 const dialogStore = useDialogStore()
 
-
-
 function handleClickDeleteItems() {
 
   dialogStore.open({
-
+    title: 'Delete items',
     component: markRaw(ConfirmDelete),
     props: {
       handleDelete: deleteCheckedItems
