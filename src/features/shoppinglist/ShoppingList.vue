@@ -45,12 +45,22 @@ function handleOnEditItem(itemId: string) {
 const shoppingItemsStore = useShoppingItemsStore()
 const dialogStore = useDialogStore()
 
-function deleteCheckedItems() {
+
+
+function handleClickDeleteItems() {
+
   dialogStore.open({
-    component: markRaw(ConfirmDelete)
+
+    component: markRaw(ConfirmDelete),
+    props: {
+      handleDelete: deleteCheckedItems
+    }
   })
-  // shoppingItemsStore.deleteSelection(selectedIds.value)
-  // clearAll()
+}
+
+function deleteCheckedItems() {
+  shoppingItemsStore.deleteSelection(selectedIds.value)
+  clearAll()
 }
 
 // List progress
@@ -108,7 +118,7 @@ const displayItems = computed(() => {
 <template>
   <div>
     <header class="text-sm flex items-center justify-between">
-      <button class="py-1" @click="deleteCheckedItems" :disabled="!allItemsChecked">
+      <button class="py-1" @click="handleClickDeleteItems" :disabled="!allItemsChecked">
         {{ listProgressButtonText }}
       </button>
       <button class="py-1 disabled:text-white/40" @click="toggleFilter" :disabled="noItemsChecked">
@@ -124,7 +134,7 @@ const displayItems = computed(() => {
     </ul>
     <footer class="flex mt-4">
       <BaseButton button-type="danger" class="flex-grow py-3 disabled:text-white/40 disabled:bg-red-900/50"
-        :disabled="noItemsChecked" @click="deleteCheckedItems">Delete checked items
+        :disabled="noItemsChecked" @click="handleClickDeleteItems">Delete checked items
       </BaseButton>
     </footer>
   </div>

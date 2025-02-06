@@ -2,9 +2,18 @@
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useDialogStore } from '@/stores/dialog';
 
+const props = defineProps<{
+  handleDelete: () => void
+}>()
+
 const dialogStore = useDialogStore()
 
 function handleClickCancel() {
+  dialogStore.close()
+}
+
+function handleClickConfirm() {
+  props.handleDelete()
   dialogStore.close()
 }
 
@@ -20,7 +29,7 @@ function handleClickCancel() {
     </ul>
   </main>
   <footer class="flex items-center justify-between border-b border-white/20 p-2 gap-2">
-    <BaseButton class="grow">Confirm</BaseButton>
+    <BaseButton class="grow" @click="handleClickConfirm">Confirm</BaseButton>
     <BaseButton button-type="danger" @click="handleClickCancel">Cancel</BaseButton>
   </footer>
 </template>

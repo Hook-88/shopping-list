@@ -31,7 +31,7 @@ function handleClose() {
       <header class="flex items-center justify-between border-b border-white/20 text-2xl p-2">
         <h1>Confirm delete items</h1>
       </header>
-      <component :is="dialogStore.component" />
+      <component :is="dialogStore.component" v-bind="dialogStore.props" />
     </div>
   </dialog>
 </template>
