@@ -91,6 +91,16 @@ const displayItems = computed(() => {
   return shoppingItemsStore.shoppingItems
 })
 
+//filter checked button text
+const filterButtonText = computed(() => {
+  if (filter.value === 'checked') {
+    return 'Show checked'
+  }
+
+  return 'Hide checked'
+})
+
+
 </script>
 
 <template>
@@ -100,7 +110,7 @@ const displayItems = computed(() => {
         {{ listProgressButtonText }}
       </button>
       <button class="py-1" @click="toggleFilter">
-        Hide checked
+        {{ filterButtonText }}
       </button>
     </header>
     <ul class="space-y-2">
