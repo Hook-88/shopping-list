@@ -7,6 +7,7 @@ import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingList from '@/features/shoppinglist/ShoppingList.vue';
 import { onMounted } from 'vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 const shoppingItemsStore = useShoppingItemsStore()
 
@@ -26,8 +27,9 @@ onMounted(() => {
     </button>
   </header>
   <main class="flex-grow px-2 flex flex-col">
-    <ShoppingList v-if="shoppingItemsStore.shoppingItems" :shopping-items="shoppingItemsStore.shoppingItems" />
-    <!-- <BaseButton>Add item</BaseButton> -->
+    <ShoppingList v-if="shoppingItemsStore.shoppingItems && shoppingItemsStore.shoppingItems.length > 0"
+      :shopping-items="shoppingItemsStore.shoppingItems" />
+    <BaseButton v-else>Add item</BaseButton>
     <!-- <BaseList :list-data="GROCERYITEMS" :list-component="ShoppingItem" /> -->
   </main>
 </template>
