@@ -100,6 +100,8 @@ const filterButtonText = computed(() => {
   return 'Hide checked'
 })
 
+const noItemsChecked = computed(() => selectedIds.value.length === 0)
+
 
 </script>
 
@@ -109,7 +111,7 @@ const filterButtonText = computed(() => {
       <button class="py-1" @click="deleteCheckedItems">
         {{ listProgressButtonText }}
       </button>
-      <button class="py-1" @click="toggleFilter">
+      <button class="py-1 disabled:text-white/40" @click="toggleFilter" :disabled="noItemsChecked">
         {{ filterButtonText }}
       </button>
     </header>
@@ -121,7 +123,8 @@ const filterButtonText = computed(() => {
       </li>
     </ul>
     <footer class="flex mt-4">
-      <BaseButton button-type="danger" class="flex-grow py-3" @click="deleteCheckedItems">Delete checked items
+      <BaseButton button-type="danger" class="flex-grow py-3 disabled:text-white/40 disabled:bg-red-900/50"
+        :disabled="noItemsChecked" @click="deleteCheckedItems">Delete checked items
       </BaseButton>
     </footer>
   </div>
