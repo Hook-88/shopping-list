@@ -5,7 +5,7 @@ import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleId
 import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -58,17 +58,53 @@ const listProgressButtonText = computed(() => {
 })
 
 
+//Filter
+
+const filter = ref<'checked' | null>()
+
+function setFilter(filterType: 'checked' | null = null) {
+  filter.value = filterType
+}
+
+function clearFilter() {
+  setFilter()
+}
+
+function toggleFilter() {
+  if (filter.value) {
+    clearFilter()
+    return
+  }
+
+  setFilter('checked')
+}
+
+// watch(filter, () => console.log(filter.value))
+
+
+// items to display
+const displayItems = computed(() => {
+  if (filter.value === 'checked') {
+    return shoppingItemsStore.shoppingItems?.filter(shoppingItem => !itemIsChecked(shoppingItem.id))
+  }
+
+  return shoppingItemsStore.shoppingItems
+})
+
 </script>
 
 <template>
   <div>
-    <header class="text-sm">
+    <header class="text-sm flex items-center justify-between">
       <button class="py-1" @click="deleteCheckedItems">
         {{ listProgressButtonText }}
       </button>
+      <button class="py-1" @click="toggleFilter">
+        Hide checked
+      </button>
     </header>
     <ul class="space-y-2">
-      <li v-for="(item, index) in shoppingItems" :key="index">
+      <li v-for="(item, index) in displayItems" :key="index">
         <ShoppingItem :item="item" :isChecked="itemIsChecked(item.id)"
           :is-selected-to-edit="itemIsSelectedToEdit(item.id)" @on-toggle-check="handleOnToggleCheck"
           @on-edit-item="handleOnEditItem" />
