@@ -5,8 +5,11 @@ import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleId
 import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
-import { computed } from 'vue';
+import { computed, markRaw } from 'vue';
 import { useFilter } from '../filter/useFilter';
+import { useDialogStore } from '@/stores/dialog';
+import ConfirmDelete from '../confirm-delete-items/ConfirmDelete.vue';
+
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -38,14 +41,16 @@ function handleOnEditItem(itemId: string) {
 }
 
 
-
-
 //Delete items
 const shoppingItemsStore = useShoppingItemsStore()
+const dialogStore = useDialogStore()
 
 function deleteCheckedItems() {
-  shoppingItemsStore.deleteSelection(selectedIds.value)
-  clearAll()
+  dialogStore.open({
+    component: markRaw(ConfirmDelete)
+  })
+  // shoppingItemsStore.deleteSelection(selectedIds.value)
+  // clearAll()
 }
 
 // List progress
