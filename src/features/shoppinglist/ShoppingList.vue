@@ -5,7 +5,8 @@ import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleId
 import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
+import { useFilter } from '../filter/useFilter';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -34,6 +35,9 @@ function handleOnEditItem(itemId: string) {
   toggleSelect(itemId)
 }
 
+
+
+
 //Delete items
 const shoppingItemsStore = useShoppingItemsStore()
 
@@ -60,26 +64,26 @@ const listProgressButtonText = computed(() => {
 
 //Filter
 
-const filter = ref<'checked' | null>()
+const { filter, toggleFilter } = useFilter()
 
-function setFilter(filterType: 'checked' | null = null) {
-  filter.value = filterType
-}
+// const filter = ref<'checked' | null>()
 
-function clearFilter() {
-  setFilter()
-}
+// function setFilter(filterType: 'checked' | null = null) {
+//   filter.value = filterType
+// }
 
-function toggleFilter() {
-  if (filter.value) {
-    clearFilter()
-    return
-  }
+// function clearFilter() {
+//   setFilter()
+// }
 
-  setFilter('checked')
-}
+// function toggleFilter() {
+//   if (filter.value) {
+//     clearFilter()
+//     return
+//   }
 
-// watch(filter, () => console.log(filter.value))
+//   setFilter('checked')
+// }
 
 
 // items to display
