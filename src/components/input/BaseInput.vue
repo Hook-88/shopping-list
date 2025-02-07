@@ -31,7 +31,7 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-0.5">
     <label v-if="label" :for="label">{{ label }}:</label>
     <input :value="modelValue" v-bind="attrs" class="grow" :id="label" @input="handleInput" />
   </div>
