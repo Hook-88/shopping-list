@@ -3,6 +3,7 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseInput from '@/components/input/BaseInput.vue';
 import BaseSelect from '@/components/input/BaseSelect.vue';
 import { useDialogStore } from '@/stores/dialog';
+import { reactive } from 'vue';
 
 const dialogStore = useDialogStore()
 
@@ -10,19 +11,30 @@ function handleClickCancel() {
   dialogStore.close()
 }
 
+const formData = reactive({
+  ['item-name']: '',
+  ['item-quantity']: 1,
+  ['item-unit']: 'x',
+  ['item-label']: ''
+})
+
+function handleSubmit() {
+  console.log({ ...formData })
+}
+
 
 </script>
 
 <template>
-  <form class="flex flex-col gap-4 mt-2 w-full">
+  <form class="flex flex-col gap-4 mt-2 w-full" @submit.prevent="handleSubmit">
     <main class="mx-2 flex flex-col gap-2.5">
-      <BaseInput label="Item name" class="bg-white/10 rounded-sm py-1 px-2" required />
+      <BaseInput label="Item name" class="bg-white/10 rounded-sm py-1 px-2" required v-model="formData['item-name']" />
       <div class="flex gap-2">
-        <BaseInput :cancel-grow="true" label="Item quantity" class="bg-white/10 rounded-sm py-1 px-2 w-24"
-          type="number" />
-        <BaseSelect label="Item unit" class="bg-white/10 rounded-sm py-1.5 px-2" />
+        <BaseInput :cancel-grow="true" label="Item quantity" class="bg-white/10 rounded-sm py-1 px-2 w-24" type="number"
+          v-model="formData['item-quantity']" />
+        <BaseSelect label="Item unit" class="bg-white/10 rounded-sm py-1.5 px-2" v-model="formData['item-unit']" />
       </div>
-      <BaseInput label="Item label" class="bg-white/10 rounded-sm py-1 px-2" />
+      <BaseInput label="Item label" class="bg-white/10 rounded-sm py-1 px-2" v-model="formData['item-label']" />
     </main>
     <footer class="flex items-center justify-between py-2 gap-2 border-t border-white/20 px-2">
       <BaseButton class="grow">Add item</BaseButton>
