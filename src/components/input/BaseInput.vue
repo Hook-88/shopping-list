@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAttrs } from 'vue';
+import { computed, useAttrs } from 'vue';
 
 defineOptions({
   inheritAttrs: false
@@ -8,11 +8,12 @@ defineOptions({
 interface Props {
   label?: string
   modelValue?: string | number
+  cancelGrow?: boolean
 }
 
 const attrs = useAttrs()
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   label: '',
   modelValue: ''
 })
@@ -26,12 +27,12 @@ function handleInput(event: Event) {
   emit('update:modelValue', target.value)
 }
 
-
+const containerClassName = computed(() => props.cancelGrow ? 'flex flex-col gap-0.5' : 'flex flex-col gap-0.5 grow')
 
 </script>
 
 <template>
-  <div class="flex flex-col gap-0.5 grow">
+  <div :class="containerClassName">
     <label v-if="label" :for="label">{{ label }}:</label>
     <input :value="modelValue" v-bind="attrs" :id="label" @input="handleInput" />
   </div>
