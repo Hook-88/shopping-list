@@ -1,8 +1,16 @@
 <script setup lang="ts">
+import { useAttrs } from 'vue';
+
+defineOptions({
+  inheritAttrs: false
+})
+
 interface Props {
   label?: string
   modelValue?: string | number
 }
+
+const attrs = useAttrs()
 
 withDefaults(defineProps<Props>(), {
   label: '',
@@ -23,9 +31,8 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col">
     <label v-if="label" :for="label">{{ label }}:</label>
-    <br />
-    <input :value="modelValue" v-bind="$attrs" :id="label" @input="handleInput" class="min-w-full" />
+    <input :value="modelValue" v-bind="attrs" class="grow" :id="label" @input="handleInput" />
   </div>
 </template>
