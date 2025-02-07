@@ -4,6 +4,6 @@
 
 <template>
   <form>
-    <p>here goes the form</p>
+
   </form>
 </template>

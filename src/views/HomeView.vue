@@ -22,7 +22,8 @@ const dialogStore = useDialogStore()
 
 function handleClickAddNewItem() {
   dialogStore.open({
-    component: ShoppingItemForm
+    component: ShoppingItemForm,
+    title: 'Add new item'
   })
 }
 
@@ -39,7 +40,7 @@ function handleClickAddNewItem() {
   <main class="flex-grow px-2 flex flex-col">
     <ShoppingList v-if="shoppingItemsStore.shoppingItems && shoppingItemsStore.shoppingItems.length > 0"
       :shopping-items="shoppingItemsStore.shoppingItems" />
-    <BaseButton v-else>Add item</BaseButton>
+    <BaseButton v-else @click="handleClickAddNewItem">Add item</BaseButton>
     <!-- <BaseList :list-data="GROCERYITEMS" :list-component="ShoppingItem" /> -->
   </main>
 </template>
