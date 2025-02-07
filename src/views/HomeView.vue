@@ -8,6 +8,8 @@ import ShoppingList from '@/features/shoppinglist/ShoppingList.vue';
 import { onMounted } from 'vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
 import BaseButton from '@/components/buttons/BaseButton.vue';
+import { useDialogStore } from '@/stores/dialog';
+import ShoppingItemForm from '@/features/add-new-item/form/ShoppingItemForm.vue';
 
 const shoppingItemsStore = useShoppingItemsStore()
 
@@ -15,14 +17,22 @@ onMounted(() => {
   shoppingItemsStore.shoppingItems = GROCERYITEMS
 })
 
-</script>
+//add new item
+const dialogStore = useDialogStore()
 
+function handleClickAddNewItem() {
+  dialogStore.open({
+    component: ShoppingItemForm
+  })
+}
+
+</script>
 
 
 <template>
   <header class="flex items-center justify-between border-b border-white/20">
     <MainNav />
-    <button class="px-4">
+    <button class="px-4" @click="handleClickAddNewItem">
       <FontAwesomeIcon :icon="faPlus" class="text-2xl" />
     </button>
   </header>
