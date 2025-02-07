@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 import MainNav from '@/components/main-nav/MainNav.vue'
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingList from '@/features/shoppinglist/ShoppingList.vue';
-import { onMounted } from 'vue';
+import { markRaw, onMounted } from 'vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useDialogStore } from '@/stores/dialog';
@@ -22,7 +22,7 @@ const dialogStore = useDialogStore()
 
 function handleClickAddNewItem() {
   dialogStore.open({
-    component: ShoppingItemForm,
+    component: markRaw(ShoppingItemForm),
     title: 'Add new item'
   })
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
-  label: string
-  modelValue: string | number
+  label?: string
+  modelValue?: string | number
 }
 
 withDefaults(defineProps<Props>(), {
@@ -23,6 +23,9 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-  <label v-if="label" :for="label">{{ label }}:</label>
-  <input :value="modelValue" v-model="$attrs" :id="label" @input="handleInput" />
+  <div>
+    <label v-if="label" :for="label">{{ label }}:</label>
+    <br />
+    <input :value="modelValue" v-bind="$attrs" :id="label" @input="handleInput" class="min-w-full" />
+  </div>
 </template>
