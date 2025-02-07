@@ -5,9 +5,14 @@ import BaseInput from '@/components/input/BaseInput.vue';
 </script>
 
 <template>
-  <form class="flex flex-col gap-4 mt-2">
-    <main class="mx-2">
+  <form class="flex flex-col gap-4 mt-2 w-full">
+    <main class="mx-2 flex flex-col gap-2.5">
       <BaseInput label="Item name" class="bg-white/10 rounded-sm py-1 px-2" />
+      <div class="flex gap-2">
+        <BaseInput label="Item quantity" class="bg-white/10 rounded-sm py-1 px-2 w-24" type="number" />
+        <BaseInput label="Item label" class="bg-white/10 rounded-sm py-1 px-2" />
+      </div>
+      <BaseInput label="Item label" class="bg-white/10 rounded-sm py-1 px-2" />
     </main>
     <footer class="flex items-center justify-between py-2 gap-2 border-t border-white/20 px-2">
       <BaseButton class="grow">Add item</BaseButton>
