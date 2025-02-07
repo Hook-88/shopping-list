@@ -39,6 +39,7 @@ function handleSubmit() {
   }
   shoppingListStore.addNewItem(itemObj)
   resetForm()
+  inputNameRef.value?.focus()
 }
 
 onMounted(() => {
@@ -49,7 +50,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <form class="flex flex-col gap-4 mt-2 w-full" @submit.prevent="handleSubmit">
+  <form class="flex flex-col gap-4 pt-2 w-full" @submit.prevent="handleSubmit">
 
     <main class="mx-2 flex flex-col gap-2.5">
       <BaseInput label="Item name" class="bg-white/10 rounded-sm py-1 px-2" required v-model="formData['item-name']"

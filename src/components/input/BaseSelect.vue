@@ -31,7 +31,7 @@ function handleChange(event: Event) {
 <template>
   <div class="flex flex-col gap-0.5 grow">
     <label v-if="label" :for="label">{{ label }}:</label>
-    <select :value="modelValue" v-bind="attrs" @change="handleChange">
+    <select :value="modelValue" v-bind="attrs" @change="handleChange" class="border border-white/10">
       <option value="x">X</option>
       <option value="lb">Lb</option>
       <option value="gr">Gr</option>
