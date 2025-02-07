@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 
 export interface ShoppingItemInterface {
   name: string
@@ -9,9 +10,12 @@ export interface ShoppingItemInterface {
   label: string
 }
 
+export type ShoppingItemNoId = Omit<ShoppingItemInterface, 'id'>
+
 export const useShoppingItemsStore = defineStore('shopping-items-store', () => {
   const shoppingItems = ref<ShoppingItemInterface[] | null>()
 
+  //delete selection
   function deleteSelection(selectedIds: string[]) {
     if (!shoppingItems.value) {
       throw new Error('Nothing to delete, shoppingitems is undefined')
@@ -24,8 +28,19 @@ export const useShoppingItemsStore = defineStore('shopping-items-store', () => {
     })
   }
 
+  //add new item
+  function addNewItem(item: ShoppingItemNoId) {
+    const shoppingItem: ShoppingItemInterface = {
+      ...item,
+      id: uuidv4(),
+    }
+
+    shoppingItems.value?.unshift(shoppingItem)
+  }
+
   return {
     shoppingItems,
     deleteSelection,
+    addNewItem,
   }
 })
