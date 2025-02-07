@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue';
+import { computed, useAttrs, ref } from 'vue';
 
 defineOptions({
   inheritAttrs: false
@@ -22,6 +22,14 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
 
+const inputRef = ref<HTMLInputElement | null>(null)
+
+defineExpose({
+  focus() {
+    inputRef.value?.focus()
+  }
+})
+
 function handleInput(event: Event) {
   const target = event.target as HTMLInputElement
   emit('update:modelValue', target.value)
@@ -34,6 +42,6 @@ const containerClassName = computed(() => props.cancelGrow ? 'flex flex-col gap-
 <template>
   <div :class="containerClassName">
     <label v-if="label" :for="label">{{ label }}:</label>
-    <input :value="modelValue" v-bind="attrs" :id="label" @input="handleInput" />
+    <input :value="modelValue" v-bind="attrs" :id="label" @input="handleInput" ref="inputRef" />
   </div>
 </template>

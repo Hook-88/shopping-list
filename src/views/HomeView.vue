@@ -3,7 +3,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { RouterLink } from 'vue-router'
 import MainNav from '@/components/main-nav/MainNav.vue'
-import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingList from '@/features/shoppinglist/ShoppingList.vue';
 import { markRaw, onMounted } from 'vue';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
@@ -14,7 +13,7 @@ import ShoppingItemForm from '@/features/add-new-item/form/ShoppingItemForm.vue'
 const shoppingItemsStore = useShoppingItemsStore()
 
 onMounted(() => {
-  shoppingItemsStore.shoppingItems = GROCERYITEMS
+  shoppingItemsStore.shoppingItems = []
 })
 
 //add new item

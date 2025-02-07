@@ -4,11 +4,13 @@ import BaseInput from '@/components/input/BaseInput.vue';
 import BaseSelect from '@/components/input/BaseSelect.vue';
 import { useDialogStore } from '@/stores/dialog';
 import { useShoppingItemsStore } from '@/stores/shoppingItems';
-import { reactive } from 'vue';
+import { onMounted, reactive, useTemplateRef } from 'vue';
 import { type ShoppingItemNoId } from '@/stores/shoppingItems';
 
 const dialogStore = useDialogStore()
 const shoppingListStore = useShoppingItemsStore()
+
+const inputNameRef = useTemplateRef<HTMLInputElement>('input-name-ref')
 
 function handleClickCancel() {
   dialogStore.close()
@@ -39,6 +41,10 @@ function handleSubmit() {
   resetForm()
 }
 
+onMounted(() => {
+  inputNameRef.value?.focus()
+})
+
 
 </script>
 
@@ -46,7 +52,8 @@ function handleSubmit() {
   <form class="flex flex-col gap-4 mt-2 w-full" @submit.prevent="handleSubmit">
 
     <main class="mx-2 flex flex-col gap-2.5">
-      <BaseInput label="Item name" class="bg-white/10 rounded-sm py-1 px-2" required v-model="formData['item-name']" />
+      <BaseInput label="Item name" class="bg-white/10 rounded-sm py-1 px-2" required v-model="formData['item-name']"
+        ref="input-name-ref" />
       <div class="flex gap-2">
         <BaseInput :cancel-grow="true" label="Item quantity" class="bg-white/10 rounded-sm py-1 px-2 w-24" type="number"
           v-model="formData['item-quantity']" />
