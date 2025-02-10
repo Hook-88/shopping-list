@@ -10,6 +10,7 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useDialogStore } from '@/stores/dialog';
 import ShoppingItemForm from '@/features/add-new-item/form/ShoppingItemForm.vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
+import BaseToolbar from '@/components/toolbar/BaseToolbar.vue';
 
 const shoppingItemsStore = useShoppingItemsStore()
 
@@ -42,4 +43,5 @@ function handleClickAddNewItem() {
       :shopping-items="shoppingItemsStore.shoppingItems" />
     <BaseButton v-else @click="handleClickAddNewItem">Add item</BaseButton>
   </main>
+  <BaseToolbar />
 </template>
