@@ -1,6 +1,5 @@
 import { useShoppingItemsStore } from '@/stores/shoppingItems'
 import { useSelectMultipleIds } from '../select-multiple-ids/useSelectMultipleIds'
-import { useSelectSingleId } from '../select-single-id/useSelectSingleId'
 import { useDialogStore } from '@/stores/dialog'
 import { markRaw } from 'vue'
 import ConfirmDelete from '../confirm-delete-items/ConfirmDelete.vue'
@@ -16,22 +15,7 @@ export const useShoppingList = () => {
   }
 
   function handleOnToggleCheck(itemId: string) {
-    if (selectedId.value) {
-      clearSelection()
-      return
-    }
     toggleSelectId(itemId)
-  }
-
-  //Select item to edit
-  const { toggleSelect, selectedId, clearSelection } = useSelectSingleId()
-
-  function itemIsSelectedToEdit(id: string) {
-    return selectedId.value === id
-  }
-
-  function handleOnEditItem(itemId: string) {
-    toggleSelect(itemId)
   }
 
   //Delete items
@@ -107,8 +91,6 @@ export const useShoppingList = () => {
   return {
     itemIsChecked,
     handleOnToggleCheck,
-    itemIsSelectedToEdit,
-    handleOnEditItem,
     handleClickDeleteItems,
     listProgressButtonText,
     allItemsChecked,

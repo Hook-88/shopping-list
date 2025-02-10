@@ -3,6 +3,7 @@ import { type GroceryItemInterface } from '@/types/GroceryItem';
 import ShoppingItem from '@/features/shoppinglist/ShoppingItem.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useShoppingList } from './useShoppingList';
+import { useSelectSingleId } from '../select-single-id/useSelectSingleId';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -15,12 +16,20 @@ const {
   toggleFilter,
   itemIsChecked,
   handleOnToggleCheck,
-  itemIsSelectedToEdit,
-  handleOnEditItem,
   handleClickDeleteItems,
   allItemsChecked,
-  listProgressButtonText
+  listProgressButtonText,
 } = useShoppingList()
+
+const selectSingleId = useSelectSingleId()
+
+function handleOnEditItem(itemId: string) {
+  selectSingleId.selectId(itemId)
+}
+
+function isSelectedToEdit(itemId: string) {
+  return selectSingleId.selectedId.value === itemId
+}
 
 </script>
 
@@ -36,9 +45,8 @@ const {
     </header>
     <ul class="space-y-2">
       <li v-for="(item, index) in displayItems" :key="index">
-        <ShoppingItem :item="item" :isChecked="itemIsChecked(item.id)"
-          :is-selected-to-edit="itemIsSelectedToEdit(item.id)" @on-toggle-check="handleOnToggleCheck"
-          @on-edit-item="handleOnEditItem" />
+        <ShoppingItem :item="item" :isChecked="itemIsChecked(item.id)" :is-selected-to-edit="isSelectedToEdit(item.id)"
+          @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem" />
       </li>
     </ul>
     <footer class="flex mt-4">

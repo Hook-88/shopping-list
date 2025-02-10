@@ -11,18 +11,9 @@ export const useSelectSingleId = () => {
     selectedId.value = null
   }
 
-  function toggleSelect(id: string) {
-    if (selectedId.value !== id) {
-      selectId(id)
-      return
-    }
-    clearSelection()
-  }
-
   return {
     selectedId,
     selectId,
     clearSelection,
-    toggleSelect,
   }
 }
