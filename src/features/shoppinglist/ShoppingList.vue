@@ -10,6 +10,7 @@ import { useDialogStore } from '@/stores/dialog';
 import { markRaw } from 'vue';
 import ConfirmDelete from '../confirm-delete-items/ConfirmDelete.vue';
 import { useToolbarStore } from '@/stores/toolbar';
+import EditButtons from '../edit-item/toolbar/EditButtons.vue';
 
 defineProps<{
   shoppingItems: GroceryItemInterface[]
@@ -37,14 +38,15 @@ function handleOnEditItem(itemId: string) {
   }
 
   selectSingleId.selectId(itemId)
-  // toolbarStore.openToolbar()
+  toolbarStore.openToolbar({
+    component: EditButtons,
+    onCloceCallback: selectSingleId.clearSelection
+  })
 }
 
 function isSelectedToEdit(itemId: string) {
   return selectSingleId.selectedId.value === itemId
 }
-
-
 
 
 //Check items
@@ -53,6 +55,7 @@ const selectMultipleIds = useSelectMultipleIds()
 function handleOnToggleCheck(itemId: string) {
   if (selectSingleId.selectedId.value) {
     selectSingleId.clearSelection()
+    toolbarStore.closeToolbar()
     return
   }
 
@@ -74,6 +77,12 @@ function handleClickDeleteItems() {
   const itemsChecked = shoppingItemsStore.shoppingItems?.filter((shoppingItem) =>
     selectMultipleIds.selectedIds.value.includes(shoppingItem.id),
   )
+
+  if (selectSingleId.selectedId.value) {
+    selectSingleId.clearSelection()
+    toolbarStore.closeToolbar()
+    return
+  }
 
   dialogStore.open({
     title: 'Delete items',
