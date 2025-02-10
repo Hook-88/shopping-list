@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BaseButton from '@/components/buttons/BaseButton.vue';
-import { faClose, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 
 </script>
