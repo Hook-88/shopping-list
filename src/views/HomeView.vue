@@ -9,11 +9,12 @@ import { useShoppingItemsStore } from '@/stores/shoppingItems';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { useDialogStore } from '@/stores/dialog';
 import ShoppingItemForm from '@/features/add-new-item/form/ShoppingItemForm.vue';
+import { GROCERYITEMS } from '@/data/shoppingList';
 
 const shoppingItemsStore = useShoppingItemsStore()
 
 onMounted(() => {
-  shoppingItemsStore.shoppingItems = []
+  shoppingItemsStore.shoppingItems = [...GROCERYITEMS]
 })
 
 //add new item

@@ -1,69 +1,39 @@
-interface ShoppingItem {
-  name: string
-  quantity: number
-  label: string
-  id: string
-}
+import { type ShoppingItemInterface } from './stores/shoppingItems'
 
-export const SHOPPINGLIST: ShoppingItem[] = [
+export const GROCERYITEMS: ShoppingItemInterface[] = [
   {
-    id: 'milk-001',
+    id: '1',
     name: 'Milk',
     quantity: 2,
+    unit: 'cartons',
     label: 'Dairy',
   },
   {
-    id: 'bread-001',
-    name: 'Whole Wheat Bread',
+    id: '2',
+    name: 'Bread',
     quantity: 1,
+    unit: 'loaf',
     label: 'Bakery',
   },
   {
-    id: 'eggs-001',
+    id: '3',
     name: 'Eggs',
     quantity: 12,
+    unit: 'count',
     label: 'Dairy',
   },
   {
-    id: 'banana-001',
-    name: 'Bananas',
-    quantity: 6,
-    label: 'Produce',
-  },
-  {
-    id: 'chicken-001',
-    name: 'Chicken Breast',
+    id: '4',
+    name: 'Chicken',
     quantity: 2,
+    unit: 'pounds',
     label: 'Meat',
   },
   {
-    id: 'tomato-001',
-    name: 'Tomatoes',
-    quantity: 4,
+    id: '5',
+    name: 'Apples',
+    quantity: 6,
+    unit: 'count',
     label: 'Produce',
-  },
-  {
-    id: 'pasta-001',
-    name: 'Spaghetti',
-    quantity: 1,
-    label: 'Pantry',
-  },
-  {
-    id: 'cheese-001',
-    name: 'Cheddar Cheese',
-    quantity: 1,
-    label: 'Dairy',
-  },
-  {
-    id: 'carrots-001',
-    name: 'Carrots',
-    quantity: 5,
-    label: 'Produce',
-  },
-  {
-    id: 'rice-001',
-    name: 'Brown Rice',
-    quantity: 1,
-    label: 'Pantry',
   },
 ]
