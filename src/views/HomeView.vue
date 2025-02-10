@@ -40,6 +40,5 @@ function handleClickAddNewItem() {
     <ShoppingList v-if="shoppingItemsStore.shoppingItems && shoppingItemsStore.shoppingItems.length > 0"
       :shopping-items="shoppingItemsStore.shoppingItems" />
     <BaseButton v-else @click="handleClickAddNewItem">Add item</BaseButton>
-    <!-- <BaseList :list-data="GROCERYITEMS" :list-component="ShoppingItem" /> -->
   </main>
 </template>

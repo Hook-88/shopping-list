@@ -25,6 +25,7 @@ export const useShoppingList = () => {
 
   //Select item to edit
   const { toggleSelect, selectedId, clearSelection } = useSelectSingleId()
+
   function itemIsSelectedToEdit(id: string) {
     return selectedId.value === id
   }
