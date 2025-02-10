@@ -16,7 +16,10 @@ function handleCloseToolbar() {
 </script>
 
 <template>
-  <div class="fixed bottom-8 inset-x-0 bg-[#232327] border border-white/20 rounded-xs mx-2" v-if="toolbarStore.isOpen">
+  <div
+    class="fixed bottom-8 inset-x-0 bg-[#232327] border border-white/20 rounded-xs mx-2 flex items-center justify-between"
+    v-if="toolbarStore.isOpen">
+    <component :is="toolbarStore.component" v-bind="toolbarStore.props" />
     <BaseButton button-type="transparant" class="py-3" @click="handleCloseToolbar">
       <FontAwesomeIcon :icon="faClose" />
     </BaseButton>

@@ -15,6 +15,15 @@ export type ShoppingItemNoId = Omit<ShoppingItemInterface, 'id'>
 export const useShoppingItemsStore = defineStore('shopping-items-store', () => {
   const shoppingItems = ref<ShoppingItemInterface[] | null>()
 
+  //delete item
+  function deleteItem(itemId: string) {
+    if (!shoppingItems.value) {
+      throw new Error('Nothing to delete, shoppingitems is undefined')
+    }
+
+    shoppingItems.value = shoppingItems.value.filter((item) => item.id !== itemId)
+  }
+
   //delete selection
   function deleteSelection(selectedIds: string[]) {
     if (!shoppingItems.value) {
@@ -41,6 +50,7 @@ export const useShoppingItemsStore = defineStore('shopping-items-store', () => {
   return {
     shoppingItems,
     deleteSelection,
+    deleteItem,
     addNewItem,
   }
 })

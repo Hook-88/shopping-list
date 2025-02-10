@@ -12,7 +12,7 @@ import ConfirmDelete from '../confirm-delete-items/ConfirmDelete.vue';
 import { useToolbarStore } from '@/stores/toolbar';
 import EditButtons from '../edit-item/toolbar/EditButtons.vue';
 
-defineProps<{
+const props = defineProps<{
   shoppingItems: GroceryItemInterface[]
 }>()
 
@@ -39,8 +39,11 @@ function handleOnEditItem(itemId: string) {
 
   selectSingleId.selectId(itemId)
   toolbarStore.openToolbar({
-    component: EditButtons,
-    onCloceCallback: selectSingleId.clearSelection
+    component: markRaw(EditButtons),
+    onCloceCallback: selectSingleId.clearSelection,
+    props: {
+      itemId
+    }
   })
 }
 

@@ -11,8 +11,11 @@ import { useDialogStore } from '@/stores/dialog';
 import ShoppingItemForm from '@/features/add-new-item/form/ShoppingItemForm.vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import BaseToolbar from '@/components/toolbar/BaseToolbar.vue';
+import { useToolbarStore } from '@/stores/toolbar';
 
 const shoppingItemsStore = useShoppingItemsStore()
+
+const toolbarStore = useToolbarStore()
 
 onMounted(() => {
   shoppingItemsStore.shoppingItems = [...GROCERYITEMS]
@@ -22,6 +25,13 @@ onMounted(() => {
 const dialogStore = useDialogStore()
 
 function handleClickAddNewItem() {
+  if (toolbarStore.isOpen) {
+    toolbarStore.closeToolbar()
+
+    return
+  }
+
+
   dialogStore.open({
     component: markRaw(ShoppingItemForm),
     title: 'Add new item'
