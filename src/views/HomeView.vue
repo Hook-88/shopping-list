@@ -29,7 +29,10 @@ onMounted(() => {
     <ul v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0" class="space-y-2">
       <li v-for="item in shoppingListStore.shoppingItems" :key="item.id"
         class="pl-2 border border-ash/20 rounded-xs flex items-center">
-        {{ item.name }}
+        <p>
+          {{ item.name }}
+          ({{ item.quantity }}x)
+        </p>
         <BaseButton class="ml-auto py-4 px-4 flex items-center">
           <FontAwesomeIcon :icon="faCircle" />
         </BaseButton>
