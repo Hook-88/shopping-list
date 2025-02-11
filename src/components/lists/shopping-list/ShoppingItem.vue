@@ -13,6 +13,10 @@ const props = defineProps<{
   isChecked: boolean
 }>()
 
+const emit = defineEmits<{
+  (e: 'on-toggle-check', itemId: string): void
+}>()
+
 const shoppingItemClassName = computed(() => {
   if (props.isChecked) {
     return 'bg-green-900'
@@ -21,10 +25,15 @@ const shoppingItemClassName = computed(() => {
   return null
 })
 
+function handleClickItem() {
+  emit('on-toggle-check', props.item.id)
+}
+
 </script>
 
 <template>
-  <div class="pl-2 border border-ash/20 rounded-xs flex items-center" :class="shoppingItemClassName">
+  <div class="pl-2 border border-ash/20 rounded-xs flex items-center" :class="shoppingItemClassName"
+    @click="handleClickItem">
     <p>
       {{ item.name }}
       ({{ item.quantity }}x)
