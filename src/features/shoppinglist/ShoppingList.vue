@@ -12,7 +12,7 @@ import ConfirmDelete from '../confirm-delete-items/ConfirmDelete.vue';
 import { useToolbarStore } from '@/stores/toolbar';
 import EditButtons from '../edit-item/toolbar/EditButtons.vue';
 
-const props = defineProps<{
+defineProps<{
   shoppingItems: GroceryItemInterface[]
 }>()
 
