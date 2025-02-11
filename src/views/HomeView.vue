@@ -3,6 +3,7 @@ import { faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { RouterLink } from 'vue-router';
 import MainNav from '@/components/main-nav/MainNav.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 </script>
 
@@ -10,11 +11,12 @@ import MainNav from '@/components/main-nav/MainNav.vue';
 <template>
   <header class="text-2xl tracking-wider font-bold border-b border-ash/20 flex justify-between">
     <MainNav />
-    <button class=" py-1.5 px-2">
+    <BaseButton>
       <FontAwesomeIcon :icon="faPlus" />
-    </button>
+    </BaseButton>
   </header>
-  <main class="grow">
+  <main class="grow flex flex-col px-2">
+    <BaseButton button-type="action">Add new item</BaseButton>
 
   </main>
 </template>
