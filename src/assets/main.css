@@ -8,17 +8,24 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
 }
 
 body {
-  background-color: #181818;
-  color: #d1d2d3;
+    background-color: #181818;
+    color: #d1d2d3;
+}
+
+@theme {
+    --color-obsidian: #181818;
+    --color-ash: #d1d2d3;
 }

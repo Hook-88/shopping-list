@@ -1,57 +1,29 @@
 <script setup lang="ts">
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { RouterLink } from 'vue-router'
-import MainNav from '@/components/main-nav/MainNav.vue'
-import ShoppingList from '@/features/shoppinglist/ShoppingList.vue';
-import { markRaw, onMounted } from 'vue';
-import { useShoppingItemsStore } from '@/stores/shoppingItems';
-import BaseButton from '@/components/buttons/BaseButton.vue';
-import { useDialogStore } from '@/stores/dialog';
-import ShoppingItemForm from '@/features/add-new-item/form/ShoppingItemForm.vue';
-import { GROCERYITEMS } from '@/data/shoppingList';
-import BaseToolbar from '@/components/toolbar/BaseToolbar.vue';
-import { useToolbarStore } from '@/stores/toolbar';
+import { faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { RouterLink } from 'vue-router';
 
-const shoppingItemsStore = useShoppingItemsStore()
-
-const toolbarStore = useToolbarStore()
-
-onMounted(() => {
-  shoppingItemsStore.shoppingItems = [...GROCERYITEMS]
-})
-
-//add new item
-const dialogStore = useDialogStore()
-
-function handleClickAddNewItem() {
-  if (toolbarStore.isOpen) {
-    toolbarStore.closeToolbar()
-
-    return
-  }
-
-
-  dialogStore.open({
-    component: markRaw(ShoppingItemForm),
-    title: 'Add new item'
-  })
-}
 
 </script>
 
 
 <template>
-  <header class="flex items-center justify-between border-b border-white/20">
-    <MainNav />
-    <button class="px-4" @click="handleClickAddNewItem">
-      <FontAwesomeIcon :icon="faPlus" class="text-2xl" />
+  <header class="text-2xl tracking-wider font-bold border-b border-ash/20 flex justify-between">
+    <button class="flex items-center gap-1.5 py-1.5 px-2" popovertarget="main-nav">
+      <h1>Shopping list</h1>
+      <FontAwesomeIcon :icon="faCaretDown" />
     </button>
+    <button class="py-1.5 px-2">
+      <FontAwesomeIcon :icon="faPlus" />
+    </button>
+    <nav popover id="main-nav" class="open:flex open:flex-col mt-11 min-w-full bg-sky-950/50 text-ash tracking-wider">
+      <RouterLink to="/recipes" class="px-2 py-1.5 border-b border-ash/20">Recipes</RouterLink>
+      <RouterLink :to="{
+        name: 'about'
+      }" class="px-2 py-1.5 border-b border-ash/20">About</RouterLink>
+    </nav>
   </header>
-  <main class="flex-grow px-2 flex flex-col">
-    <ShoppingList v-if="shoppingItemsStore.shoppingItems && shoppingItemsStore.shoppingItems.length > 0"
-      :shopping-items="shoppingItemsStore.shoppingItems" />
-    <BaseButton v-else @click="handleClickAddNewItem">Add item</BaseButton>
+  <main class="grow">
+
   </main>
-  <BaseToolbar />
 </template>

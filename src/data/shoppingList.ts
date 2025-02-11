@@ -1,4 +1,10 @@
-import { type ShoppingItemInterface } from '@/stores/shoppingItems'
+interface ShoppingItemInterface {
+  name: string
+  id: string
+  quantity: number
+  unit: string
+  label: string
+}
 
 export const GROCERYITEMS: ShoppingItemInterface[] = [
   {
