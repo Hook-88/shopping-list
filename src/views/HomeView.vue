@@ -8,6 +8,7 @@ import { onMounted } from 'vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import ShoppingItem from '@/components/lists/shopping-list/ShoppingItem.vue';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -19,7 +20,7 @@ onMounted(() => {
 
 
 <template>
-  <header class="text-2xl tracking-wider font-bold border-b border-ash/20 flex justify-between">
+  <header class="text-2xl tracking-wider font-bold border-b border-as h/20 flex justify-between">
     <MainNav />
     <BaseButton>
       <FontAwesomeIcon :icon="faPlus" />
@@ -27,15 +28,8 @@ onMounted(() => {
   </header>
   <main class="grow flex flex-col px-2">
     <ul v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0" class="space-y-2">
-      <li v-for="item in shoppingListStore.shoppingItems" :key="item.id"
-        class="pl-2 border border-ash/20 rounded-xs flex items-center">
-        <p>
-          {{ item.name }}
-          ({{ item.quantity }}x)
-        </p>
-        <BaseButton class="ml-auto py-4 px-4 flex items-center">
-          <FontAwesomeIcon :icon="faCircle" />
-        </BaseButton>
+      <li v-for="item in shoppingListStore.shoppingItems" :key="item.id">
+        <ShoppingItem :item="item" />
       </li>
     </ul>
     <BaseButton v-else button-type="action">Add new item</BaseButton>
