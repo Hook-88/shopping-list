@@ -20,7 +20,7 @@ onMounted(() => {
 
 
 <template>
-  <header class="text-2xl tracking-wider font-bold border-b border-as h/20 flex justify-between">
+  <header class="text-2xl tracking-wider font-bold border-b border-ash/20 flex justify-between">
     <MainNav />
     <BaseButton>
       <FontAwesomeIcon :icon="faPlus" />
@@ -29,7 +29,7 @@ onMounted(() => {
   <main class="grow flex flex-col px-2">
     <ul v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0" class="space-y-2">
       <li v-for="item in shoppingListStore.shoppingItems" :key="item.id">
-        <ShoppingItem :item="item" />
+        <ShoppingItem :item="item" :is-checked="false" />
       </li>
     </ul>
     <BaseButton v-else button-type="action">Add new item</BaseButton>
