@@ -27,6 +27,7 @@ function itemIsChecked(itemId: string) {
   return selectMultipleIds.selectedIds.value.includes(itemId)
 }
 
+
 //delete checked items
 function handleClickDeleteItems() {
   shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
