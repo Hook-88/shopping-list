@@ -9,6 +9,9 @@ import { useShoppingListStore } from '@/stores/shoppingList';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingItem from '@/components/lists/shopping-list/ShoppingItem.vue';
 import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
+import BaseModal from '@/components/modal/BaseModal.vue';
+import { useDialogStore } from '@/stores/dialog';
+import AddNewItemForm from '@/features/add-new-item/form/AddNewItemForm.vue';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -39,7 +42,14 @@ function noItemsChecked() {
   return selectMultipleIds.selectedIds.value.length === 0
 }
 
+//add new item
+const dialogStore = useDialogStore()
 
+function handleClickAddNewItem() {
+  dialogStore.open({
+    component: AddNewItemForm
+  })
+}
 
 </script>
 
@@ -47,7 +57,7 @@ function noItemsChecked() {
 <template>
   <header class="text-2xl tracking-wider font-bold border-b border-ash/20 flex justify-between">
     <MainNav />
-    <BaseButton>
+    <BaseButton @click="handleClickAddNewItem">
       <FontAwesomeIcon :icon="faPlus" />
     </BaseButton>
   </header>
@@ -69,4 +79,5 @@ function noItemsChecked() {
     <BaseButton v-else button-type="action">Add new item</BaseButton>
 
   </main>
+  <BaseModal />
 </template>
