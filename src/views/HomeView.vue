@@ -27,6 +27,9 @@ function itemIsChecked(itemId: string) {
   return selectMultipleIds.selectedIds.value.includes(itemId)
 }
 
+//delete checked items
+
+
 
 </script>
 
@@ -39,11 +42,17 @@ function itemIsChecked(itemId: string) {
     </BaseButton>
   </header>
   <main class="grow flex flex-col px-2">
-    <ul v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0" class="space-y-2">
-      <li v-for="item in shoppingListStore.shoppingItems" :key="item.id">
-        <ShoppingItem :item="item" :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" />
-      </li>
-    </ul>
+    <div v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0">
+      <ul class="space-y-2">
+        <li v-for="item in shoppingListStore.shoppingItems" :key="item.id">
+          <ShoppingItem :item="item" :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" />
+        </li>
+      </ul>
+
+      <BaseButton button-type="danger" class="w-full mt-4">Delete checked items</BaseButton>
+
+    </div>
+
     <BaseButton v-else button-type="action">Add new item</BaseButton>
 
   </main>
