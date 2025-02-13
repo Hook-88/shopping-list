@@ -30,7 +30,12 @@ function itemIsChecked(itemId: string) {
 //delete checked items
 function handleClickDeleteItems() {
   shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
+  selectMultipleIds.clearSelection()
 
+}
+
+function noItemsChecked() {
+  return selectMultipleIds.selectedIds.value.length === 0
 }
 
 
@@ -53,7 +58,9 @@ function handleClickDeleteItems() {
         </li>
       </ul>
 
-      <BaseButton button-type="danger" class="w-full mt-4" @click="handleClickDeleteItems">Delete checked items
+      <BaseButton button-type="danger" :disabled="noItemsChecked()"
+        class="w-full mt-4 disabled:bg-red-900/50 disabled:text-white/50" @click="handleClickDeleteItems">
+        Delete checked items
       </BaseButton>
 
     </div>

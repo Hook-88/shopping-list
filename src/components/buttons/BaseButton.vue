@@ -14,7 +14,7 @@ const buttonTypeClass = computed(() => {
   }
 
   if (props.buttonType === 'danger') {
-    return 'bg-red-800 border border-ash/20'
+    return 'bg-red-900 border border-ash/20'
   }
 
   return null
