@@ -7,7 +7,6 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 import { onMounted, ref } from 'vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { GROCERYITEMS } from '@/data/shoppingList';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import ShoppingItem from '@/components/lists/shopping-list/ShoppingItem.vue';
 
 const shoppingListStore = useShoppingListStore()
