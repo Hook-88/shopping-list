@@ -21,10 +21,15 @@ export const useSelectMultipleIds = () => {
     selectId(itemId)
   }
 
+  function clearSelection() {
+    selectedIds.value = []
+  }
+
   return {
     selectedIds,
     selectId,
     deSelectId,
     toggleSelectId,
+    clearSelection,
   }
 }
