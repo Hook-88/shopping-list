@@ -8,6 +8,7 @@ import { onMounted, ref } from 'vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingItem from '@/components/lists/shopping-list/ShoppingItem.vue';
+import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -15,33 +16,15 @@ onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
 })
 
-//check item
-const selectedIds = ref<string[]>([])
-
-function selectId(itemId: string) {
-  selectedIds.value.push(itemId)
-}
-
-function deSelectId(itemId: string) {
-  selectedIds.value = selectedIds.value.filter(selectedId => selectedId !== itemId)
-}
-
-function toggleSelectId(itemId: string) {
-  if (selectedIds.value.includes(itemId)) {
-    deSelectId(itemId)
-
-    return
-  }
-
-  selectId(itemId)
-}
+//toggle check item
+const selectMultipleIds = useSelectMultipleIds()
 
 function handleOnToggleCheck(itemId: string) {
-  toggleSelectId(itemId)
+  selectMultipleIds.toggleSelectId(itemId)
 }
 
 function itemIsChecked(itemId: string) {
-  return selectedIds.value.includes(itemId)
+  return selectMultipleIds.selectedIds.value.includes(itemId)
 }
 
 
