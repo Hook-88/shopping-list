@@ -76,7 +76,6 @@ function handleOnEditItem(itemId: string) {
   }
 
   toolbarStore.open({
-    component: EditButtons,
     props: {
       onCloseCalback: selectSingleId.clearSelection,
     }
@@ -113,6 +112,16 @@ function handleOnDecrementItem(itemId: string) {
   })
 }
 
+function handleOnEditItemValues(itemId: string) {
+  dialogStore.open({
+    title: 'Edit item',
+    component: markRaw(AddNewItemForm),
+    props: {
+      itemId
+    }
+  })
+}
+
 </script>
 
 
@@ -146,7 +155,8 @@ function handleOnDecrementItem(itemId: string) {
 
   <BaseToolbar @on-close="handleOnCloseToolbar">
     <EditButtons :item-id="selectSingleId.selectedId.value" @on-delete-item="handleOnDeleteItem"
-      @on-increment-item="handleOnIncrementItem" @on-decrement-item="handleOnDecrementItem" />
+      @on-increment-item="handleOnIncrementItem" @on-decrement-item="handleOnDecrementItem"
+      @on-edit-item="handleOnEditItemValues" />
   </BaseToolbar>
 
 </template>

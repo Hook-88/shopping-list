@@ -4,24 +4,34 @@ import BaseInput from '@/components/inputs/BaseInput.vue';
 import BaseSelect from '@/components/inputs/BaseSelect.vue';
 import { useDialogStore } from '@/stores/dialog';
 import { useShoppingListStore } from '@/stores/shoppingList';
-import { onMounted, reactive, useTemplateRef } from 'vue';
+import { computed, onMounted, reactive, useTemplateRef } from 'vue';
 
 interface FormData {
   ['item-name']: string
   ['item-quantity']: number
-  ['quantity-unit']: 'x' | 'gr' | 'lb'
+  ['quantity-unit']: string
   ['item-label']: string
 }
+const shoppingListStore = useShoppingListStore()
+const dialogStore = useDialogStore()
+
+const itemObj = computed(() => {
+  if (dialogStore.props.itemId) {
+    return shoppingListStore.getShoppingItem(dialogStore.props.itemId)
+  }
+
+  return null
+})
 
 const formData = reactive<FormData>({
-  "item-name": "",
-  "item-quantity": 1,
-  "quantity-unit": 'x',
-  "item-label": ""
+  "item-name": itemObj.value ? itemObj.value.name : "",
+  "item-quantity": itemObj.value ? itemObj.value.quantity : 1,
+  "quantity-unit": itemObj.value ? itemObj.value.unit : "x",
+  "item-label": itemObj.value ? itemObj.value.label : "",
 })
 
 //submit form
-const shoppingListStore = useShoppingListStore()
+
 
 function handleSubmit() {
   shoppingListStore.addNewItem({
@@ -55,7 +65,6 @@ onMounted(() => {
 })
 
 //Close modal
-const dialogStore = useDialogStore()
 
 function handleCloseForm() {
   dialogStore.close()

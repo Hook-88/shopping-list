@@ -42,8 +42,13 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
     })
   }
 
+  function getShoppingItem(itemId: string) {
+    return shoppingItems.value?.find((shoppingItem) => shoppingItem.id === itemId)
+  }
+
   return {
     shoppingItems,
+    getShoppingItem,
     deleteItem,
     deleteMultipleItems,
     addNewItem,

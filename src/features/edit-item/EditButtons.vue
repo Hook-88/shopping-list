@@ -14,9 +14,10 @@ const emit = defineEmits<{
   (e: 'on-delete-item', itemId: string): void
   (e: 'on-increment-item', itemId: string): void
   (e: 'on-decrement-item', itemId: string): void
+  (e: 'on-edit-item', itemId: string): void
 }>()
 
-//for debouncing 
+//for debouncing
 const isProcessing = ref(false)
 
 
@@ -55,6 +56,13 @@ function handleClickDecrement() {
   }, 150) // 250ms delay, adjust as needed
 }
 
+//Edit item
+function handleEditItem() {
+  if (props.itemId) {
+    emit('on-edit-item', props.itemId)
+  }
+}
+
 </script>
 
 <template>
@@ -66,7 +74,7 @@ function handleClickDecrement() {
     <FontAwesomeIcon :icon="faPlus" />
   </BaseButton>
 
-  <BaseButton class="grow">
+  <BaseButton class="grow" @click="handleEditItem">
     <FontAwesomeIcon :icon="faEdit" />
   </BaseButton>
 
