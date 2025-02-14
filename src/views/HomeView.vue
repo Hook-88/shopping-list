@@ -24,6 +24,12 @@ onMounted(() => {
 const selectMultipleIds = useSelectMultipleIds()
 
 function handleOnToggleCheck(itemId: string) {
+  if (selectSingleId.selectedId.value) {
+    selectSingleId.clearSelection()
+    return
+  }
+
+
   selectMultipleIds.toggleSelectId(itemId)
 }
 
