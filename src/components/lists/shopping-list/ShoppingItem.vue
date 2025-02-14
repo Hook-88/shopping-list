@@ -29,6 +29,18 @@ function handleClickItem() {
   emit('on-toggle-check', props.item.id)
 }
 
+const itemQuantityText = computed(() => {
+  if (props.item.unit === 'x' && props.item.quantity === 1) {
+    return null
+  }
+
+  if (props.item.unit === 'x') {
+    return `(${props.item.quantity}${props.item.unit})`
+  }
+
+  return `(${props.item.quantity} ${props.item.unit})`
+})
+
 </script>
 
 <template>
@@ -36,7 +48,7 @@ function handleClickItem() {
     @click="handleClickItem">
     <p>
       {{ item.name }}
-      ({{ item.quantity }}x)
+      {{ itemQuantityText }}
     </p>
     <span class="ml-auto py-4 px-4 flex items-center" v-if="props.isChecked">
       <FontAwesomeIcon :icon="faCheck" />

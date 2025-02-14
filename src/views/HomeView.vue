@@ -77,7 +77,7 @@ function handleClickAddNewItem() {
 
     </div>
 
-    <BaseButton v-else button-type="action">Add new item</BaseButton>
+    <BaseButton v-else button-type="action" @click="handleClickAddNewItem">Add new item</BaseButton>
 
   </main>
   <BaseModal />
