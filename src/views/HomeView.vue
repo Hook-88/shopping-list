@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { RouterLink } from 'vue-router';
 import MainNav from '@/components/main-nav/MainNav.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
-import { onMounted, ref } from 'vue';
+import { markRaw, onMounted, ref } from 'vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingItem from '@/components/lists/shopping-list/ShoppingItem.vue';
@@ -47,7 +47,7 @@ const dialogStore = useDialogStore()
 
 function handleClickAddNewItem() {
   dialogStore.open({
-    component: AddNewItemForm
+    component: markRaw(AddNewItemForm)
   })
 }
 
