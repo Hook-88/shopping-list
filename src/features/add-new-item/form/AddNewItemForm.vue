@@ -22,7 +22,6 @@ const formData = reactive<FormData>({
 //submit form
 const shoppingListStore = useShoppingListStore()
 
-
 function handleSubmit() {
   shoppingListStore.addNewItem({
     label: formData['item-label'],
@@ -30,6 +29,15 @@ function handleSubmit() {
     quantity: formData['item-quantity'],
     unit: formData['quantity-unit']
   })
+
+  resetForm()
+}
+
+function resetForm() {
+  formData['item-label'] = ""
+  formData['item-name'] = ""
+  formData['item-quantity'] = 1
+  formData['quantity-unit'] = "x"
 }
 
 
