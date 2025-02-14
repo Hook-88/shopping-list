@@ -6,9 +6,13 @@ import { useToolbarStore } from '@/stores/toolbar';
 
 const toolbarStore = useToolbarStore()
 
+const emit = defineEmits<{
+  (e: 'on-close'): void
+}>()
+
 function handleClickClose() {
+  emit('on-close')
   toolbarStore.close()
-  toolbarStore.props.onCloseCalback()
 }
 
 </script>
@@ -16,7 +20,8 @@ function handleClickClose() {
 <template>
   <div v-if="toolbarStore.isOpen"
     class="fixed inset-x-0 bottom-4 bg-obsidian-100 text-ash border border-ash/20 mx-2 flex">
-    <component :is="toolbarStore.component" />
+    <!-- <component :is="toolbarStore.component" /> -->
+    <slot></slot>
     <BaseButton class="grow" @click="handleClickClose">
       <FontAwesomeIcon :icon="faClose" />
     </BaseButton>

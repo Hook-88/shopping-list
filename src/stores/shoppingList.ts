@@ -8,6 +8,10 @@ type itemWithoutId = Omit<ShoppingItemInterface, 'id'>
 export const useShoppingListStore = defineStore('shopping-list-store', () => {
   const shoppingItems = ref<ShoppingItemInterface[] | null>()
 
+  function deleteItem(itemId: string) {
+    shoppingItems.value = shoppingItems.value?.filter((shoppingItem) => shoppingItem.id !== itemId)
+  }
+
   function deleteMultipleItems(itemIds: string[]) {
     shoppingItems.value = shoppingItems.value?.filter((item) => {
       if (!itemIds.includes(item.id)) {
@@ -27,6 +31,7 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
 
   return {
     shoppingItems,
+    deleteItem,
     deleteMultipleItems,
     addNewItem,
   }

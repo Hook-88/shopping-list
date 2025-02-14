@@ -19,7 +19,7 @@ export const useToolbarStore = defineStore('toolbar', () => {
 
   function close() {
     isOpen.value = false
-    // props.value = {}
+    props.value = {}
     component.value = null
   }
 

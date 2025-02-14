@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { RouterLink } from 'vue-router';
 import MainNav from '@/components/main-nav/MainNav.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
-import { markRaw, onMounted, ref } from 'vue';
+import { markRaw, onMounted } from 'vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ShoppingItem from '@/components/lists/shopping-list/ShoppingItem.vue';
@@ -78,7 +78,7 @@ function handleOnEditItem(itemId: string) {
   toolbarStore.open({
     component: EditButtons,
     props: {
-      onCloseCalback: selectSingleId.clearSelection
+      onCloseCalback: selectSingleId.clearSelection,
     }
   })
 
@@ -86,6 +86,17 @@ function handleOnEditItem(itemId: string) {
 
 function isSelectedToEdit(itemId: string) {
   return itemId === selectSingleId.selectedId.value
+}
+
+
+function handleOnCloseToolbar() {
+  selectSingleId.clearSelection()
+}
+
+function handleOnDeleteItem(itemId: string) {
+  shoppingListStore.deleteItem(itemId)
+  selectSingleId.clearSelection()
+  toolbarStore.close()
 }
 
 </script>
@@ -118,5 +129,9 @@ function isSelectedToEdit(itemId: string) {
 
   </main>
   <BaseModal />
-  <BaseToolbar />
+
+  <BaseToolbar @on-close="handleOnCloseToolbar">
+    <EditButtons :item-id="selectSingleId.selectedId.value" @on-delete-item="handleOnDeleteItem" />
+  </BaseToolbar>
+
 </template>
