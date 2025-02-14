@@ -2,7 +2,7 @@
 import { type ShoppingItemInterface } from '@/types/types'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
-// import { faCircle as faCircleFull } from '@fortawesome/free-solid-svg-icons';
+import { faCircle as faCircleFull } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 const props = defineProps<{
   item: ShoppingItemInterface
   isChecked: boolean
+  isSelected: boolean
 }>()
 
 const emit = defineEmits<{
@@ -20,6 +21,10 @@ const emit = defineEmits<{
 const shoppingItemClassName = computed(() => {
   if (props.isChecked) {
     return 'bg-green-900'
+  }
+
+  if (props.isSelected) {
+    return 'border-ash/90'
   }
 
   return null
@@ -54,7 +59,7 @@ const itemQuantityText = computed(() => {
       <FontAwesomeIcon :icon="faCheck" />
     </span>
     <BaseButton class="ml-auto py-4 px-4 flex items-center" v-else>
-      <FontAwesomeIcon :icon="faCircle" />
+      <FontAwesomeIcon :icon="props.isSelected ? faCircleFull : faCircle" />
     </BaseButton>
   </div>
 </template>

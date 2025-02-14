@@ -66,7 +66,8 @@ function handleClickAddNewItem() {
     <div v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0">
       <ul class="space-y-2">
         <li v-for="item in shoppingListStore.shoppingItems" :key="item.id">
-          <ShoppingItem :item="item" :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" />
+          <ShoppingItem :item="item" :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck"
+            :is-selected="true" />
         </li>
       </ul>
 
