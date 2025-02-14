@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { type ShoppingItemInterface } from '@/types/types'
 import { v4 as uuidV4 } from 'uuid'
 
-type itemWithoutId = Omit<ShoppingItemInterface, 'id'>
+export type itemWithoutId = Omit<ShoppingItemInterface, 'id'>
 
 export const useShoppingListStore = defineStore('shopping-list-store', () => {
   const shoppingItems = ref<ShoppingItemInterface[] | null>()
@@ -34,7 +34,7 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
       if (shoppingItem.id === mutateObj.itemId) {
         return {
           ...shoppingItem,
-          quantity: shoppingItem.quantity + mutateObj.mutateFactor,
+          quantity: Number(shoppingItem.quantity) + mutateObj.mutateFactor,
         }
       }
 
@@ -46,6 +46,19 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
     return shoppingItems.value?.find((shoppingItem) => shoppingItem.id === itemId)
   }
 
+  function replaceItem(itemId: string, newObj: itemWithoutId) {
+    shoppingItems.value = shoppingItems.value?.map((shoppingItem) => {
+      if (shoppingItem.id === itemId) {
+        return {
+          ...newObj,
+          id: shoppingItem.id,
+        }
+      }
+
+      return shoppingItem
+    })
+  }
+
   return {
     shoppingItems,
     getShoppingItem,
@@ -53,5 +66,6 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
     deleteMultipleItems,
     addNewItem,
     mutateItemQuantity,
+    replaceItem,
   }
 })

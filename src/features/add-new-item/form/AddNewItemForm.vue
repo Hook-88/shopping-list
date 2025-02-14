@@ -3,7 +3,7 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseInput from '@/components/inputs/BaseInput.vue';
 import BaseSelect from '@/components/inputs/BaseSelect.vue';
 import { useDialogStore } from '@/stores/dialog';
-import { useShoppingListStore } from '@/stores/shoppingList';
+import { useShoppingListStore, type itemWithoutId } from '@/stores/shoppingList';
 import { computed, onMounted, reactive, useTemplateRef } from 'vue';
 
 interface FormData {
@@ -32,14 +32,30 @@ const formData = reactive<FormData>({
 
 //submit form
 
-
 function handleSubmit() {
+  if (itemObj.value) {
+    const newObj: itemWithoutId = {
+      label: formData['item-label'],
+      name: formData['item-name'],
+      quantity: formData['item-quantity'],
+      unit: formData['quantity-unit']
+    }
+
+    shoppingListStore.replaceItem(itemObj.value.id, newObj)
+    dialogStore.close()
+
+    return
+  }
+
+
   shoppingListStore.addNewItem({
     label: formData['item-label'],
     name: formData['item-name'],
     quantity: formData['item-quantity'],
     unit: formData['quantity-unit']
   })
+
+  //TODO add logic to replace item on submit
 
   resetForm()
   focusOnNameInput()
@@ -100,7 +116,9 @@ function handleCloseForm() {
 
 
     <div class="flex gap-3 border-t border-ash/20 p-2">
-      <BaseButton button-type="action" class="grow">Add item</BaseButton>
+      <BaseButton button-type="action" class="grow">
+        {{ itemObj ? 'Save' : 'Add item' }}
+      </BaseButton>
       <BaseButton button-type="danger" type="button" @click="handleCloseForm">Cancel</BaseButton>
     </div>
 

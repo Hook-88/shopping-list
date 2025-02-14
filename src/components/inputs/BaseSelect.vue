@@ -22,9 +22,9 @@ function handleChange(event: Event) {
     {{ label }}
   </label>
   <br />
-  <select :id="label" @change="handleChange" v-bind="$attrs">
-    <option value="x">X</option>
+  <select :id="label" @change="handleChange" v-bind="$attrs" :value="modelValue">
     <option value="gr">Gr</option>
+    <option value="x">X</option>
     <option value="lb">Lb</option>
   </select>
 </template>
