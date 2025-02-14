@@ -12,6 +12,7 @@ import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMulti
 import BaseModal from '@/components/modal/BaseModal.vue';
 import { useDialogStore } from '@/stores/dialog';
 import AddNewItemForm from '@/features/add-new-item/form/AddNewItemForm.vue';
+import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -52,6 +53,17 @@ function handleClickAddNewItem() {
   })
 }
 
+//Edit item
+const selectSingleId = useSelectSingleId()
+
+function handleOnEditItem(itemId: string) {
+  selectSingleId.toggleSelectId(itemId)
+}
+
+function isSelectedToEdit(itemId: string) {
+  return itemId === selectSingleId.selectedId.value
+}
+
 </script>
 
 
@@ -67,7 +79,7 @@ function handleClickAddNewItem() {
       <ul class="space-y-2">
         <li v-for="item in shoppingListStore.shoppingItems" :key="item.id">
           <ShoppingItem :item="item" :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck"
-            :is-selected="true" />
+            :is-selected="isSelectedToEdit(item.id)" @on-edit-item="handleOnEditItem" />
         </li>
       </ul>
 

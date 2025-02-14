@@ -16,6 +16,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'on-toggle-check', itemId: string): void
+  (e: 'on-edit-item', itemId: string): void
 }>()
 
 const shoppingItemClassName = computed(() => {
@@ -46,6 +47,11 @@ const itemQuantityText = computed(() => {
   return `(${props.item.quantity} ${props.item.unit})`
 })
 
+
+function handleClickEditItem() {
+  emit('on-edit-item', props.item.id)
+}
+
 </script>
 
 <template>
@@ -58,7 +64,7 @@ const itemQuantityText = computed(() => {
     <span class="ml-auto py-4 px-4 flex items-center" v-if="props.isChecked">
       <FontAwesomeIcon :icon="faCheck" />
     </span>
-    <BaseButton class="ml-auto py-4 px-4 flex items-center" v-else>
+    <BaseButton class="ml-auto py-4 px-4 flex items-center" v-else @click.stop="handleClickEditItem">
       <FontAwesomeIcon :icon="props.isSelected ? faCircleFull : faCircle" />
     </BaseButton>
   </div>
