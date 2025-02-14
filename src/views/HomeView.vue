@@ -15,6 +15,7 @@ import AddNewItemForm from '@/features/add-new-item/form/AddNewItemForm.vue';
 import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 import BaseToolbar from '@/components/toolbar/BaseToolbar.vue';
 import { useToolbarStore } from '@/stores/toolbar';
+import EditButtons from '@/features/edit-item/EditButtons.vue';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -28,6 +29,7 @@ const selectMultipleIds = useSelectMultipleIds()
 function handleOnToggleCheck(itemId: string) {
   if (selectSingleId.selectedId.value) {
     selectSingleId.clearSelection()
+    toolbarStore.close()
     return
   }
 
@@ -74,7 +76,7 @@ function handleOnEditItem(itemId: string) {
   }
 
   toolbarStore.open({
-    component: BaseButton,
+    component: EditButtons,
     props: {
       onCloseCalback: selectSingleId.clearSelection
     }

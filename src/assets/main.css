@@ -27,6 +27,7 @@ body {
 
 @theme {
     --color-obsidian: #181818;
+    --color-obsidian-100: #232323;
     --color-ash: #d1d2d3;
     --color-sky-1000: #141d22
 }
