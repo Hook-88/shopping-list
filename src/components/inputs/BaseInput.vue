@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useTemplateRef } from 'vue';
+
 interface Props {
   label?: string
   modelValue?: string | number
@@ -15,10 +17,17 @@ function handleInput(event: Event) {
   emit('update:modelValue', target.value)
 }
 
+// exposing focus to parent
+const inputRef = useTemplateRef<HTMLInputElement | null>('input-ref')
+
+defineExpose({
+  focus: () => inputRef.value?.focus()
+})
+
 </script>
 
 <template>
   <label :for="label" v-if="label">{{ label }}:</label>
   <br v-if="label">
-  <input v-bind="$attrs" :value="modelValue" @input="handleInput">
+  <input ref="input-ref" v-bind="$attrs" :value="modelValue" @input="handleInput">
 </template>

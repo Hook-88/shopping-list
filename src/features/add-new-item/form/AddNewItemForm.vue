@@ -3,7 +3,7 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseInput from '@/components/inputs/BaseInput.vue';
 import BaseSelect from '@/components/inputs/BaseSelect.vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
-import { reactive } from 'vue';
+import { onMounted, reactive, useTemplateRef } from 'vue';
 
 interface FormData {
   ['item-name']: string
@@ -41,6 +41,12 @@ function resetForm() {
 }
 
 
+//focus on name input
+const nameInputRef = useTemplateRef<{ focus: () => void }>('name-input-ref')
+
+onMounted(() => {
+  nameInputRef.value?.focus()
+})
 
 </script>
 
@@ -49,7 +55,7 @@ function resetForm() {
     <div class="flex flex-col m-2 gap-3 mb-4">
       <div>
         <BaseInput label="Name" type="text" placeholder="Item name..." class="w-full bg-ash/10 px-2 py-1 rounded-sm"
-          v-model="formData['item-name']" required />
+          v-model="formData['item-name']" required ref="name-input-ref" />
       </div>
 
 
