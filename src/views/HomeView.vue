@@ -13,6 +13,8 @@ import BaseModal from '@/components/modal/BaseModal.vue';
 import { useDialogStore } from '@/stores/dialog';
 import AddNewItemForm from '@/features/add-new-item/form/AddNewItemForm.vue';
 import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
+import BaseToolbar from '@/components/toolbar/BaseToolbar.vue';
+import { useToolbarStore } from '@/stores/toolbar';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -61,9 +63,23 @@ function handleClickAddNewItem() {
 
 //Edit item
 const selectSingleId = useSelectSingleId()
+const toolbarStore = useToolbarStore()
 
 function handleOnEditItem(itemId: string) {
   selectSingleId.toggleSelectId(itemId)
+
+  if (!selectSingleId.selectedId.value) {
+    toolbarStore.close()
+    return
+  }
+
+  toolbarStore.open({
+    component: BaseButton,
+    props: {
+      onCloseCalback: selectSingleId.clearSelection
+    }
+  })
+
 }
 
 function isSelectedToEdit(itemId: string) {
@@ -100,4 +116,5 @@ function isSelectedToEdit(itemId: string) {
 
   </main>
   <BaseModal />
+  <BaseToolbar />
 </template>
