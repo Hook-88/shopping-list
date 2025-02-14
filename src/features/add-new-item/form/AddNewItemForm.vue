@@ -31,6 +31,7 @@ function handleSubmit() {
   })
 
   resetForm()
+  focusOnNameInput()
 }
 
 function resetForm() {
@@ -44,8 +45,12 @@ function resetForm() {
 //focus on name input
 const nameInputRef = useTemplateRef<{ focus: () => void }>('name-input-ref')
 
-onMounted(() => {
+function focusOnNameInput() {
   nameInputRef.value?.focus()
+}
+
+onMounted(() => {
+  focusOnNameInput()
 })
 
 </script>
