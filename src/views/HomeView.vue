@@ -47,7 +47,8 @@ const dialogStore = useDialogStore()
 
 function handleClickAddNewItem() {
   dialogStore.open({
-    component: markRaw(AddNewItemForm)
+    component: markRaw(AddNewItemForm),
+    title: 'Add new item'
   })
 }
 
