@@ -20,5 +20,5 @@ function handleInput(event: Event) {
 <template>
   <label :for="label" v-if="label">{{ label }}:</label>
   <br v-if="label">
-  <input v-bind="$attrs" class="w-full bg-ash/10 px-2 py-1 rounded-sm" :value="modelValue" @input="handleInput">
+  <input v-bind="$attrs" :value="modelValue" @input="handleInput">
 </template>
