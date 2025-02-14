@@ -2,6 +2,7 @@
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseInput from '@/components/inputs/BaseInput.vue';
 import BaseSelect from '@/components/inputs/BaseSelect.vue';
+import { useDialogStore } from '@/stores/dialog';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { onMounted, reactive, useTemplateRef } from 'vue';
 
@@ -53,6 +54,13 @@ onMounted(() => {
   focusOnNameInput()
 })
 
+//Close modal
+const dialogStore = useDialogStore()
+
+function handleCloseForm() {
+  dialogStore.close()
+}
+
 </script>
 
 <template>
@@ -84,7 +92,7 @@ onMounted(() => {
 
     <div class="flex gap-3 border-t border-ash/20 p-2">
       <BaseButton button-type="action" class="grow">Add item</BaseButton>
-      <BaseButton button-type="danger" type="button">Cancel</BaseButton>
+      <BaseButton button-type="danger" type="button" @click="handleCloseForm">Cancel</BaseButton>
     </div>
 
   </form>
