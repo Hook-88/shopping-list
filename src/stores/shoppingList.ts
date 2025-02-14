@@ -29,10 +29,24 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
     shoppingItems.value?.unshift(obj)
   }
 
+  function mutateItemQuantity(mutateObj: { itemId: string; mutateFactor: number }) {
+    shoppingItems.value = shoppingItems.value?.map((shoppingItem) => {
+      if (shoppingItem.id === mutateObj.itemId) {
+        return {
+          ...shoppingItem,
+          quantity: shoppingItem.quantity + mutateObj.mutateFactor,
+        }
+      }
+
+      return shoppingItem
+    })
+  }
+
   return {
     shoppingItems,
     deleteItem,
     deleteMultipleItems,
     addNewItem,
+    mutateItemQuantity,
   }
 })
