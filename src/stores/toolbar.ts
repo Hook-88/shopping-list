@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, type Component } from 'vue'
 
 interface ToolbarPayload {
-  component: Component
+  component?: Component
   props?: Record<string, any>
 }
 
@@ -14,7 +14,7 @@ export const useToolbarStore = defineStore('toolbar', () => {
   function open(payload: ToolbarPayload) {
     isOpen.value = true
     props.value = payload.props || {}
-    component.value = payload.component
+    component.value = payload.component || null
   }
 
   function close() {

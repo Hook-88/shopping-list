@@ -20,7 +20,6 @@ function handleClickClose() {
 <template>
   <div v-if="toolbarStore.isOpen"
     class="fixed inset-x-0 bottom-4 bg-obsidian-100 text-ash border border-ash/20 mx-2 flex">
-    <!-- <component :is="toolbarStore.component" /> -->
     <slot></slot>
     <BaseButton class="grow" @click="handleClickClose">
       <FontAwesomeIcon :icon="faClose" />

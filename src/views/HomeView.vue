@@ -106,6 +106,13 @@ function handleOnIncrementItem(itemId: string) {
   })
 }
 
+function handleOnDecrementItem(itemId: string) {
+  shoppingListStore.mutateItemQuantity({
+    itemId: itemId,
+    mutateFactor: -1
+  })
+}
+
 </script>
 
 
@@ -139,7 +146,7 @@ function handleOnIncrementItem(itemId: string) {
 
   <BaseToolbar @on-close="handleOnCloseToolbar">
     <EditButtons :item-id="selectSingleId.selectedId.value" @on-delete-item="handleOnDeleteItem"
-      @on-increment-item="handleOnIncrementItem" />
+      @on-increment-item="handleOnIncrementItem" @on-decrement-item="handleOnDecrementItem" />
   </BaseToolbar>
 
 </template>

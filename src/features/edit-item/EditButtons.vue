@@ -2,6 +2,7 @@
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import { faEdit, faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { ref } from 'vue';
 
 interface Props {
   itemId: string | null
@@ -15,6 +16,10 @@ const emit = defineEmits<{
   (e: 'on-decrement-item', itemId: string): void
 }>()
 
+//for debouncing 
+const isProcessing = ref(false)
+
+
 // delete item
 function handleClickDelteItem() {
   emit('on-delete-item', props.itemId!)
@@ -22,13 +27,38 @@ function handleClickDelteItem() {
 
 //increment item
 function handleClickIncrementItem() {
+  if (isProcessing.value || !props.itemId) {
+    return
+  }
+
+  isProcessing.value = true
   emit('on-increment-item', props.itemId!)
+
+  // Reset after a short delay
+  setTimeout(() => {
+    isProcessing.value = false
+  }, 150)
+}
+
+//decrement item
+function handleClickDecrement() {
+  if (isProcessing.value || !props.itemId) {
+    return
+  }
+
+  isProcessing.value = true
+  emit('on-decrement-item', props.itemId)
+
+  // Reset after a short delay
+  setTimeout(() => {
+    isProcessing.value = false
+  }, 150) // 250ms delay, adjust as needed
 }
 
 </script>
 
 <template>
-  <BaseButton class="grow">
+  <BaseButton class="grow" @click="handleClickDecrement">
     <FontAwesomeIcon :icon="faMinus" />
   </BaseButton>
 
