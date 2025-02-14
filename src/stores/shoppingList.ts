@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { type ShoppingItemInterface } from '@/types/types'
+import { v4 as uuidV4 } from 'uuid'
+
+type itemWithoutId = Omit<ShoppingItemInterface, 'id'>
 
 export const useShoppingListStore = defineStore('shopping-list-store', () => {
   const shoppingItems = ref<ShoppingItemInterface[] | null>()
@@ -13,8 +16,18 @@ export const useShoppingListStore = defineStore('shopping-list-store', () => {
     })
   }
 
+  function addNewItem(itemObj: itemWithoutId) {
+    const obj = {
+      ...itemObj,
+      id: uuidV4(),
+    }
+
+    shoppingItems.value?.unshift(obj)
+  }
+
   return {
     shoppingItems,
     deleteMultipleItems,
+    addNewItem,
   }
 })

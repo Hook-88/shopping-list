@@ -2,6 +2,7 @@
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseInput from '@/components/inputs/BaseInput.vue';
 import BaseSelect from '@/components/inputs/BaseSelect.vue';
+import { useShoppingListStore } from '@/stores/shoppingList';
 import { reactive } from 'vue';
 
 interface FormData {
@@ -18,8 +19,17 @@ const formData = reactive<FormData>({
   "item-label": ""
 })
 
+//submit form
+const shoppingListStore = useShoppingListStore()
+
+
 function handleSubmit() {
-  console.log(formData)
+  shoppingListStore.addNewItem({
+    label: formData['item-label'],
+    name: formData['item-name'],
+    quantity: formData['item-quantity'],
+    unit: formData['quantity-unit']
+  })
 }
 
 
