@@ -38,7 +38,7 @@ function handleClickIncrementItem() {
   // Reset after a short delay
   setTimeout(() => {
     isProcessing.value = false
-  }, 150)
+  }, 250)
 }
 
 //decrement item
@@ -53,7 +53,7 @@ function handleClickDecrement() {
   // Reset after a short delay
   setTimeout(() => {
     isProcessing.value = false
-  }, 150) // 250ms delay, adjust as needed
+  }, 250) // 250ms delay, adjust as needed
 }
 
 //Edit item
