@@ -2,6 +2,7 @@
 import IconButton from '@/components/buttons/IconButton.vue';
 import { type ShoppingItemInterface } from '@/types/types';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -17,6 +18,14 @@ const liClassName = computed(() => {
   return null
 })
 
+const liButtonIcon = computed(() => {
+  if (props.isChecked) {
+    return faCheck
+  }
+
+  return faCircle
+})
+
 </script>
 
 <template>
@@ -26,6 +35,6 @@ const liClassName = computed(() => {
       <span>({{ item.quantity }} {{ item.unit }})</span>
     </p>
 
-    <IconButton :icon-def="faCircle" class="p-3" />
+    <IconButton :icon-def="liButtonIcon" :disabled="props.isChecked" class="p-3" />
   </li>
 </template>
