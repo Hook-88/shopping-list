@@ -22,11 +22,14 @@ const selectedItems = computed(() => {
   return itemArr
 })
 
+//Confirm delete
 function handleClickConfirm() {
   shoppingListStore.deleteMultipleItems(dialogStore.props.checkedIds)
   dialogStore.close()
 }
 
+
+//Close modal
 function handleClickCancel() {
   dialogStore.close()
 }
@@ -36,7 +39,11 @@ function handleClickCancel() {
 <template>
   <main class="p-2">
     <ul>
-      <li v-for="item in selectedItems" :key="item.id">{{ item.name }}</li>
+      <li v-for="item in selectedItems" :key="item.id">
+        <p>
+          {{ item.name }}
+        </p>
+      </li>
     </ul>
   </main>
   <footer class="flex p-2 gap-2 border-t border-ash/20">
