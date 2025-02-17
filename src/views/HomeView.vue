@@ -20,6 +20,7 @@ function handleOnToggleMenu(isOpen: boolean) {
   menuIsOpen.value = isOpen
 }
 
+
 //Shopping List
 const shoppingListStore = useShoppingListStore()
 
@@ -27,16 +28,22 @@ onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
 })
 
+
 ////Check Item
 const selectMultipleIds = useSelectMultipleIds()
 
 function handleOnToggleCheck(itemId: string) {
+  if (selectSingleId.selectedId.value) {
+    selectSingleId.clearSelection()
+    return
+  }
   selectMultipleIds.toggleSelectId(itemId)
 }
 
 function itemIsChecked(itemId: string) {
   return selectMultipleIds.selectedIds.value.includes(itemId)
 }
+
 
 ////Select item to Edit
 const selectSingleId = useSelectSingleId()
