@@ -58,7 +58,14 @@ function itemIsSelectedToEdit(itemId: string) {
   return selectSingleId.selectedId.value === itemId
 }
 
+
 ////Delete Checked Items
+function handleClickDeleteItems() {
+  shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
+  selectMultipleIds.clearSelection()
+}
+
+//////Disable Delete Button
 const noItemsChecked = computed(() => {
   return selectMultipleIds.selectedIds.value.length === 0
 })
@@ -86,7 +93,7 @@ const noItemsChecked = computed(() => {
         :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
     </ul>
 
-    <BaseButton :disabled="noItemsChecked" button-type="danger"
+    <BaseButton :disabled="noItemsChecked" button-type="danger" @click="handleClickDeleteItems"
       class="mt-4 w-full disabled:bg-red-950 disabled:text-white/50">Delete
       checked items
     </BaseButton>
