@@ -20,7 +20,7 @@ const buttonTypeClassName = computed(() => {
 </script>
 
 <template>
-  <button class="p-2.5 rounded border border-ash/20" :class="buttonTypeClassName">
+  <button class="p-2.5 rounded border border-ash/20" :class="buttonTypeClassName" v-bind="$attrs">
     <slot></slot>
   </button>
 </template>

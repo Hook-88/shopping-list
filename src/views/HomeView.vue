@@ -58,6 +58,11 @@ function itemIsSelectedToEdit(itemId: string) {
   return selectSingleId.selectedId.value === itemId
 }
 
+////Delete Checked Items
+const noItemsChecked = computed(() => {
+  return selectMultipleIds.selectedIds.value.length === 0
+})
+
 
 </script>
 
@@ -81,7 +86,10 @@ function itemIsSelectedToEdit(itemId: string) {
         :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
     </ul>
 
-    <BaseButton button-type="danger" class="mt-4 w-full">Delete checked items</BaseButton>
+    <BaseButton :disabled="noItemsChecked" button-type="danger"
+      class="mt-4 w-full disabled:bg-red-950 disabled:text-white/50">Delete
+      checked items
+    </BaseButton>
 
   </main>
 
