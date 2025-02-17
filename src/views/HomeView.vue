@@ -10,6 +10,8 @@ import { onMounted, ref, useTemplateRef } from 'vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle';
 import ListItem from '@/components/shopping-list/ListItem.vue';
+import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
+import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -26,32 +28,27 @@ onMounted(() => {
 })
 
 ////Check Item
-const selectMultipleIds = ref<string[]>([])
-
-function selectId(itemId: string) {
-  selectMultipleIds.value.push(itemId)
-}
-
-function deSelectId(itemId: string) {
-  selectMultipleIds.value = selectMultipleIds.value.filter(id => id !== itemId)
-}
-
-function toggleSelectId(itemId: string) {
-  if (selectMultipleIds.value.includes(itemId)) {
-    deSelectId(itemId)
-    return
-  }
-
-  selectId(itemId)
-}
+const selectMultipleIds = useSelectMultipleIds()
 
 function handleOnToggleCheck(itemId: string) {
-  toggleSelectId(itemId)
+  selectMultipleIds.toggleSelectId(itemId)
 }
 
-function itemIChecked(itemId: string) {
-  return selectMultipleIds.value.includes(itemId)
+function itemIsChecked(itemId: string) {
+  return selectMultipleIds.selectedIds.value.includes(itemId)
 }
+
+////Select item to Edit
+const selectSingleId = useSelectSingleId()
+
+function handleOnEditItem(itemId: string) {
+  selectSingleId.toggleSelectId(itemId)
+}
+
+function itemIsSelectedToEdit(itemId: string) {
+  return selectSingleId.selectedId.value === itemId
+}
+
 
 </script>
 
@@ -68,7 +65,8 @@ function itemIChecked(itemId: string) {
   <main class="grow">
     <ul class="mx-2 space-y-2">
       <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
-        :is-checked="itemIChecked(item.id)" @on-toggle-check="handleOnToggleCheck" />
+        :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
+        :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
     </ul>
 
   </main>
