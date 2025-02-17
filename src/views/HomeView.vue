@@ -25,6 +25,34 @@ onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
 })
 
+////Check Item
+const selectMultipleIds = ref<string[]>([])
+
+function selectId(itemId: string) {
+  selectMultipleIds.value.push(itemId)
+}
+
+function deSelectId(itemId: string) {
+  selectMultipleIds.value = selectMultipleIds.value.filter(id => id !== itemId)
+}
+
+function toggleSelectId(itemId: string) {
+  if (selectMultipleIds.value.includes(itemId)) {
+    deSelectId(itemId)
+    return
+  }
+
+  selectId(itemId)
+}
+
+function handleOnToggleCheck(itemId: string) {
+  toggleSelectId(itemId)
+}
+
+function itemIChecked(itemId: string) {
+  return selectMultipleIds.value.includes(itemId)
+}
+
 </script>
 
 
@@ -39,7 +67,8 @@ onMounted(() => {
 
   <main class="grow">
     <ul class="mx-2 space-y-2">
-      <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item" :is-checked="true" />
+      <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
+        :is-checked="itemIChecked(item.id)" @on-toggle-check="handleOnToggleCheck" />
     </ul>
 
   </main>

@@ -10,6 +10,10 @@ const props = defineProps<{
   isChecked?: boolean
 }>()
 
+const emit = defineEmits<{
+  (e: 'on-toggle-check', itemId: string): void
+}>()
+
 const liClassName = computed(() => {
   if (props.isChecked) {
     return 'bg-green-900'
@@ -26,10 +30,17 @@ const liButtonIcon = computed(() => {
   return faCircle
 })
 
+//toggle check item
+function handleClickItem() {
+  emit('on-toggle-check', props.item.id)
+}
+
+
 </script>
 
 <template>
-  <li class="border border-ash/20 rounded pl-2 flex items-center justify-between" :class="liClassName">
+  <li class="border border-ash/20 rounded pl-2 flex items-center justify-between" :class="liClassName"
+    @click="handleClickItem">
     <p>
       {{ item.name }}
       <span>({{ item.quantity }} {{ item.unit }})</span>
