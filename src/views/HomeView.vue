@@ -16,6 +16,7 @@ import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 import BaseToolbar from '@/components/toolbar/BaseToolbar.vue';
 import { useToolbarStore } from '@/stores/toolbar';
 import EditButtons from '@/features/edit-item/EditButtons.vue';
+import ConfirmDelete from '@/features/delete-item/ConfirmDelete.vue';
 
 const shoppingListStore = useShoppingListStore()
 
@@ -42,10 +43,15 @@ function itemIsChecked(itemId: string) {
 }
 
 
-//delete checked items
+//Delete checked items
 function handleClickDeleteItems() {
-  shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
-  selectMultipleIds.clearSelection()
+  dialogStore.open({
+    title: 'Delete these items?',
+    component: markRaw(ConfirmDelete),
+  })
+
+  // shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
+  // selectMultipleIds.clearSelection()
 
 }
 
