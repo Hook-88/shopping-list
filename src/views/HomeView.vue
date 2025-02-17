@@ -48,6 +48,9 @@ function handleClickDeleteItems() {
   dialogStore.open({
     title: 'Delete these items?',
     component: markRaw(ConfirmDelete),
+    props: {
+      checkedIds: selectMultipleIds.selectedIds
+    }
   })
 
   // shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
