@@ -2,7 +2,6 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { onMounted, useTemplateRef } from 'vue';
-import { ref } from 'vue';
 import NavLink from '@/components/main-nav/NavLink.vue';
 
 const navRef = useTemplateRef('nav-ref')
@@ -15,13 +14,11 @@ onMounted(() => {
   if (navRef.value) {
     navRef.value?.addEventListener("toggle", (event: ToggleEvent) => {
       if (event.newState === "open") {
-        console.log("Popover has been shown");
         emit('on-toggle-menu', true)
       } else {
-        console.log("Popover has been hidden");
         emit('on-toggle-menu', false)
       }
-    });
+    })
   }
 })
 
