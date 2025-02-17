@@ -22,6 +22,11 @@ const selectedItems = computed(() => {
   return itemArr
 })
 
+function handleClickConfirm() {
+  shoppingListStore.deleteMultipleItems(dialogStore.props.checkedIds)
+  dialogStore.close()
+}
+
 function handleClickCancel() {
   dialogStore.close()
 }
@@ -35,7 +40,7 @@ function handleClickCancel() {
     </ul>
   </main>
   <footer class="flex p-2 gap-2 border-t border-ash/20">
-    <BaseButton button-type="action" class="grow">Confirm</BaseButton>
+    <BaseButton button-type="action" class="grow" @click="handleClickConfirm">Confirm</BaseButton>
     <BaseButton button-type="danger" @click="handleClickCancel">Cancel</BaseButton>
   </footer>
 </template>
