@@ -6,7 +6,7 @@ import NavLink from '@/components/main-nav/NavLink.vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { faAngleRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { onMounted, ref, useTemplateRef } from 'vue';
+import { computed, onMounted, ref, useTemplateRef } from 'vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle';
 import ListItem from '@/components/shopping-list/ListItem.vue';
@@ -26,6 +26,17 @@ const shoppingListStore = useShoppingListStore()
 
 onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
+})
+
+////Shopping List header
+const progressText = computed(() => {
+  const progress = `(${selectMultipleIds.selectedIds.value.length}/${shoppingListStore.shoppingItems?.length})`
+
+  if (selectMultipleIds.selectedIds.value.length === shoppingListStore.shoppingItems?.length) {
+    return progress + ' - Completed'
+  }
+
+  return progress
 })
 
 
@@ -69,8 +80,16 @@ function itemIsSelectedToEdit(itemId: string) {
     <IconButton :icon-def="faPlus" />
   </header>
 
-  <main class="grow">
-    <ul class="mx-2 space-y-2">
+  <main class="grow px-2">
+    <header class="text-sm flex items-center">
+      <span>
+        {{ progressText }}
+      </span>
+      <button class="pl-4 py-1 ml-auto">
+        Hide checked
+      </button>
+    </header>
+    <ul class="space-y-2">
       <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
         :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
         :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
