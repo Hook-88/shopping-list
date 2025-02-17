@@ -65,6 +65,8 @@ function handleClickDeleteItems() {
   selectMultipleIds.clearSelection()
 }
 
+
+
 //////Disable Delete Button
 const noItemsChecked = computed(() => {
   return selectMultipleIds.selectedIds.value.length === 0
@@ -84,20 +86,23 @@ const noItemsChecked = computed(() => {
   </header>
 
   <main class="grow px-2">
-    <ListHeader v-if="shoppingListStore.shoppingItems"
-      :num-of-items-checked="selectMultipleIds.selectedIds.value.length"
-      :num-of-shopping-items="shoppingListStore.shoppingItems?.length" />
-    <ul class="space-y-2">
-      <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
-        :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
-        :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
-    </ul>
+    <div v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0">
+      <ListHeader v-if="shoppingListStore.shoppingItems"
+        :num-of-items-checked="selectMultipleIds.selectedIds.value.length"
+        :num-of-shopping-items="shoppingListStore.shoppingItems?.length" />
+      <ul class="space-y-2">
+        <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
+          :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
+          :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
+      </ul>
 
-    <BaseButton :disabled="noItemsChecked" button-type="danger" @click="handleClickDeleteItems"
-      class="mt-4 w-full disabled:bg-red-950 disabled:text-white/50">Delete
-      checked items
-    </BaseButton>
+      <BaseButton :disabled="noItemsChecked" button-type="danger" @click="handleClickDeleteItems"
+        class="mt-4 w-full disabled:bg-red-950 disabled:text-white/50">Delete
+        checked items
+      </BaseButton>
+    </div>
 
+    <BaseButton v-else class="w-full">Add new Item</BaseButton>
   </main>
 
 </template>
