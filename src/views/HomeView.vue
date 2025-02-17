@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { onMounted, ref, useTemplateRef } from 'vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle';
+import ListItem from '@/components/shopping-list/ListItem.vue';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -38,15 +39,7 @@ onMounted(() => {
 
   <main class="grow">
     <ul class="mx-2 space-y-2">
-      <li v-for="item in shoppingListStore.shoppingItems" :key="item.id"
-        class="border border-ash/20 rounded pl-2 flex items-center justify-between">
-        <p>
-          {{ item.name }}
-          <span>({{ item.quantity }} {{ item.unit }})</span>
-        </p>
-
-        <IconButton :icon-def="faCircle" class="p-3" />
-      </li>
+      <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item" :is-checked="true" />
     </ul>
 
   </main>

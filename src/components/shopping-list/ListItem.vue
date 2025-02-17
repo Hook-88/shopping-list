@@ -1,0 +1,31 @@
+<script setup lang="ts">
+import IconButton from '@/components/buttons/IconButton.vue';
+import { type ShoppingItemInterface } from '@/types/types';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { computed } from 'vue';
+
+const props = defineProps<{
+  item: ShoppingItemInterface
+  isChecked?: boolean
+}>()
+
+const liClassName = computed(() => {
+  if (props.isChecked) {
+    return 'bg-green-900'
+  }
+
+  return null
+})
+
+</script>
+
+<template>
+  <li class="border border-ash/20 rounded pl-2 flex items-center justify-between" :class="liClassName">
+    <p>
+      {{ item.name }}
+      <span>({{ item.quantity }} {{ item.unit }})</span>
+    </p>
+
+    <IconButton :icon-def="faCircle" class="p-3" />
+  </li>
+</template>
