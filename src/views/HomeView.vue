@@ -12,6 +12,7 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle';
 import ListItem from '@/components/shopping-list/ListItem.vue';
 import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
 import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
+import ListHeader from '@/components/shopping-list/ListHeader.vue';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -26,17 +27,6 @@ const shoppingListStore = useShoppingListStore()
 
 onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
-})
-
-////Shopping List header
-const progressText = computed(() => {
-  const progress = `(${selectMultipleIds.selectedIds.value.length}/${shoppingListStore.shoppingItems?.length})`
-
-  if (selectMultipleIds.selectedIds.value.length === shoppingListStore.shoppingItems?.length) {
-    return progress + ' - Completed'
-  }
-
-  return progress
 })
 
 
@@ -81,14 +71,9 @@ function itemIsSelectedToEdit(itemId: string) {
   </header>
 
   <main class="grow px-2">
-    <header class="text-sm flex items-center">
-      <span>
-        {{ progressText }}
-      </span>
-      <button class="pl-4 py-1 ml-auto">
-        Hide checked
-      </button>
-    </header>
+    <ListHeader v-if="shoppingListStore.shoppingItems"
+      :num-of-items-checked="selectMultipleIds.selectedIds.value.length"
+      :num-of-shopping-items="shoppingListStore.shoppingItems?.length" />
     <ul class="space-y-2">
       <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
         :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
