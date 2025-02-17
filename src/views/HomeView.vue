@@ -13,6 +13,7 @@ import ListItem from '@/components/shopping-list/ListItem.vue';
 import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
 import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 import ListHeader from '@/components/shopping-list/ListHeader.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -79,6 +80,8 @@ function itemIsSelectedToEdit(itemId: string) {
         :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
         :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
     </ul>
+
+    <BaseButton button-type="danger" class="mt-4 w-full">Delete checked items</BaseButton>
 
   </main>
 
