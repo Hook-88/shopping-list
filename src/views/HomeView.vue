@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import IconButton from '@/components/buttons/IconButton.vue';
-import ButtonIcon from '@/components/buttons/IconButton.vue';
 import MainNav from '@/components/main-nav/MainNav.vue';
-import NavLink from '@/components/main-nav/NavLink.vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
-import { faAngleRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { computed, onMounted, ref, useTemplateRef } from 'vue';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { computed, onMounted, ref } from 'vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
-import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle';
 import ListItem from '@/components/shopping-list/ListItem.vue';
 import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
 import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
