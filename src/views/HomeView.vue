@@ -45,13 +45,30 @@ function itemIsChecked(itemId: string) {
 
 ////Filters
 
+//////Category
+const selectedCategory = ref<string | null>(null)
+
+function handleOnChangeCategory(label: string) {
+  selectedCategory.value = label
+}
+
+const itemsOfCategory = computed(() => {
+
+  if (selectedCategory.value) {
+
+    return shoppingListStore.shoppingItems?.filter(shoppingItem => shoppingItem.label === selectedCategory.value)
+  }
+
+  return shoppingListStore.shoppingItems
+})
+
 //////filter unchecked
 const hideUncheckedItems = ref(false)
 
 const displayItems = computed(() => {
   if (hideUncheckedItems.value) {
 
-    return shoppingListStore.shoppingItems?.filter(shoppingItem => {
+    return itemsOfCategory.value?.filter(shoppingItem => {
 
       if (!selectMultipleIds.selectedIds.value.includes(shoppingItem.id)) {
 
@@ -61,7 +78,7 @@ const displayItems = computed(() => {
     })
   }
 
-  return shoppingListStore.shoppingItems
+  return itemsOfCategory.value
 })
 
 function handleOnToggleHide() {
@@ -151,7 +168,8 @@ const noItemsChecked = computed(() => {
     <div v-if="displayItems && displayItems.length > 0">
       <ListHeader v-if="shoppingListStore.shoppingItems"
         :num-of-items-checked="selectMultipleIds.selectedIds.value.length"
-        :num-of-shopping-items="shoppingListStore.shoppingItems.length" @on-toggle-hide="handleOnToggleHide" />
+        :num-of-shopping-items="shoppingListStore.shoppingItems.length" @on-toggle-hide="handleOnToggleHide"
+        @on-change-category="handleOnChangeCategory" />
       <ul class="space-y-2">
         <ListItem v-for="item in displayItems" :key="item.id" :item="item" :is-checked="itemIsChecked(item.id)"
           @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
@@ -168,7 +186,8 @@ const noItemsChecked = computed(() => {
   </main>
 
   <BaseModal ref="confirmDeleteModalRef" title="Delete these items?">
-    <ConfirmDeleteModal :items="selectedItems!" @on-confirm="handleOnConfirm" @on-cancel="handleOnCancel" />
+    <ConfirmDeleteModal v-if="selectedItems" :items="selectedItems" @on-confirm="handleOnConfirm"
+      @on-cancel="handleOnCancel" />
   </BaseModal>
 
 </template>
