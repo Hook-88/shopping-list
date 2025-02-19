@@ -10,6 +10,7 @@ import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMulti
 import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 import ListHeader from '@/components/shopping-list/ListHeader.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
+import BaseModal from '@/components/modal/BaseModal.vue';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -56,9 +57,20 @@ function itemIsSelectedToEdit(itemId: string) {
 
 
 ////Delete Checked Items
+const confirmDeleteModalRef = ref<InstanceType<typeof BaseModal> | null>(null)
+
+function openConfirmDeleteModal() {
+  if (confirmDeleteModalRef.value) {
+    confirmDeleteModalRef.value.openModal()
+  }
+}
+
 function handleClickDeleteItems() {
-  shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
-  selectMultipleIds.clearSelection()
+  openConfirmDeleteModal()
+
+
+  // shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
+  // selectMultipleIds.clearSelection()
 }
 
 
@@ -100,5 +112,11 @@ const noItemsChecked = computed(() => {
 
     <BaseButton v-else class="w-full">Add new Item</BaseButton>
   </main>
+
+  <BaseModal ref="confirmDeleteModalRef">
+    <ul>
+
+    </ul>
+  </BaseModal>
 
 </template>
