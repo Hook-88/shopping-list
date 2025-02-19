@@ -23,7 +23,7 @@ const progressText = computed(() => {
     <span>
       {{ progressText }}
     </span>
-    <button class="pl-4 py-1 ml-auto">
+    <button class="pl-4 py-1 ml-auto disabled:text-white/30" :disabled="numOfItemsChecked === 0">
       Hide checked
     </button>
   </header>

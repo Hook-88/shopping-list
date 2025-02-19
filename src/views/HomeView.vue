@@ -43,6 +43,12 @@ function itemIsChecked(itemId: string) {
   return selectMultipleIds.selectedIds.value.includes(itemId)
 }
 
+////Filters
+
+//////filter unchecked
+
+
+
 
 ////Select item to Edit
 const selectSingleId = useSelectSingleId()
