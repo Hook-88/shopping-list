@@ -48,7 +48,7 @@ function itemIsChecked(itemId: string) {
 //////Category
 const selectedCategory = ref<string | null>(null)
 
-function handleOnChangeCategory(label: string) {
+function handleOnChangeCategory(label: string | null) {
   selectedCategory.value = label
   console.log(selectedCategory.value)
 }
