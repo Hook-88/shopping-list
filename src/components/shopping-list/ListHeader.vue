@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   numOfItemsChecked: number
@@ -9,6 +9,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'on-toggle-hide'): void
 }>()
+
+const uncheckedFilterApplied = ref(false)
 
 
 const progressText = computed(() => {
@@ -24,6 +26,7 @@ const progressText = computed(() => {
 
 function handleClickHideChecked() {
   emit('on-toggle-hide')
+  uncheckedFilterApplied.value = !uncheckedFilterApplied.value
 }
 
 
@@ -36,7 +39,7 @@ function handleClickHideChecked() {
     </span>
     <button class="pl-4 py-1 ml-auto disabled:text-white/30" :disabled="numOfItemsChecked === 0"
       @click="handleClickHideChecked">
-      Hide checked
+      {{ uncheckedFilterApplied ? 'Show' : 'Hide' }} checked
     </button>
   </header>
 </template>
