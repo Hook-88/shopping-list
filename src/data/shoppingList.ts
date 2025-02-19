@@ -34,6 +34,6 @@ export const GROCERYITEMS: ShoppingItemInterface[] = [
     id: 'veg-001',
     quantity: 4,
     unit: 'pieces',
-    label: 'Vegetables',
+    label: 'Fruits',
   },
 ]
