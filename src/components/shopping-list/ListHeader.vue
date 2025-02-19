@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { computed, ref } from 'vue';
 
@@ -16,6 +17,7 @@ const uncheckedFilterApplied = ref(false)
 
 const shoppingListStore = useShoppingListStore()
 
+//get all the unique labels
 const shoppingLabels = computed(() => {
 
   const allLAbels = shoppingListStore.shoppingItems?.filter(shoppingItem => {
@@ -47,17 +49,16 @@ function handleClickHideChecked() {
   uncheckedFilterApplied.value = !uncheckedFilterApplied.value
 }
 
-
-const selectedCategory = ref<string | null>(null)
+const selectSingleId = useSelectSingleId()
 
 
 function handleClickCategory(label: string) {
-  selectedCategory.value = label
+  selectSingleId.selectId(label)
   emit('on-change-category', label)
 }
 
 function isSelected(label: string) {
-  return selectedCategory.value === label
+  return selectSingleId.selectedId.value === label
 }
 
 
@@ -67,8 +68,8 @@ function isSelected(label: string) {
   <header>
 
     <div class="flex gap-2 flex-wrap">
-      <button class="py-1 px-2 border border-ash/20 rounded-xl" @click="selectedCategory = null" :class="{
-        'bg-emerald-800': !selectedCategory
+      <button class="py-1 px-2 border border-ash/20 rounded-xl" @click="selectSingleId.clearSelection" :class="{
+        'bg-emerald-800': !selectSingleId.selectedId.value
       }">All</button>
       <button v-for="label in shoppingLabels" :key="label" @click="() => handleClickCategory(label)"
         class="py-1 px-2 border border-ash/20 rounded-xl" :class="{
