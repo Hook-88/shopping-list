@@ -50,6 +50,7 @@ const selectedCategory = ref<string | null>(null)
 
 function handleOnChangeCategory(label: string) {
   selectedCategory.value = label
+  console.log(selectedCategory.value)
 }
 
 const itemsOfCategory = computed(() => {
