@@ -58,21 +58,45 @@ function itemIsSelectedToEdit(itemId: string) {
 
 ////Delete Checked Items
 const confirmDeleteModalRef = ref<InstanceType<typeof BaseModal> | null>(null)
+const selectedItems = computed(() => {
+
+  if (shoppingListStore.shoppingItems) {
+
+    return shoppingListStore.shoppingItems.filter(shoppingItem => {
+
+      if (selectMultipleIds.selectedIds.value.includes(shoppingItem.id)) {
+
+        return shoppingItem
+      }
+    })
+  }
+
+  return null
+})
 
 function openConfirmDeleteModal() {
   if (confirmDeleteModalRef.value) {
     confirmDeleteModalRef.value.openModal()
+    confirmDeleteModalRef.value.dialogTitle = 'Delete these items?'
+  }
+}
+
+function closeConfirmDeleteModal() {
+  if (confirmDeleteModalRef.value) {
+    confirmDeleteModalRef.value.closeModal()
   }
 }
 
 function handleClickDeleteItems() {
   openConfirmDeleteModal()
 
-
-  // shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
-  // selectMultipleIds.clearSelection()
 }
 
+function handleClickConfirm() {
+  shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
+  selectMultipleIds.clearSelection()
+  closeConfirmDeleteModal()
+}
 
 
 //////Disable Delete Button
@@ -113,10 +137,16 @@ const noItemsChecked = computed(() => {
     <BaseButton v-else class="w-full">Add new Item</BaseButton>
   </main>
 
-  <BaseModal ref="confirmDeleteModalRef">
-    <ul>
-
-    </ul>
+  <BaseModal ref="confirmDeleteModalRef" title="Delete these items?">
+    <main class="p-2">
+      <ul>
+        <li v-for="item in selectedItems" :key="item.id">{{ item.name }}</li>
+      </ul>
+    </main>
+    <footer class="p-2 border-y border-ash/20 flex gap-2">
+      <BaseButton class="grow" @click="handleClickConfirm">Yes</BaseButton>
+      <BaseButton button-type="danger" @click="closeConfirmDeleteModal">Cancel</BaseButton>
+    </footer>
   </BaseModal>
 
 </template>
