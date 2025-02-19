@@ -46,7 +46,27 @@ function itemIsChecked(itemId: string) {
 ////Filters
 
 //////filter unchecked
+const hideUncheckedItems = ref(false)
 
+const displayItems = computed(() => {
+  if (hideUncheckedItems.value) {
+
+    return shoppingListStore.shoppingItems?.filter(shoppingItem => {
+
+      if (!selectMultipleIds.selectedIds.value.includes(shoppingItem.id)) {
+
+        return shoppingItem
+      }
+
+    })
+  }
+
+  return shoppingListStore.shoppingItems
+})
+
+function handleOnToggleHide() {
+  hideUncheckedItems.value = !hideUncheckedItems.value
+}
 
 
 
@@ -128,13 +148,13 @@ const noItemsChecked = computed(() => {
   </header>
 
   <main class="grow px-2">
-    <div v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0">
+    <div v-if="displayItems && displayItems.length > 0">
       <ListHeader v-if="shoppingListStore.shoppingItems"
         :num-of-items-checked="selectMultipleIds.selectedIds.value.length"
-        :num-of-shopping-items="shoppingListStore.shoppingItems?.length" />
+        :num-of-shopping-items="shoppingListStore.shoppingItems.length" @on-toggle-hide="handleOnToggleHide" />
       <ul class="space-y-2">
-        <ListItem v-for="item in shoppingListStore.shoppingItems" :key="item.id" :item="item"
-          :is-checked="itemIsChecked(item.id)" @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
+        <ListItem v-for="item in displayItems" :key="item.id" :item="item" :is-checked="itemIsChecked(item.id)"
+          @on-toggle-check="handleOnToggleCheck" @on-edit-item="handleOnEditItem"
           :is-selected-to-edit="itemIsSelectedToEdit(item.id)" />
       </ul>
 

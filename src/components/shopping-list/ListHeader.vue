@@ -6,6 +6,10 @@ const props = defineProps<{
   numOfShoppingItems: number
 }>()
 
+const emit = defineEmits<{
+  (e: 'on-toggle-hide'): void
+}>()
+
 
 const progressText = computed(() => {
   const progress = `(${props.numOfItemsChecked}/${props.numOfShoppingItems})`
@@ -16,6 +20,13 @@ const progressText = computed(() => {
 
   return progress
 })
+
+
+function handleClickHideChecked() {
+  emit('on-toggle-hide')
+}
+
+
 </script>
 
 <template>
@@ -23,7 +34,8 @@ const progressText = computed(() => {
     <span>
       {{ progressText }}
     </span>
-    <button class="pl-4 py-1 ml-auto disabled:text-white/30" :disabled="numOfItemsChecked === 0">
+    <button class="pl-4 py-1 ml-auto disabled:text-white/30" :disabled="numOfItemsChecked === 0"
+      @click="handleClickHideChecked">
       Hide checked
     </button>
   </header>
