@@ -11,6 +11,7 @@ import { useSelectSingleId } from '@/features/select-single-id/selectSingleId';
 import ListHeader from '@/components/shopping-list/ListHeader.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseModal from '@/components/modal/BaseModal.vue';
+import ConfirmDeleteModal from '@/components/shopping-list/delete-item/ConfirmDeleteModal.vue';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -18,7 +19,6 @@ const menuIsOpen = ref(false)
 function handleOnToggleMenu(isOpen: boolean) {
   menuIsOpen.value = isOpen
 }
-
 
 //Shopping List
 const shoppingListStore = useShoppingListStore()
@@ -92,9 +92,13 @@ function handleClickDeleteItems() {
 
 }
 
-function handleClickConfirm() {
+function handleOnConfirm() {
   shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
   selectMultipleIds.clearSelection()
+  closeConfirmDeleteModal()
+}
+
+function handleOnCancel() {
   closeConfirmDeleteModal()
 }
 
@@ -138,15 +142,7 @@ const noItemsChecked = computed(() => {
   </main>
 
   <BaseModal ref="confirmDeleteModalRef" title="Delete these items?">
-    <main class="p-2">
-      <ul>
-        <li v-for="item in selectedItems" :key="item.id">{{ item.name }}</li>
-      </ul>
-    </main>
-    <footer class="p-2 border-y border-ash/20 flex gap-2">
-      <BaseButton class="grow" @click="handleClickConfirm">Yes</BaseButton>
-      <BaseButton button-type="danger" @click="closeConfirmDeleteModal">Cancel</BaseButton>
-    </footer>
+    <ConfirmDeleteModal :items="selectedItems!" @on-confirm="handleOnConfirm" @on-cancel="handleOnCancel" />
   </BaseModal>
 
 </template>
