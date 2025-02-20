@@ -230,7 +230,7 @@ function resetForm() {
       </BaseButton>
     </div>
 
-    <BaseButton v-else class="w-full">Add new Item</BaseButton>
+    <BaseButton v-else class="w-full" @click="handleClickAddNewItem">Add new Item</BaseButton>
   </main>
 
   <BaseModal ref="confirmDeleteModalRef" title="Delete these items?">
