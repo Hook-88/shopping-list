@@ -54,7 +54,7 @@ const selectSingleId = useSelectSingleId()
 
 function handleClickCategory(label: string | null) {
   if (label) {
-    selectSingleId.toggleSelectId(label)
+    selectSingleId.selectId(label)
   } else {
     selectSingleId.clearSelection()
   }
