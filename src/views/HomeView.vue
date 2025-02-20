@@ -3,7 +3,7 @@ import IconButton from '@/components/buttons/IconButton.vue';
 import MainNav from '@/components/main-nav/MainNav.vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ListItem from '@/components/shopping-list/ListItem.vue';
 import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
@@ -12,6 +12,7 @@ import ListHeader from '@/components/shopping-list/ListHeader.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseModal from '@/components/modal/BaseModal.vue';
 import ConfirmDeleteModal from '@/components/shopping-list/delete-item/ConfirmDeleteModal.vue';
+import BaseInput from '@/components/inputs/BaseInput.vue';
 
 //Main menu
 const menuIsOpen = ref(false)
@@ -159,6 +160,25 @@ function handleClickAddNewItem() {
   newItemModalRef.value?.openModal()
 }
 
+////Form handle
+interface FormData {
+  ['item-name']: string
+  ['item-quantity']: number
+  ['item-unit']: string
+  ['item-label']: string
+}
+
+const formData = reactive<FormData>({
+  "item-name": "",
+  "item-label": "",
+  "item-quantity": 1,
+  "item-unit": "Pieces"
+})
+
+function handleSubmit() {
+  console.log(formData)
+}
+
 
 
 </script>
@@ -200,34 +220,34 @@ function handleClickAddNewItem() {
   </BaseModal>
 
   <BaseModal ref="newItemModalRef" title="Add new items">
-    <form>
+    <form @submit.prevent="handleSubmit">
       <div class="p-2 flex flex-col gap-3">
-        <div>
-          <label for="">Name:</label>
-          <br>
-          <input type="text" placeholder="item name..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
-        </div>
+        <BaseInput label="Name" v-model="formData['item-name']" />
 
         <div class="flex gap-2">
           <div>
             <label for="">Quantity:</label>
-            <br>
-            <input type="number" placeholder="item quantity..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+            <br />
+            <input type="number" placeholder="item quantity..." class="w-full py-1 px-2 bg-white/10 rounded-sm"
+              v-model="formData['item-quantity']" />
           </div>
 
           <div>
             <label for="">Unit:</label>
-            <br>
-            <input type="string" placeholder="item unit..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+            <br />
+            <input type="string" placeholder="item unit..." class="w-full py-1 px-2 bg-white/10 rounded-sm"
+              v-model="formData['item-unit']" />
           </div>
         </div>
 
         <div>
           <label for="">Label:</label>
-          <br>
-          <input type="string" placeholder="Label..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+          <br />
+          <input type="string" placeholder="Label..." class="w-full py-1 px-2 bg-white/10 rounded-sm"
+            v-model="formData['item-label']" />
         </div>
       </div>
+
       <div class="flex gap-2 p-2 border-y border-ash/20">
         <BaseButton class="grow">Add item</BaseButton>
         <BaseButton button-type="danger" type="button">Cancel</BaseButton>
