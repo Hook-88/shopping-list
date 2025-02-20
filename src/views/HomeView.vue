@@ -14,6 +14,7 @@ import BaseModal from '@/components/modal/BaseModal.vue';
 import ConfirmDeleteModal from '@/components/shopping-list/delete-item/ConfirmDeleteModal.vue';
 import BaseInput from '@/components/inputs/BaseInput.vue';
 import { type ItemNoId } from '@/types/types';
+import ItemForm, { type ItemFormData } from '@/components/shopping-list/add-item/ItemForm.vue';
 
 
 
@@ -164,21 +165,21 @@ function handleClickAddNewItem() {
 }
 
 ////Form handle
-interface FormData {
-  ['item-name']: string
-  ['item-quantity']: number
-  ['item-unit']: string
-  ['item-label']: string
-}
+// interface FormData {
+//   ['item-name']: string
+//   ['item-quantity']: number
+//   ['item-unit']: string
+//   ['item-label']: string
+// }
 
-const formData = reactive<FormData>({
-  "item-name": "",
-  "item-label": "",
-  "item-quantity": 1,
-  "item-unit": "Pieces"
-})
+// const formData = reactive<FormData>({
+//   "item-name": "",
+//   "item-label": "",
+//   "item-quantity": 1,
+//   "item-unit": "Pieces"
+// })
 
-function handleSubmit() {
+function handleOnSubmitForm(formData: ItemFormData) {
 
   const itemObj: ItemNoId = {
     name: formData['item-name'],
@@ -188,15 +189,9 @@ function handleSubmit() {
   }
 
   shoppingListStore.addNewItem(itemObj)
-  resetForm()
 }
 
-function resetForm() {
-  formData['item-name'] = ''
-  formData['item-quantity'] = 1
-  formData['item-unit'] = 'Pieces'
-  formData['item-label'] = ''
-}
+
 
 
 
@@ -239,7 +234,8 @@ function resetForm() {
   </BaseModal>
 
   <BaseModal ref="newItemModalRef" title="Add new items">
-    <form @submit.prevent="handleSubmit">
+    <ItemForm @on-submit-form="handleOnSubmitForm" />
+    <!-- <form @submit.prevent="handleSubmit">
       <div class="p-2 flex flex-col gap-3">
 
         <BaseInput label="Name" v-model="formData['item-name']" placeholder="Item name..." required />
@@ -258,7 +254,7 @@ function resetForm() {
         <BaseButton button-type="danger" type="button">Cancel</BaseButton>
       </div>
 
-    </form>
+    </form> -->
   </BaseModal>
 
 </template>
