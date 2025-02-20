@@ -6,4 +6,6 @@ interface ShoppingItemInterface {
   label: string
 }
 
-export { type ShoppingItemInterface }
+type ItemNoId = Omit<ShoppingItemInterface, 'id'>
+
+export { type ShoppingItemInterface, type ItemNoId }
