@@ -50,7 +50,6 @@ const selectedCategory = ref<string | null>(null)
 
 function handleOnChangeCategory(label: string | null) {
   selectedCategory.value = label
-  console.log(selectedCategory.value)
 }
 
 const itemsOfCategory = computed(() => {
@@ -153,6 +152,15 @@ const noItemsChecked = computed(() => {
 })
 
 
+//Add new Item
+const newItemModalRef = ref<InstanceType<typeof BaseModal> | null>(null)
+
+function handleClickAddNewItem() {
+  newItemModalRef.value?.openModal()
+}
+
+
+
 </script>
 
 
@@ -162,11 +170,11 @@ const noItemsChecked = computed(() => {
   }">
     <MainNav @on-toggle-menu="handleOnToggleMenu" />
 
-    <IconButton :icon-def="faPlus" />
+    <IconButton :icon-def="faPlus" @click="handleClickAddNewItem" />
   </header>
 
   <main class="grow px-2">
-    <div v-if="displayItems && displayItems.length > 0">
+    <div v-if="shoppingListStore.shoppingItems && shoppingListStore.shoppingItems.length > 0">
       <ListHeader v-if="shoppingListStore.shoppingItems"
         :num-of-items-checked="selectMultipleIds.selectedIds.value.length"
         :num-of-shopping-items="shoppingListStore.shoppingItems.length" @on-toggle-hide="handleOnToggleHide"
@@ -189,6 +197,42 @@ const noItemsChecked = computed(() => {
   <BaseModal ref="confirmDeleteModalRef" title="Delete these items?">
     <ConfirmDeleteModal v-if="selectedItems" :items="selectedItems" @on-confirm="handleOnConfirm"
       @on-cancel="handleOnCancel" />
+  </BaseModal>
+
+  <BaseModal ref="newItemModalRef" title="Add new items">
+    <form>
+      <div class="p-2 flex flex-col gap-3">
+        <div>
+          <label for="">Name:</label>
+          <br>
+          <input type="text" placeholder="item name..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+        </div>
+
+        <div class="flex gap-2">
+          <div>
+            <label for="">Quantity:</label>
+            <br>
+            <input type="number" placeholder="item quantity..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+          </div>
+
+          <div>
+            <label for="">Unit:</label>
+            <br>
+            <input type="string" placeholder="item unit..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+          </div>
+        </div>
+
+        <div>
+          <label for="">Label:</label>
+          <br>
+          <input type="string" placeholder="Label..." class="w-full py-1 px-2 bg-white/10 rounded-sm">
+        </div>
+      </div>
+      <div class="flex gap-2 p-2 border-y border-ash/20">
+        <BaseButton class="grow">Add item</BaseButton>
+        <BaseButton button-type="danger" type="button">Cancel</BaseButton>
+      </div>
+    </form>
   </BaseModal>
 
 </template>
