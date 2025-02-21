@@ -3,7 +3,7 @@ import IconButton from '@/components/buttons/IconButton.vue';
 import MainNav from '@/components/main-nav/MainNav.vue';
 import { useShoppingListStore } from '@/stores/shoppingList';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { GROCERYITEMS } from '@/data/shoppingList';
 import ListItem from '@/components/shopping-list/ListItem.vue';
 import { useSelectMultipleIds } from '@/features/select-multiple-ids/selectMultipleIds';
@@ -12,18 +12,12 @@ import ListHeader from '@/components/shopping-list/ListHeader.vue';
 import BaseButton from '@/components/buttons/BaseButton.vue';
 import BaseModal from '@/components/modal/BaseModal.vue';
 import ConfirmDeleteModal from '@/components/shopping-list/delete-item/ConfirmDeleteModal.vue';
-import BaseInput from '@/components/inputs/BaseInput.vue';
 import { type ItemNoId } from '@/types/types';
 import ItemForm, { type ItemFormData } from '@/components/shopping-list/add-item/ItemForm.vue';
-
-
+import { useMainNav } from '@/components/main-nav/mainNav';
 
 //Main menu
-const menuIsOpen = ref(false)
-
-function handleOnToggleMenu(isOpen: boolean) {
-  menuIsOpen.value = isOpen
-}
+const mainNav = useMainNav()
 
 //Shopping List
 const shoppingListStore = useShoppingListStore()
@@ -31,7 +25,6 @@ const shoppingListStore = useShoppingListStore()
 onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
 })
-
 
 ////Check Item
 const selectMultipleIds = useSelectMultipleIds()
@@ -122,6 +115,10 @@ const selectedItems = computed(() => {
   return null
 })
 
+function handleClickDeleteItems() {
+  openConfirmDeleteModal()
+}
+
 function openConfirmDeleteModal() {
   if (confirmDeleteModalRef.value) {
     confirmDeleteModalRef.value.openModal()
@@ -135,10 +132,7 @@ function closeConfirmDeleteModal() {
   }
 }
 
-function handleClickDeleteItems() {
-  openConfirmDeleteModal()
 
-}
 
 function handleOnConfirm() {
   shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
@@ -164,21 +158,6 @@ function handleClickAddNewItem() {
   newItemModalRef.value?.openModal()
 }
 
-////Form handle
-// interface FormData {
-//   ['item-name']: string
-//   ['item-quantity']: number
-//   ['item-unit']: string
-//   ['item-label']: string
-// }
-
-// const formData = reactive<FormData>({
-//   "item-name": "",
-//   "item-label": "",
-//   "item-quantity": 1,
-//   "item-unit": "Pieces"
-// })
-
 function handleOnSubmitForm(formData: ItemFormData) {
 
   const itemObj: ItemNoId = {
@@ -193,16 +172,14 @@ function handleOnSubmitForm(formData: ItemFormData) {
 
 
 
-
-
 </script>
 
 
 <template>
   <header class="text-2xl tracking-wider border-b border-ash/20 flex justify-between" :class="{
-    'bg-sky-1000': menuIsOpen
+    'bg-sky-1000': mainNav.menuIsOpen.value
   }">
-    <MainNav @on-toggle-menu="handleOnToggleMenu" />
+    <MainNav @on-toggle-menu="mainNav.handleOnToggleMenu" />
 
     <IconButton :icon-def="faPlus" @click="handleClickAddNewItem" />
   </header>
@@ -235,26 +212,6 @@ function handleOnSubmitForm(formData: ItemFormData) {
 
   <BaseModal ref="newItemModalRef" title="Add new items">
     <ItemForm @on-submit-form="handleOnSubmitForm" />
-    <!-- <form @submit.prevent="handleSubmit">
-      <div class="p-2 flex flex-col gap-3">
-
-        <BaseInput label="Name" v-model="formData['item-name']" placeholder="Item name..." required />
-
-        <div class="flex gap-2">
-          <BaseInput label="Quantity" type="number" v-model="formData['item-quantity']" required />
-          <BaseInput label="Unit" placeholder="item unit..." v-model="formData['item-unit']" required />
-        </div>
-
-        <BaseInput label="Label" placeholder="Label..." v-model="formData['item-label']" />
-
-      </div>
-
-      <div class="flex gap-2 p-2 border-y border-ash/20">
-        <BaseButton class="grow">Add item</BaseButton>
-        <BaseButton button-type="danger" type="button">Cancel</BaseButton>
-      </div>
-
-    </form> -->
   </BaseModal>
 
 </template>
