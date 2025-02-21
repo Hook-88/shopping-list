@@ -14,10 +14,14 @@ import BaseModal from '@/components/modal/BaseModal.vue';
 import ConfirmDeleteModal from '@/components/shopping-list/delete-item/ConfirmDeleteModal.vue';
 import { type ItemNoId } from '@/types/types';
 import ItemForm, { type ItemFormData } from '@/components/shopping-list/add-item/ItemForm.vue';
-import { useMainNav } from '@/components/main-nav/mainNav';
+
 
 //Main menu
-const mainNav = useMainNav()
+const menuIsOpen = ref(false)
+
+function handleOnToggleMenu(isOpen: boolean) {
+  menuIsOpen.value = isOpen
+}
 
 //Shopping List
 const shoppingListStore = useShoppingListStore()
@@ -25,6 +29,7 @@ const shoppingListStore = useShoppingListStore()
 onMounted(() => {
   shoppingListStore.shoppingItems = GROCERYITEMS
 })
+
 
 ////Check Item
 const selectMultipleIds = useSelectMultipleIds()
@@ -115,10 +120,6 @@ const selectedItems = computed(() => {
   return null
 })
 
-function handleClickDeleteItems() {
-  openConfirmDeleteModal()
-}
-
 function openConfirmDeleteModal() {
   if (confirmDeleteModalRef.value) {
     confirmDeleteModalRef.value.openModal()
@@ -132,7 +133,10 @@ function closeConfirmDeleteModal() {
   }
 }
 
+function handleClickDeleteItems() {
+  openConfirmDeleteModal()
 
+}
 
 function handleOnConfirm() {
   shoppingListStore.deleteMultipleItems(selectMultipleIds.selectedIds.value)
@@ -177,9 +181,9 @@ function handleOnSubmitForm(formData: ItemFormData) {
 
 <template>
   <header class="text-2xl tracking-wider border-b border-ash/20 flex justify-between" :class="{
-    'bg-sky-1000': mainNav.menuIsOpen.value
+    'bg-sky-1000': menuIsOpen
   }">
-    <MainNav @on-toggle-menu="mainNav.handleOnToggleMenu" />
+    <MainNav @on-toggle-menu="handleOnToggleMenu" />
 
     <IconButton :icon-def="faPlus" @click="handleClickAddNewItem" />
   </header>
