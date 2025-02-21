@@ -260,5 +260,5 @@ function resetForm() {
 
     </form>
   </BaseModal>
-  <!-- someting -->
+  <!-- someting here-->
 </template>
